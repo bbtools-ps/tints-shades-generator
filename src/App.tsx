@@ -6,6 +6,7 @@ import {
   DialogTrigger,
   Form,
   Heading,
+  Link,
   Picker,
   PickerItem,
   TextField,
@@ -78,40 +79,52 @@ export default function App() {
   };
 
   return (
-    <main
-      className={style({
-        height: "full",
-        width: "full",
-        display: "flex",
-        alignItems: "center",
-        flexDirection: "column",
-        gap: "text-to-control",
-      })}
-    >
-      <h1 className={style({ font: "heading-2xl" })}>Tints & Shades Generator</h1>
-      <p className={style({ font: "body" })}>
-        Create tints and shades from a base color using OKLCH color space.
-      </p>
-      <Form onSubmit={handleSubmit}>
-        <TextField
-          name="baseColor"
-          label="Base Color"
-          errorMessage="Please enter a valid base color"
-          placeholder="Enter hex, rgb, hsl, oklch..."
-          validate={(value) => (parse(value) ? null : "Invalid color")}
-          defaultValue={DEFAULT_BASE_COLOR}
-        />
-        <Picker name="steps" label="Steps" items={STEPS} defaultValue={DEFAULT_STEPS}>
-          {(item) => <PickerItem>{item.name}</PickerItem>}
-        </Picker>
-        <div className={style({ margin: "auto" })}>
-          <Button type="submit" size="L">
-            Generate
-          </Button>
-        </div>
-      </Form>
-      {result && <Results key={JSON.stringify(result)} result={result} />}
-    </main>
+    <>
+      <main
+        className={style({
+          flexGrow: 1,
+          width: "full",
+          display: "flex",
+          alignItems: "center",
+          flexDirection: "column",
+          gap: "text-to-control",
+        })}
+      >
+        <h1 className={style({ font: "heading-2xl" })}>Tints & Shades Generator</h1>
+        <p className={style({ font: "body" })}>
+          Create tints and shades from a base color using OKLCH color space.
+        </p>
+        <Form onSubmit={handleSubmit}>
+          <TextField
+            name="baseColor"
+            label="Base Color"
+            errorMessage="Please enter a valid base color"
+            placeholder="Enter hex, rgb, hsl, oklch..."
+            validate={(value) => (parse(value) ? null : "Invalid color")}
+            defaultValue={DEFAULT_BASE_COLOR}
+          />
+          <Picker name="steps" label="Steps" items={STEPS} defaultValue={DEFAULT_STEPS}>
+            {(item) => <PickerItem>{item.name}</PickerItem>}
+          </Picker>
+          <div className={style({ margin: "auto" })}>
+            <Button type="submit" size="L">
+              Generate
+            </Button>
+          </div>
+        </Form>
+        {result && <Results key={JSON.stringify(result)} result={result} />}
+      </main>
+      <footer className={style({ margin: "text-to-control", font: "body" })}>
+        <p>
+          <span
+            className={style({ marginEnd: "text-to-visual" })}
+          >{`© ${new Date().getFullYear()}`}</span>
+          <Link href="https://bogdan-bogdanovic.com/" rel="noopener noreferrer">
+            Bogdan Bogdanovic
+          </Link>
+        </p>
+      </footer>
+    </>
   );
 }
 
