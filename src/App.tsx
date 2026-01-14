@@ -23,6 +23,8 @@ const STEPS = [
   { id: 4, name: "4" },
   { id: 5, name: "5" },
 ];
+const DEFAULT_STEPS = 5;
+const DEFAULT_BASE_COLOR = "#ad0770";
 
 function generateTintsAndShades(baseColor: string, steps: number) {
   const parsedColor = parse(baseColor);
@@ -60,9 +62,6 @@ function generateTintsAndShades(baseColor: string, steps: number) {
 }
 
 type Result = ReturnType<typeof generateTintsAndShades>;
-
-const DEFAULT_STEPS = 5;
-const DEFAULT_BASE_COLOR = "#ad0770";
 
 export default function App() {
   const [result, setResult] = useState<Result>(() =>
@@ -102,7 +101,7 @@ export default function App() {
           validate={(value) => (parse(value) ? null : "Invalid color")}
           defaultValue={DEFAULT_BASE_COLOR}
         />
-        <Picker name="steps" label="Steps" items={STEPS} defaultValue={STEPS[STEPS.length - 1].id}>
+        <Picker name="steps" label="Steps" items={STEPS} defaultValue={DEFAULT_STEPS}>
           {(item) => <PickerItem>{item.name}</PickerItem>}
         </Picker>
         <div className={style({ margin: "auto" })}>
