@@ -118,7 +118,7 @@ export default function App() {
         <p>
           <span
             className={style({ marginEnd: "text-to-visual" })}
-          >{`© ${new Date().getFullYear()}`}</span>
+          >{`© ${new Date().getFullYear()}.`}</span>
           <Link href="https://bogdan-bogdanovic.com/" rel="noopener noreferrer">
             Bogdan Bogdanovic
           </Link>
