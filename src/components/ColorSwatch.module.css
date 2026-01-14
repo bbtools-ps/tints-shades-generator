@@ -1,0 +1,36 @@
+.container {
+  width: 3rem;
+  height: 3rem;
+  border: none;
+  border-radius: 0.5rem;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  position: relative;
+}
+
+.container:hover,
+.container:focus {
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+  border: 2px solid #fff;
+  outline: 2px solid #000;
+  .copy {
+    display: block;
+  }
+}
+
+.copy {
+  display: none;
+  width: 2rem;
+  height: 2rem;
+  overflow: hidden;
+  border-radius: 0.5rem;
+  position: absolute;
+  top: 0.25rem;
+  right: 0.25rem;
+}
+
+@media screen and (min-width: 50em) {
+  .container {
+    width: 5rem;
+    height: 5rem;
+  }
+}
