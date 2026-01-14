@@ -26,6 +26,9 @@ export default function ColorSwatch({ oklch, setSelectedColor, autoFocus }: Colo
       className={classes.container}
       style={{
         backgroundColor: `oklch(${oklch.l} ${oklch.c} ${oklch.h})`,
+        borderColor: "ButtonHighlight",
+        borderWidth: "3px",
+        borderStyle: "solid",
       }}
       autoFocus={autoFocus}
       onFocus={() => setSelectedColor(oklch)}

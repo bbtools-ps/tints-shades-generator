@@ -34,3 +34,11 @@
     height: 5rem;
   }
 }
+
+@media (prefers-color-scheme: dark) {
+  .container:hover,
+  .container:focus {
+    border: 2px solid #000;
+    outline: 2px solid #fff;
+  }
+}
