@@ -61,8 +61,13 @@ function generateTintsAndShades(baseColor: string, steps: number) {
 
 type Result = ReturnType<typeof generateTintsAndShades>;
 
+const DEFAULT_STEPS = 5;
+const DEFAULT_BASE_COLOR = "#ad0770";
+
 export default function App() {
-  const [result, setResult] = useState<Result>();
+  const [result, setResult] = useState<Result>(() =>
+    generateTintsAndShades(DEFAULT_BASE_COLOR, DEFAULT_STEPS)
+  );
 
   const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
@@ -74,7 +79,7 @@ export default function App() {
   };
 
   return (
-    <div
+    <main
       className={style({
         height: "full",
         width: "full",
@@ -84,7 +89,7 @@ export default function App() {
         gap: "text-to-control",
       })}
     >
-      <h1 className={style({ font: "heading-2xl" })}>Tints/Shades Generator</h1>
+      <h1 className={style({ font: "heading-2xl" })}>Tints & Shades Generator</h1>
       <p className={style({ font: "body" })}>
         Create tints and shades from a base color using OKLCH color space.
       </p>
@@ -95,6 +100,7 @@ export default function App() {
           errorMessage="Please enter a valid base color"
           placeholder="Enter hex, rgb, hsl, oklch..."
           validate={(value) => (parse(value) ? null : "Invalid color")}
+          defaultValue={DEFAULT_BASE_COLOR}
         />
         <Picker name="steps" label="Steps" items={STEPS} defaultValue={STEPS[STEPS.length - 1].id}>
           {(item) => <PickerItem>{item.name}</PickerItem>}
@@ -106,7 +112,7 @@ export default function App() {
         </div>
       </Form>
       {result && <Results key={JSON.stringify(result)} result={result} />}
-    </div>
+    </main>
   );
 }
 

@@ -31,6 +31,7 @@ export default function ColorSwatch({ oklch, setSelectedColor, autoFocus }: Colo
       onFocus={() => setSelectedColor(oklch)}
       onBlur={() => setSelectedColor(undefined)}
       onClick={handleCopy}
+      aria-label="Copy color swatch"
     >
       <div className={classes.copy}>
         <div
