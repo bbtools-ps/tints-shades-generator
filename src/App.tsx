@@ -175,37 +175,44 @@ function Results({ result }: ResultsProps) {
     result.base.oklch!
   );
   const [isShiftPressed, setIsShiftPressed] = useState(false);
-  const swatchRefs = useRef<(HTMLButtonElement | null)[]>([]);
+  const swatches = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
+    const swatchesRef = swatches.current;
+
+    if (!swatchesRef) return;
+
+    const allSwatches = Array.from(
+      swatchesRef.querySelectorAll('button')
+    ) as HTMLButtonElement[];
+
     const handleKeyDown = (e: KeyboardEvent) => {
       setIsShiftPressed(e.shiftKey);
 
       // Handle arrow key navigation
       if (e.key === 'ArrowLeft' || e.key === 'ArrowRight') {
         e.preventDefault();
-        const focusedElement = document.activeElement as HTMLElement;
-        const currentIndex = swatchRefs.current.findIndex(
-          (ref) => ref === focusedElement
+
+        const focusedElement = document.activeElement;
+        const currentIndex = allSwatches.findIndex(
+          (swatch) => swatch === focusedElement
         );
 
-        if (currentIndex !== -1) {
-          let nextIndex: number;
-          if (e.key === 'ArrowLeft') {
-            // Move to previous swatch (wrap to end if at start)
-            nextIndex =
-              currentIndex === 0
-                ? swatchRefs.current.length - 1
-                : currentIndex - 1;
-          } else {
-            // Move to next swatch (wrap to start if at end)
-            nextIndex =
-              currentIndex === swatchRefs.current.length - 1
-                ? 0
-                : currentIndex + 1;
-          }
-          swatchRefs.current[nextIndex]?.focus();
+        if (currentIndex === -1) return;
+
+        let nextIndex: number;
+
+        if (e.key === 'ArrowLeft') {
+          // Move to previous swatch (wrap to end if at start)
+          nextIndex =
+            currentIndex === 0 ? allSwatches.length - 1 : currentIndex - 1;
+        } else {
+          // Move to next swatch (wrap to start if at end)
+          nextIndex =
+            currentIndex === allSwatches.length - 1 ? 0 : currentIndex + 1;
         }
+
+        allSwatches[nextIndex]?.focus();
       }
     };
 
@@ -213,19 +220,14 @@ function Results({ result }: ResultsProps) {
       setIsShiftPressed(e.shiftKey);
     };
 
-    document.addEventListener('keydown', handleKeyDown);
-    document.addEventListener('keyup', handleKeyUp);
+    swatchesRef.addEventListener('keydown', handleKeyDown);
+    swatchesRef.addEventListener('keyup', handleKeyUp);
 
     return () => {
-      document.removeEventListener('keydown', handleKeyDown);
-      document.removeEventListener('keyup', handleKeyUp);
+      swatchesRef.removeEventListener('keydown', handleKeyDown);
+      swatchesRef.removeEventListener('keyup', handleKeyUp);
     };
   }, []);
-
-  // Helper to get ref callback for swatch at specific index
-  const getSwatchRef = (index: number) => (el: HTMLButtonElement | null) => {
-    swatchRefs.current[index] = el;
-  };
 
   return (
     <div
@@ -245,7 +247,9 @@ function Results({ result }: ResultsProps) {
           <ExportDialog result={result} />
         </DialogTrigger>
       </div>
+      {/* Swatches */}
       <div
+        ref={swatches}
         className={style({
           display: 'flex',
           marginBottom: 'text-to-control',
@@ -284,7 +288,6 @@ function Results({ result }: ResultsProps) {
                 key={`shade-${i}`}
                 oklch={shade.oklch}
                 setSelectedColor={setSelectedColor}
-                ref={getSwatchRef(i)}
               />
             ))}
           </div>
@@ -313,7 +316,6 @@ function Results({ result }: ResultsProps) {
             oklch={result.base.oklch!}
             setSelectedColor={setSelectedColor}
             autoFocus
-            ref={getSwatchRef(result.shades.length)}
           />
         </div>
 
@@ -347,13 +349,11 @@ function Results({ result }: ResultsProps) {
                 key={`tint-${i}`}
                 oklch={tint.oklch}
                 setSelectedColor={setSelectedColor}
-                ref={getSwatchRef(result.shades.length + 1 + i)}
               />
             ))}
           </div>
         </div>
       </div>
-
       {selectedColor && (
         <div
           className={style({
