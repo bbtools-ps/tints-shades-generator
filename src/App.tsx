@@ -14,7 +14,7 @@ import {
 import ExportTo from '@react-spectrum/s2/icons/ExportTo';
 import { style } from '@react-spectrum/s2/style' with { type: 'macro' };
 import { converter, formatHex, parse, type Oklch } from 'culori';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import ColorSwatch from './components/ColorSwatch';
 
 const STEPS = [
@@ -174,6 +174,21 @@ function Results({ result }: ResultsProps) {
   const [selectedColor, setSelectedColor] = useState<Oklch | undefined>(
     result.base.oklch!
   );
+  const [isShiftPressed, setIsShiftPressed] = useState(false);
+
+  useEffect(() => {
+    const handleKeyDown = (e: KeyboardEvent) => {
+      setIsShiftPressed(e.shiftKey);
+    };
+
+    document.addEventListener('keydown', handleKeyDown);
+    document.addEventListener('keyup', handleKeyDown);
+
+    return () => {
+      document.removeEventListener('keydown', handleKeyDown);
+      document.removeEventListener('keyup', handleKeyDown);
+    };
+  }, []);
 
   return (
     <div
@@ -309,26 +324,27 @@ function Results({ result }: ResultsProps) {
             textAlign: 'start',
           })}
         >
-          <div
+          <p
             className={style({
+              margin: 'unset',
               display: 'flex',
               alignItems: 'center',
               gap: 'text-to-visual',
             })}
           >
-            <p
-              className={style({
-                margin: 'unset',
-                fontWeight: 'bold',
-                textTransform: 'capitalize',
-              })}
-            >
-              Selected Color:
-            </p>
-            <div>{`oklch(${selectedColor.l.toFixed(6)} ${selectedColor.c.toFixed(6)} ${selectedColor.h?.toFixed(4) ?? selectedColor.h})`}</div>
-          </div>
+            <strong>Selected Color:</strong>
+            <span>
+              {isShiftPressed
+                ? formatHex(selectedColor)
+                : `oklch(${selectedColor.l.toFixed(6)} ${selectedColor.c.toFixed(6)} ${selectedColor.h?.toFixed(4) ?? selectedColor.h})`}
+            </span>
+          </p>
         </div>
       )}
+      <p className={style({ font: 'detail' })}>
+        Click/Enter/Space to copy the selected color. Hold Shift to toggle
+        hex/oklch.
+      </p>
     </div>
   );
 }

@@ -1,7 +1,7 @@
 import Checkmark from '@react-spectrum/s2/icons/Checkmark';
 import Copy from '@react-spectrum/s2/icons/Copy';
 import { style } from '@react-spectrum/s2/style' with { type: 'macro' };
-import type { Oklch } from 'culori';
+import { formatHex, type Oklch } from 'culori';
 import { useState } from 'react';
 import classes from './ColorSwatch.module.css';
 
@@ -18,8 +18,17 @@ export default function ColorSwatch({
 }: ColorSwatchProps) {
   const [copied, setCopied] = useState(false);
 
-  const handleCopy = async () => {
-    const value = `oklch(${oklch.l.toFixed(6)} ${oklch.c.toFixed(6)} ${oklch.h?.toFixed(4) ?? oklch.h})`;
+  const handleCopy = async (event: React.MouseEvent<HTMLButtonElement>) => {
+    let value: string;
+
+    if (event.shiftKey) {
+      // Shift + Click: Copy hex color
+      value = formatHex(oklch);
+    } else {
+      // Regular click: Copy OKLCH color
+      value = `oklch(${oklch.l.toFixed(6)} ${oklch.c.toFixed(6)} ${oklch.h?.toFixed(4) ?? oklch.h})`;
+    }
+
     await navigator.clipboard.writeText(value);
     setCopied(true);
     setTimeout(() => setCopied(false), 2000);
