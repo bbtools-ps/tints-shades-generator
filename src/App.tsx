@@ -42,11 +42,13 @@ function generateTintsAndShades(baseColor: string, steps: number) {
       const factor = (i + 1) / (count + 1);
       const newL = isTint ? l + (1 - l) * factor : l * (1 - factor);
 
+      const easedFactor = factor * factor;
+
       const colorObj = {
         mode: 'oklch' as const,
         l: newL,
-        c: c * (1 - factor),
-        h,
+        c: c * (1 - easedFactor),
+        h: c < 0.01 ? undefined : h,
       };
 
       return {
