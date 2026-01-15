@@ -10,12 +10,12 @@ import {
   Picker,
   PickerItem,
   TextField,
-} from '@react-spectrum/s2'
-import ExportTo from '@react-spectrum/s2/icons/ExportTo'
-import { style } from '@react-spectrum/s2/style' with { type: 'macro' }
-import { converter, formatHex, parse, type Oklch } from 'culori'
-import { useState } from 'react'
-import ColorSwatch from './components/ColorSwatch'
+} from '@react-spectrum/s2';
+import ExportTo from '@react-spectrum/s2/icons/ExportTo';
+import { style } from '@react-spectrum/s2/style' with { type: 'macro' };
+import { converter, formatHex, parse, type Oklch } from 'culori';
+import { useState } from 'react';
+import ColorSwatch from './components/ColorSwatch';
 
 const STEPS = [
   { id: 1, name: '1' },
@@ -23,37 +23,37 @@ const STEPS = [
   { id: 3, name: '3' },
   { id: 4, name: '4' },
   { id: 5, name: '5' },
-]
-const DEFAULT_STEPS = 5
-const DEFAULT_BASE_COLOR = '#ad0770'
+];
+const DEFAULT_STEPS = 5;
+const DEFAULT_BASE_COLOR = '#ad0770';
 
 function generateTintsAndShades(baseColor: string, steps: number) {
-  const parsedColor = parse(baseColor)
-  const oklchColor = converter('oklch')(parsedColor)
+  const parsedColor = parse(baseColor);
+  const oklchColor = converter('oklch')(parsedColor);
 
   if (!oklchColor) {
-    throw new Error('Invalid color')
+    throw new Error('Invalid color');
   }
 
-  const { l, c, h } = oklchColor
+  const { l, c, h } = oklchColor;
 
   function generateScale(count: number, isTint: boolean) {
     return Array.from({ length: count }).map((_, i) => {
-      const factor = (i + 1) / (count + 1)
-      const newL = isTint ? l + (1 - l) * factor : l * (1 - factor)
+      const factor = (i + 1) / (count + 1);
+      const newL = isTint ? l + (1 - l) * factor : l * (1 - factor);
 
       const colorObj = {
         mode: 'oklch' as const,
         l: newL,
         c: c * (1 - factor),
         h,
-      }
+      };
 
       return {
         oklch: colorObj,
         lightness: Math.round(newL * 100),
-      }
-    })
+      };
+    });
   }
 
   return {
@@ -64,24 +64,24 @@ function generateTintsAndShades(baseColor: string, steps: number) {
     },
     tints: generateScale(steps, true),
     shades: generateScale(steps, false).reverse(),
-  }
+  };
 }
 
-type Result = ReturnType<typeof generateTintsAndShades>
+type Result = ReturnType<typeof generateTintsAndShades>;
 
 export default function App() {
   const [result, setResult] = useState<Result>(() =>
     generateTintsAndShades(DEFAULT_BASE_COLOR, DEFAULT_STEPS)
-  )
+  );
 
   const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
-    e.preventDefault()
-    const formData = new FormData(e.currentTarget)
-    const color = formData.get('baseColor') as string
-    const steps = formData.get('steps') as string
+    e.preventDefault();
+    const formData = new FormData(e.currentTarget);
+    const color = formData.get('baseColor') as string;
+    const steps = formData.get('steps') as string;
 
-    setResult(generateTintsAndShades(color, parseInt(steps)))
-  }
+    setResult(generateTintsAndShades(color, parseInt(steps)));
+  };
 
   return (
     <>
@@ -137,43 +137,43 @@ export default function App() {
         </p>
       </footer>
     </>
-  )
+  );
 }
 
 interface ResultsProps {
-  result: Result
+  result: Result;
 }
 
 function formatAsCSS(result: Result): string {
-  let css = ':root {\n'
+  let css = ':root {\n';
 
   // Shades
-  css += '  /* Shades */\n'
+  css += '  /* Shades */\n';
   result.shades.forEach((shade, i) => {
-    const { l, c, h } = shade.oklch
-    css += `  --shade-${result.shades.length - i}: oklch(${l.toFixed(6)} ${c.toFixed(6)} ${h?.toFixed(4) ?? h});\n`
-  })
+    const { l, c, h } = shade.oklch;
+    css += `  --shade-${result.shades.length - i}: oklch(${l.toFixed(6)} ${c.toFixed(6)} ${h?.toFixed(4) ?? h});\n`;
+  });
 
   // Base Color
-  css += '\n  /* Base Color */\n'
-  const { l, c, h } = result.base.oklch!
-  css += `  --base-color: oklch(${l.toFixed(6)} ${c.toFixed(6)} ${h?.toFixed(4) ?? h});\n`
+  css += '\n  /* Base Color */\n';
+  const { l, c, h } = result.base.oklch!;
+  css += `  --base-color: oklch(${l.toFixed(6)} ${c.toFixed(6)} ${h?.toFixed(4) ?? h});\n`;
 
   // Tints
-  css += '\n  /* Tints */\n'
+  css += '\n  /* Tints */\n';
   result.tints.forEach((tint, i) => {
-    const { l: tl, c: tc, h: th } = tint.oklch
-    css += `  --tint-${i + 1}: oklch(${tl.toFixed(6)} ${tc.toFixed(6)} ${th?.toFixed(4) ?? th});\n`
-  })
+    const { l: tl, c: tc, h: th } = tint.oklch;
+    css += `  --tint-${i + 1}: oklch(${tl.toFixed(6)} ${tc.toFixed(6)} ${th?.toFixed(4) ?? th});\n`;
+  });
 
-  css += '}\n'
-  return css
+  css += '}\n';
+  return css;
 }
 
 function Results({ result }: ResultsProps) {
   const [selectedColor, setSelectedColor] = useState<Oklch | undefined>(
     result.base.oklch!
-  )
+  );
 
   return (
     <div
@@ -330,18 +330,18 @@ function Results({ result }: ResultsProps) {
         </div>
       )}
     </div>
-  )
+  );
 }
 
 function ExportDialog({ result }: ResultsProps) {
-  const [isCopied, setIsCopied] = useState(false)
-  const css = formatAsCSS(result)
+  const [isCopied, setIsCopied] = useState(false);
+  const css = formatAsCSS(result);
 
   const handleCopy = async () => {
-    await navigator.clipboard.writeText(css)
-    setIsCopied(true)
-    setTimeout(() => setIsCopied(false), 2000)
-  }
+    await navigator.clipboard.writeText(css);
+    setIsCopied(true);
+    setTimeout(() => setIsCopied(false), 2000);
+  };
 
   return (
     <CustomDialog>
@@ -389,5 +389,5 @@ function ExportDialog({ result }: ResultsProps) {
         </ActionButton>
       </div>
     </CustomDialog>
-  )
+  );
 }
