@@ -14,7 +14,7 @@ import {
 import ExportTo from '@react-spectrum/s2/icons/ExportTo';
 import { style } from '@react-spectrum/s2/style' with { type: 'macro' };
 import { converter, formatHex, parse, type Oklch } from 'culori';
-import { useEffect, useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import ColorSwatch from './components/ColorSwatch';
 
 const STEPS = [
@@ -175,20 +175,57 @@ function Results({ result }: ResultsProps) {
     result.base.oklch!
   );
   const [isShiftPressed, setIsShiftPressed] = useState(false);
+  const swatchRefs = useRef<(HTMLButtonElement | null)[]>([]);
 
   useEffect(() => {
     const handleKeyDown = (e: KeyboardEvent) => {
       setIsShiftPressed(e.shiftKey);
+
+      // Handle arrow key navigation
+      if (e.key === 'ArrowLeft' || e.key === 'ArrowRight') {
+        e.preventDefault();
+        const focusedElement = document.activeElement as HTMLElement;
+        const currentIndex = swatchRefs.current.findIndex(
+          (ref) => ref === focusedElement
+        );
+
+        if (currentIndex !== -1) {
+          let nextIndex: number;
+          if (e.key === 'ArrowLeft') {
+            // Move to previous swatch (wrap to end if at start)
+            nextIndex =
+              currentIndex === 0
+                ? swatchRefs.current.length - 1
+                : currentIndex - 1;
+          } else {
+            // Move to next swatch (wrap to start if at end)
+            nextIndex =
+              currentIndex === swatchRefs.current.length - 1
+                ? 0
+                : currentIndex + 1;
+          }
+          swatchRefs.current[nextIndex]?.focus();
+        }
+      }
+    };
+
+    const handleKeyUp = (e: KeyboardEvent) => {
+      setIsShiftPressed(e.shiftKey);
     };
 
     document.addEventListener('keydown', handleKeyDown);
-    document.addEventListener('keyup', handleKeyDown);
+    document.addEventListener('keyup', handleKeyUp);
 
     return () => {
       document.removeEventListener('keydown', handleKeyDown);
-      document.removeEventListener('keyup', handleKeyDown);
+      document.removeEventListener('keyup', handleKeyUp);
     };
   }, []);
+
+  // Helper to get ref callback for swatch at specific index
+  const getSwatchRef = (index: number) => (el: HTMLButtonElement | null) => {
+    swatchRefs.current[index] = el;
+  };
 
   return (
     <div
@@ -247,6 +284,7 @@ function Results({ result }: ResultsProps) {
                 key={`shade-${i}`}
                 oklch={shade.oklch}
                 setSelectedColor={setSelectedColor}
+                ref={getSwatchRef(i)}
               />
             ))}
           </div>
@@ -275,6 +313,7 @@ function Results({ result }: ResultsProps) {
             oklch={result.base.oklch!}
             setSelectedColor={setSelectedColor}
             autoFocus
+            ref={getSwatchRef(result.shades.length)}
           />
         </div>
 
@@ -308,6 +347,7 @@ function Results({ result }: ResultsProps) {
                 key={`tint-${i}`}
                 oklch={tint.oklch}
                 setSelectedColor={setSelectedColor}
+                ref={getSwatchRef(result.shades.length + 1 + i)}
               />
             ))}
           </div>
@@ -326,7 +366,6 @@ function Results({ result }: ResultsProps) {
         >
           <p
             className={style({
-              margin: 'unset',
               display: 'flex',
               alignItems: 'center',
               gap: 'text-to-visual',
@@ -341,10 +380,15 @@ function Results({ result }: ResultsProps) {
           </p>
         </div>
       )}
-      <p className={style({ font: 'detail' })}>
-        Click/Enter/Space to copy the selected color. Hold Shift to toggle
-        hex/oklch.
-      </p>
+      <div>
+        <p className={style({ font: 'detail', marginBottom: 'unset' })}>
+          Use keyboard left/right arrows to navigate between swatches.
+        </p>
+        <p className={style({ font: 'detail' })}>
+          Click/Enter/Space to copy the selected color. Hold Shift to toggle
+          hex/oklch.
+        </p>
+      </div>
     </div>
   );
 }

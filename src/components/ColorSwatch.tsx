@@ -9,12 +9,14 @@ interface ColorSwatchProps {
   oklch: Oklch;
   setSelectedColor: (color: Oklch | undefined) => void;
   autoFocus?: boolean;
+  ref?: React.Ref<HTMLButtonElement>;
 }
 
 export default function ColorSwatch({
   oklch,
   setSelectedColor,
   autoFocus,
+  ref,
 }: ColorSwatchProps) {
   const [copied, setCopied] = useState(false);
 
@@ -36,6 +38,7 @@ export default function ColorSwatch({
 
   return (
     <button
+      ref={ref}
       className={classes.container}
       style={{
         backgroundColor: `oklch(${oklch.l} ${oklch.c} ${oklch.h})`,
