@@ -60,8 +60,6 @@ function generateTintsAndShades(baseColor: string, steps: number) {
   return {
     base: {
       oklch: converter('oklch')(baseColor),
-      hex: formatHex(converter('rgb')(baseColor)),
-      hsl: converter('hsl')(baseColor),
     },
     tints: generateScale(steps, true),
     shades: generateScale(steps, false).reverse(),
@@ -146,29 +144,38 @@ interface ResultsProps {
 }
 
 function formatAsCSS(result: Result): string {
-  let css = ':root {\n';
+  let cssOklch = '/* OKLCH Colors */\n:root {\n';
+  let cssHex = '/* HEX Colors */\n:root {\n';
 
   // Shades
-  css += '  /* Shades */\n';
+  cssOklch += '  /* Shades */\n';
+  cssHex += '  /* Shades */\n';
   result.shades.forEach((shade, i) => {
     const { l, c, h } = shade.oklch;
-    css += `  --shade-${result.shades.length - i}: oklch(${l.toFixed(6)} ${c.toFixed(6)} ${h?.toFixed(4) ?? h});\n`;
+    const shadeNum = result.shades.length - i;
+    cssOklch += `  --shade-${shadeNum}: oklch(${l.toFixed(6)} ${c.toFixed(6)} ${h?.toFixed(4) ?? h});\n`;
+    cssHex += `  --shade-${shadeNum}: ${formatHex(shade.oklch)};\n`;
   });
 
   // Base Color
-  css += '\n  /* Base Color */\n';
+  cssOklch += '\n  /* Base Color */\n';
+  cssHex += '\n  /* Base Color */\n';
   const { l, c, h } = result.base.oklch!;
-  css += `  --base-color: oklch(${l.toFixed(6)} ${c.toFixed(6)} ${h?.toFixed(4) ?? h});\n`;
+  cssOklch += `  --base-color: oklch(${l.toFixed(6)} ${c.toFixed(6)} ${h?.toFixed(4) ?? h});\n`;
+  cssHex += `  --base-color: ${formatHex(result.base.oklch!)};\n`;
 
   // Tints
-  css += '\n  /* Tints */\n';
+  cssOklch += '\n  /* Tints */\n';
+  cssHex += '\n  /* Tints */\n';
   result.tints.forEach((tint, i) => {
     const { l: tl, c: tc, h: th } = tint.oklch;
-    css += `  --tint-${i + 1}: oklch(${tl.toFixed(6)} ${tc.toFixed(6)} ${th?.toFixed(4) ?? th});\n`;
+    cssOklch += `  --tint-${i + 1}: oklch(${tl.toFixed(6)} ${tc.toFixed(6)} ${th?.toFixed(4) ?? th});\n`;
+    cssHex += `  --tint-${i + 1}: ${formatHex(tint.oklch)};\n`;
   });
 
-  css += '}\n';
-  return css;
+  cssOklch += '}\n';
+  cssHex += '}\n';
+  return cssOklch + '\n' + cssHex;
 }
 
 function Results({ result }: ResultsProps) {
