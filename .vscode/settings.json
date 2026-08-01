@@ -5,6 +5,7 @@
     "source.sortMembers": "explicit"
   },
   "js/ts.preferences.importModuleSpecifier": "shortest",
+  "js/ts.tsdk.path": "./node_modules/typescript",
   "snyk.advanced.autoSelectOrganization": false,
   "editor.formatOnSave": true
 }
