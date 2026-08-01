@@ -1,0 +1,10 @@
+{
+  "version": 1,
+  "skills": {
+    "react-spectrum-s2": {
+      "source": "react-spectrum.adobe.com",
+      "sourceType": "well-known",
+      "computedHash": "6189ff30aa06ceb35c5b57e8abe51ce04b090849e65b7a008888be7439b9533b"
+    }
+  }
+}
