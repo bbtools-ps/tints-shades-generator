@@ -8,7 +8,7 @@
     "react/rules-of-hooks": "error",
     "typescript/consistent-type-imports": "error",
     "typescript/no-explicit-any": "error",
-    "react/only-export-components": ["warn", { "allowConstantExport": true }],
-    "react/react-compiler": "error"
-  }
+    "react/only-export-components": ["warn", { "allowConstantExport": true }]
+  },
+  "categories": { "correctness": "error" }
 }
