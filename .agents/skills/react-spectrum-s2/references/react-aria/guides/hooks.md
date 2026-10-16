@@ -19,13 +19,17 @@ Hooks and components share the same foundations: both follow the same [ARIA patt
 To build a component entirely from scratch, call the hook to get the DOM props for each element, create state with the matching React Stately hook where one is needed, and spread the returned props onto your own elements. You own the rendering and styling.
 
 ```tsx
-import {useButton} from 'react-aria/useButton';
-import {useRef} from 'react';
+import { useButton } from "react-aria/useButton";
+import { useRef } from "react";
 
 function Button(props) {
   let ref = useRef(null);
-  let {buttonProps} = useButton(props, ref);
-  return <button {...buttonProps} ref={ref}>{props.children}</button>;
+  let { buttonProps } = useButton(props, ref);
+  return (
+    <button {...buttonProps} ref={ref}>
+      {props.children}
+    </button>
+  );
 }
 ```
 
@@ -46,19 +50,24 @@ Each React Aria component exports a corresponding [context](customization.md#con
 This example shows how a custom checkbox can consume `CheckboxContext` so it receives props from parent React Aria Components.
 
 ```tsx
-import {CheckboxContext, type CheckboxProps} from 'react-aria-components/Checkbox';
-import {useContextProps} from 'react-aria-components/slots';
-import {useToggleState} from 'react-stately/useToggleState';
-import {useCheckbox} from 'react-aria/useCheckbox';
+import {
+  CheckboxContext,
+  type CheckboxProps,
+} from "react-aria-components/Checkbox";
+import { useContextProps } from "react-aria-components/slots";
+import { useToggleState } from "react-stately/useToggleState";
+import { useCheckbox } from "react-aria/useCheckbox";
 
-const MyCheckbox = React.forwardRef((props: CheckboxProps, ref: React.ForwardedRef<HTMLInputElement>) => {
-  // Merge the local props and ref with the ones provided via context.
-  let [mergedProps, mergedRef] = useContextProps(props, ref, CheckboxContext);
+const MyCheckbox = React.forwardRef(
+  (props: CheckboxProps, ref: React.ForwardedRef<HTMLInputElement>) => {
+    // Merge the local props and ref with the ones provided via context.
+    let [mergedProps, mergedRef] = useContextProps(props, ref, CheckboxContext);
 
-  let state = useToggleState(mergedProps);
-  let {inputProps} = useCheckbox(mergedProps, state, mergedRef);
-  return <input {...inputProps} ref={mergedRef} />;
-});
+    let state = useToggleState(mergedProps);
+    let { inputProps } = useCheckbox(mergedProps, state, mergedRef);
+    return <input {...inputProps} ref={mergedRef} />;
+  }
+);
 ```
 
 Since `MyCheckbox` consumes from `CheckboxContext`, it can replace the built-in `Checkbox` within a [Table](Table.md) or [GridList](GridList.md) without rewriting the rest of the pattern.
@@ -81,26 +90,26 @@ You can also provide values for React Aria Components from a Hook-based implemen
 This example follows the [useNumberField](NumberField/useNumberField.md) docs, then uses [Provider](customization.md#provider) to send values returned by the hook to each child through its corresponding context.
 
 ```tsx
-import type {NumberFieldProps} from 'react-aria-components/NumberField';
-import {Provider} from 'react-aria-components/slots';
-import {GroupContext} from 'react-aria-components/Group';
-import {InputContext} from 'react-aria-components/Input';
-import {LabelContext} from 'react-aria-components/Label';
-import {ButtonContext} from 'react-aria-components/Button';
-import {useNumberFieldState} from 'react-stately/useNumberFieldState';
-import {useNumberField} from 'react-aria/useNumberField';
-import {useLocale} from 'react-aria/I18nProvider';
+import type { NumberFieldProps } from "react-aria-components/NumberField";
+import { Provider } from "react-aria-components/slots";
+import { GroupContext } from "react-aria-components/Group";
+import { InputContext } from "react-aria-components/Input";
+import { LabelContext } from "react-aria-components/Label";
+import { ButtonContext } from "react-aria-components/Button";
+import { useNumberFieldState } from "react-stately/useNumberFieldState";
+import { useNumberField } from "react-aria/useNumberField";
+import { useLocale } from "react-aria/I18nProvider";
 
 function CustomNumberField(props: NumberFieldProps) {
-  let {locale} = useLocale();
-  let state = useNumberFieldState({...props, locale});
+  let { locale } = useLocale();
+  let state = useNumberFieldState({ ...props, locale });
   let ref = useRef<HTMLInputElement>(null);
   let {
     labelProps,
     groupProps,
     inputProps,
     incrementButtonProps,
-    decrementButtonProps
+    decrementButtonProps,
   } = useNumberField(props, state, ref);
 
   return (
@@ -108,15 +117,19 @@ function CustomNumberField(props: NumberFieldProps) {
     <Provider
       values={[
         [GroupContext, groupProps],
-        [InputContext, {...inputProps, ref}],
+        [InputContext, { ...inputProps, ref }],
         [LabelContext, labelProps],
-        [ButtonContext, {
-          slots: {
-            increment: incrementButtonProps,
-            decrement: decrementButtonProps
-          }
-        }]
-      ]}>
+        [
+          ButtonContext,
+          {
+            slots: {
+              increment: incrementButtonProps,
+              decrement: decrementButtonProps,
+            },
+          },
+        ],
+      ]}
+    >
       {props.children}
     </Provider>
     /*- end highlight -*/
@@ -142,7 +155,7 @@ Because `CustomNumberField` provides values for `Group`, `Input`, `Label`, and `
 To support the [render props](styling.md#render-props) API in a fully custom component, use `useRenderProps`. It resolves the `className`, `style`, and `children` props against the `values` you provide, and returns the computed values to spread onto your element.
 
 ```tsx
-import {useRenderProps} from 'react-aria-components';
+import { useRenderProps } from "react-aria-components";
 
 function MyComponent(props) {
   /*- begin highlight -*/
@@ -150,8 +163,8 @@ function MyComponent(props) {
     className: props.className,
     style: props.style,
     children: props.children,
-    defaultClassName: 'my-component',
-    values: {isSelected: props.isSelected}
+    defaultClassName: "my-component",
+    values: { isSelected: props.isSelected },
   });
   /*- end highlight -*/
 
@@ -171,18 +184,18 @@ The `values` object is passed to each render props function, so consumers of `My
 
 `useRenderProps(props: RenderPropsHookOptions<T, E>): RenderPropsHookRetVal<T, E>`
 
-| Name | Type | Description |
-|------|------|-------------|
-| `values` \* | `T` | — |
-| `aria-describedby` | `string | undefined` | Identifies the element (or elements) that describes the object. |
-| `aria-details` | `string | undefined` | Identifies the element (or elements) that provide a detailed, extended description for the object. |
-| `aria-label` | `string | undefined` | Defines a string value that labels the current element. |
-| `aria-labelledby` | `string | undefined` | Identifies the element (or elements) that labels the current element. |
-| `children` | `ChildrenOrFunction<T>` | The children of the component. A function may be provided to alter the children based on component state. |
-| `className` | `ClassNameOrFunction<T> | undefined` | The CSS [className](https://developer.mozilla.org/en-US/docs/Web/API/Element/className) for the element. A function may be provided to compute the class based on component state. |
-| `defaultChildren` | `React.ReactNode` | — |
-| `defaultClassName` | `string | undefined` | — |
-| `defaultStyle` | `React.CSSProperties | undefined` | — |
-| `id` | `string | undefined` | The element's unique identifier. See [MDN](https://developer.mozilla.org/en-US/docs/Web/HTML/Global_attributes/id). |
-| `render` | `DOMRenderFunction<E, T> | undefined` | Overrides the default DOM element with a custom render function. This allows rendering existing components with built-in styles and behaviors such as router links, animation libraries, and pre-styled components. Requirements: - You must render the expected element type (e.g. if `<button>` is expected, you cannot render an   `<a>`). - Only a single root DOM element can be rendered (no fragments). - You must pass through props and ref to the underlying DOM element, merging with your own prop   as appropriate. |
-| `style` | `StyleOrFunction<T> | undefined` | The inline [style](https://developer.mozilla.org/en-US/docs/Web/API/HTMLElement/style) for the element. A function may be provided to compute the style based on component state. |
+| Name               | Type                     | Description                                                                                               |
+| ------------------ | ------------------------ | --------------------------------------------------------------------------------------------------------- |
+| `values` \*        | `T`                      | —                                                                                                         |
+| `aria-describedby` | `string                  | undefined`                                                                                                | Identifies the element (or elements) that describes the object.                                                                                                                                                                                                                                                                                                                                                                                                                                                              |
+| `aria-details`     | `string                  | undefined`                                                                                                | Identifies the element (or elements) that provide a detailed, extended description for the object.                                                                                                                                                                                                                                                                                                                                                                                                                           |
+| `aria-label`       | `string                  | undefined`                                                                                                | Defines a string value that labels the current element.                                                                                                                                                                                                                                                                                                                                                                                                                                                                      |
+| `aria-labelledby`  | `string                  | undefined`                                                                                                | Identifies the element (or elements) that labels the current element.                                                                                                                                                                                                                                                                                                                                                                                                                                                        |
+| `children`         | `ChildrenOrFunction<T>`  | The children of the component. A function may be provided to alter the children based on component state. |
+| `className`        | `ClassNameOrFunction<T>  | undefined`                                                                                                | The CSS [className](https://developer.mozilla.org/en-US/docs/Web/API/Element/className) for the element. A function may be provided to compute the class based on component state.                                                                                                                                                                                                                                                                                                                                           |
+| `defaultChildren`  | `React.ReactNode`        | —                                                                                                         |
+| `defaultClassName` | `string                  | undefined`                                                                                                | —                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                            |
+| `defaultStyle`     | `React.CSSProperties     | undefined`                                                                                                | —                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                            |
+| `id`               | `string                  | undefined`                                                                                                | The element's unique identifier. See [MDN](https://developer.mozilla.org/en-US/docs/Web/HTML/Global_attributes/id).                                                                                                                                                                                                                                                                                                                                                                                                          |
+| `render`           | `DOMRenderFunction<E, T> | undefined`                                                                                                | Overrides the default DOM element with a custom render function. This allows rendering existing components with built-in styles and behaviors such as router links, animation libraries, and pre-styled components. Requirements: - You must render the expected element type (e.g. if `<button>` is expected, you cannot render an `<a>`). - Only a single root DOM element can be rendered (no fragments). - You must pass through props and ref to the underlying DOM element, merging with your own prop as appropriate. |
+| `style`            | `StyleOrFunction<T>      | undefined`                                                                                                | The inline [style](https://developer.mozilla.org/en-US/docs/Web/API/HTMLElement/style) for the element. A function may be provided to compute the style based on component state.                                                                                                                                                                                                                                                                                                                                            |

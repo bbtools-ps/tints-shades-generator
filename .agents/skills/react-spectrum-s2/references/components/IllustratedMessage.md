@@ -4,9 +4,13 @@ An IllustratedMessage displays an illustration and a message, usually
 for an empty state or an error page.
 
 ```tsx
-import {IllustratedMessage, Heading, Content} from '@react-spectrum/s2/IllustratedMessage';
-import {ButtonGroup, Button} from '@react-spectrum/s2/ButtonGroup';
-import Image from '@react-spectrum/s2/illustrations/gradient/generic1/Image';
+import {
+  IllustratedMessage,
+  Heading,
+  Content,
+} from "@react-spectrum/s2/IllustratedMessage";
+import { ButtonGroup, Button } from "@react-spectrum/s2/ButtonGroup";
+import Image from "@react-spectrum/s2/illustrations/gradient/generic1/Image";
 
 <IllustratedMessage>
   <Image />
@@ -16,7 +20,7 @@ import Image from '@react-spectrum/s2/illustrations/gradient/generic1/Image';
     <Button variant="secondary">Import</Button>
     <Button variant="accent">Upload</Button>
   </ButtonGroup>
-</IllustratedMessage>
+</IllustratedMessage>;
 ```
 
 ## API

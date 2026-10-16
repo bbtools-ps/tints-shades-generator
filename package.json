@@ -1,19 +1,21 @@
 {
   "name": "tints-shades-generator",
-  "private": true,
   "version": "1.0.0",
+  "private": true,
   "type": "module",
   "scripts": {
-    "dev": "vite",
-    "build": "tsc -b && vite build",
-    "preview": "vite preview",
+    "dev": "vp dev",
+    "build": "tsc -b && vp build",
+    "preview": "vp preview",
     "typecheck": "tsc --noEmit",
-    "lint": "oxlint",
-    "format": "oxfmt"
+    "lint": "vp lint",
+    "format": "vp fmt",
+    "prepare": "vp config"
   },
   "dependencies": {
     "@react-spectrum/s2": "^1.0.0",
     "culori": "^4.0.2",
+    "dayjs": "^1.11.23",
     "react": "^19.2.0",
     "react-dom": "^19.2.0"
   },
@@ -26,10 +28,9 @@
     "@vitejs/plugin-react": "^6.0.1",
     "babel-plugin-react-compiler": "^1.0.0",
     "lightningcss": "^1.30.2",
-    "oxfmt": "^0.60.0",
-    "oxlint": "^1.83.0",
     "typescript": "~7.0.2",
     "unplugin-parcel-macros": "^0.1.1",
-    "vite": "^8.0.2"
+    "vite": "catalog:",
+    "vite-plus": "catalog:"
   }
 }

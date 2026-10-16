@@ -2,7 +2,8 @@
   "editor.codeActionsOnSave": {
     "source.fixAll": "explicit",
     "source.organizeImports": "explicit",
-    "source.sortMembers": "explicit"
+    "source.sortMembers": "explicit",
+    "source.fixAll.oxc": "explicit"
   },
   "js/ts.preferences.importModuleSpecifier": "shortest",
   "js/ts.tsdk.path": "./node_modules/typescript",
@@ -26,5 +27,8 @@
   },
   "[jsonc]": {
     "editor.defaultFormatter": "oxc.oxc-vscode"
-  }
+  },
+  "oxc.disableNestedConfig": true,
+  "oxc.fmt.disableNestedConfig": true,
+  "editor.formatOnSaveMode": "file"
 }

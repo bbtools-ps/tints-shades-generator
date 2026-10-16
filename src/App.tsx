@@ -10,29 +10,30 @@ import {
   Picker,
   PickerItem,
   TextField,
-} from '@react-spectrum/s2';
-import ExportTo from '@react-spectrum/s2/icons/ExportTo';
-import { style } from '@react-spectrum/s2/style' with { type: 'macro' };
-import { converter, formatHex, parse, type Oklch } from 'culori';
-import { useEffect, useRef, useState } from 'react';
-import ColorSwatch from './components/ColorSwatch';
+} from "@react-spectrum/s2";
+import ExportTo from "@react-spectrum/s2/icons/ExportTo";
+import { style } from "@react-spectrum/s2/style" with { type: "macro" };
+import { converter, formatHex, parse, type Oklch } from "culori";
+import dayjs from "dayjs";
+import { useEffect, useRef, useState } from "react";
+import ColorSwatch from "./components/ColorSwatch";
 
 const STEPS = [
-  { id: 1, name: '1' },
-  { id: 2, name: '2' },
-  { id: 3, name: '3' },
-  { id: 4, name: '4' },
-  { id: 5, name: '5' },
+  { id: 1, name: "1" },
+  { id: 2, name: "2" },
+  { id: 3, name: "3" },
+  { id: 4, name: "4" },
+  { id: 5, name: "5" },
 ];
 const DEFAULT_STEPS = 5;
-const DEFAULT_BASE_COLOR = '#ad0770';
+const DEFAULT_BASE_COLOR = "#ad0770";
 
 function generateTintsAndShades(baseColor: string, steps: number) {
   const parsedColor = parse(baseColor);
-  const oklchColor = converter('oklch')(parsedColor);
+  const oklchColor = converter("oklch")(parsedColor);
 
   if (!oklchColor) {
-    throw new Error('Invalid color');
+    throw new Error("Invalid color");
   }
 
   const { l, c, h } = oklchColor;
@@ -44,7 +45,7 @@ function generateTintsAndShades(baseColor: string, steps: number) {
       const newC = c * (1 - factor * factor);
 
       const colorObj = {
-        mode: 'oklch' as const,
+        mode: "oklch" as const,
         l: newL,
         c: newC,
         h: h,
@@ -59,7 +60,7 @@ function generateTintsAndShades(baseColor: string, steps: number) {
 
   return {
     base: {
-      oklch: converter('oklch')(baseColor),
+      oklch: converter("oklch")(baseColor),
     },
     tints: generateScale(steps, true),
     shades: generateScale(steps, false).reverse(),
@@ -76,8 +77,8 @@ export default function App() {
   const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     const formData = new FormData(e.currentTarget);
-    const color = formData.get('baseColor') as string;
-    const steps = formData.get('steps') as string;
+    const color = formData.get("baseColor") as string;
+    const steps = formData.get("steps") as string;
 
     setResult(generateTintsAndShades(color, parseInt(steps)));
   };
@@ -87,17 +88,17 @@ export default function App() {
       <main
         className={style({
           flexGrow: 1,
-          width: 'full',
-          display: 'flex',
-          alignItems: 'center',
-          flexDirection: 'column',
-          gap: 'text-to-control',
+          width: "full",
+          display: "flex",
+          alignItems: "center",
+          flexDirection: "column",
+          gap: "text-to-control",
         })}
       >
-        <h1 className={style({ font: 'heading-2xl' })}>
+        <h1 className={style({ font: "heading-2xl" })}>
           Tints & Shades Generator
         </h1>
-        <p className={style({ font: 'body' })}>
+        <p className={style({ font: "body" })}>
           Create tints and shades from a base color using OKLCH color space.
         </p>
         <Form onSubmit={handleSubmit}>
@@ -106,7 +107,7 @@ export default function App() {
             label="Base Color"
             errorMessage="Please enter a valid base color"
             placeholder="Enter hex, rgb, hsl, oklch..."
-            validate={(value) => (parse(value) ? null : 'Invalid color')}
+            validate={(value) => (parse(value) ? null : "Invalid color")}
             defaultValue={DEFAULT_BASE_COLOR}
           />
           <Picker
@@ -117,7 +118,7 @@ export default function App() {
           >
             {(item) => <PickerItem>{item.name}</PickerItem>}
           </Picker>
-          <div className={style({ margin: 'auto' })}>
+          <div className={style({ margin: "auto" })}>
             <Button type="submit" size="L">
               Generate
             </Button>
@@ -125,11 +126,11 @@ export default function App() {
         </Form>
         {result && <Results key={JSON.stringify(result)} result={result} />}
       </main>
-      <footer className={style({ margin: 'text-to-control', font: 'body' })}>
+      <footer className={style({ margin: "text-to-control", font: "body" })}>
         <p>
           <span
-            className={style({ marginEnd: 'text-to-visual' })}
-          >{`© ${new Date().getFullYear()}.`}</span>
+            className={style({ marginEnd: "text-to-visual" })}
+          >{`© ${dayjs().year()}.`}</span>
           <Link href="https://bogdan-bogdanovic.com/" rel="noopener noreferrer">
             Bogdan Bogdanovic
           </Link>
@@ -144,12 +145,12 @@ interface ResultsProps {
 }
 
 function formatAsCSS(result: Result): string {
-  let cssOklch = '/* OKLCH Colors */\n:root {\n';
-  let cssHex = '/* HEX Colors */\n:root {\n';
+  let cssOklch = "/* OKLCH Colors */\n:root {\n";
+  let cssHex = "/* HEX Colors */\n:root {\n";
 
   // Shades
-  cssOklch += '  /* Shades */\n';
-  cssHex += '  /* Shades */\n';
+  cssOklch += "  /* Shades */\n";
+  cssHex += "  /* Shades */\n";
   result.shades.forEach((shade, i) => {
     const { l, c, h } = shade.oklch;
     const shadeNum = result.shades.length - i;
@@ -158,24 +159,24 @@ function formatAsCSS(result: Result): string {
   });
 
   // Base Color
-  cssOklch += '\n  /* Base Color */\n';
-  cssHex += '\n  /* Base Color */\n';
+  cssOklch += "\n  /* Base Color */\n";
+  cssHex += "\n  /* Base Color */\n";
   const { l, c, h } = result.base.oklch!;
   cssOklch += `  --base-color: oklch(${l.toFixed(6)} ${c.toFixed(6)} ${h?.toFixed(4) ?? h});\n`;
   cssHex += `  --base-color: ${formatHex(result.base.oklch!)};\n`;
 
   // Tints
-  cssOklch += '\n  /* Tints */\n';
-  cssHex += '\n  /* Tints */\n';
+  cssOklch += "\n  /* Tints */\n";
+  cssHex += "\n  /* Tints */\n";
   result.tints.forEach((tint, i) => {
     const { l: tl, c: tc, h: th } = tint.oklch;
     cssOklch += `  --tint-${i + 1}: oklch(${tl.toFixed(6)} ${tc.toFixed(6)} ${th?.toFixed(4) ?? th});\n`;
     cssHex += `  --tint-${i + 1}: ${formatHex(tint.oklch)};\n`;
   });
 
-  cssOklch += '}\n';
-  cssHex += '}\n';
-  return cssOklch + '\n' + cssHex;
+  cssOklch += "}\n";
+  cssHex += "}\n";
+  return cssOklch + "\n" + cssHex;
 }
 
 function Results({ result }: ResultsProps) {
@@ -191,14 +192,14 @@ function Results({ result }: ResultsProps) {
     if (!swatchesRef) return;
 
     const allSwatches = Array.from(
-      swatchesRef.querySelectorAll('button')
+      swatchesRef.querySelectorAll("button")
     ) as HTMLButtonElement[];
 
     const handleKeyDown = (e: KeyboardEvent) => {
       setIsShiftPressed(e.shiftKey);
 
       // Handle arrow key navigation
-      if (e.key === 'ArrowLeft' || e.key === 'ArrowRight') {
+      if (e.key === "ArrowLeft" || e.key === "ArrowRight") {
         e.preventDefault();
 
         const focusedElement = document.activeElement;
@@ -210,7 +211,7 @@ function Results({ result }: ResultsProps) {
 
         let nextIndex: number;
 
-        if (e.key === 'ArrowLeft') {
+        if (e.key === "ArrowLeft") {
           // Move to previous swatch (wrap to end if at start)
           nextIndex =
             currentIndex === 0 ? allSwatches.length - 1 : currentIndex - 1;
@@ -228,26 +229,26 @@ function Results({ result }: ResultsProps) {
       setIsShiftPressed(e.shiftKey);
     };
 
-    swatchesRef.addEventListener('keydown', handleKeyDown);
-    swatchesRef.addEventListener('keyup', handleKeyUp);
+    swatchesRef.addEventListener("keydown", handleKeyDown);
+    swatchesRef.addEventListener("keyup", handleKeyUp);
 
     return () => {
-      swatchesRef.removeEventListener('keydown', handleKeyDown);
-      swatchesRef.removeEventListener('keyup', handleKeyUp);
+      swatchesRef.removeEventListener("keydown", handleKeyDown);
+      swatchesRef.removeEventListener("keyup", handleKeyUp);
     };
   }, []);
 
   return (
     <div
       className={style({
-        display: 'flex',
-        flexDirection: 'column',
-        justifyContent: 'center',
-        alignItems: 'center',
-        margin: 'text-to-control',
+        display: "flex",
+        flexDirection: "column",
+        justifyContent: "center",
+        alignItems: "center",
+        margin: "text-to-control",
       })}
     >
-      <div className={style({ alignSelf: 'end' })}>
+      <div className={style({ alignSelf: "end" })}>
         <DialogTrigger>
           <ActionButton aria-label="Export palette">
             <ExportTo />
@@ -259,36 +260,36 @@ function Results({ result }: ResultsProps) {
       <div
         ref={swatches}
         className={style({
-          display: 'flex',
-          marginBottom: 'text-to-control',
-          alignItems: 'center',
-          justifyContent: 'center',
-          flexWrap: 'wrap',
+          display: "flex",
+          marginBottom: "text-to-control",
+          alignItems: "center",
+          justifyContent: "center",
+          flexWrap: "wrap",
         })}
       >
         {/* Shades Section */}
         <div
           className={style({
-            display: 'flex',
-            flexDirection: 'column',
-            alignItems: 'center',
-            margin: 'text-to-control',
+            display: "flex",
+            flexDirection: "column",
+            alignItems: "center",
+            margin: "text-to-control",
           })}
         >
           <h2
             className={style({
-              font: 'body-sm',
-              margin: 'unset',
-              fontWeight: 'bold',
-              color: 'gray-700',
+              font: "body-sm",
+              margin: "unset",
+              fontWeight: "bold",
+              color: "gray-700",
             })}
           >
             Shades
           </h2>
           <div
             className={style({
-              display: 'flex',
-              gap: 'text-to-control',
+              display: "flex",
+              gap: "text-to-control",
             })}
           >
             {result.shades.map((shade, i) => (
@@ -304,18 +305,18 @@ function Results({ result }: ResultsProps) {
         {/* Base Color Section */}
         <div
           className={style({
-            display: 'flex',
-            flexDirection: 'column',
-            alignItems: 'center',
-            margin: 'text-to-control',
+            display: "flex",
+            flexDirection: "column",
+            alignItems: "center",
+            margin: "text-to-control",
           })}
         >
           <h2
             className={style({
-              font: 'body-sm',
-              margin: 'unset',
-              fontWeight: 'bold',
-              color: 'gray-700',
+              font: "body-sm",
+              margin: "unset",
+              fontWeight: "bold",
+              color: "gray-700",
             })}
           >
             Base Color
@@ -330,26 +331,26 @@ function Results({ result }: ResultsProps) {
         {/* Tints Section */}
         <div
           className={style({
-            display: 'flex',
-            flexDirection: 'column',
-            alignItems: 'center',
-            margin: 'text-to-control',
+            display: "flex",
+            flexDirection: "column",
+            alignItems: "center",
+            margin: "text-to-control",
           })}
         >
           <h2
             className={style({
-              font: 'body-sm',
-              margin: 'unset',
-              fontWeight: 'bold',
-              color: 'gray-700',
+              font: "body-sm",
+              margin: "unset",
+              fontWeight: "bold",
+              color: "gray-700",
             })}
           >
             Tints
           </h2>
           <div
             className={style({
-              display: 'flex',
-              gap: 'text-to-control',
+              display: "flex",
+              gap: "text-to-control",
             })}
           >
             {result.tints.map((tint, i) => (
@@ -365,18 +366,18 @@ function Results({ result }: ResultsProps) {
       {selectedColor && (
         <div
           className={style({
-            font: 'body',
-            display: 'flex',
-            flexDirection: 'column',
-            gap: 'text-to-visual',
-            textAlign: 'start',
+            font: "body",
+            display: "flex",
+            flexDirection: "column",
+            gap: "text-to-visual",
+            textAlign: "start",
           })}
         >
           <p
             className={style({
-              display: 'flex',
-              alignItems: 'center',
-              gap: 'text-to-visual',
+              display: "flex",
+              alignItems: "center",
+              gap: "text-to-visual",
             })}
           >
             <strong>Selected Color:</strong>
@@ -389,10 +390,10 @@ function Results({ result }: ResultsProps) {
         </div>
       )}
       <div>
-        <p className={style({ font: 'detail', marginBottom: 'unset' })}>
+        <p className={style({ font: "detail", marginBottom: "unset" })}>
           Use keyboard left/right arrows to navigate between swatches.
         </p>
-        <p className={style({ font: 'detail' })}>
+        <p className={style({ font: "detail" })}>
           Click/Enter/Space to copy the selected color. Hold Shift to toggle
           hex/oklch.
         </p>
@@ -415,17 +416,17 @@ function ExportDialog({ result }: ResultsProps) {
     <CustomDialog>
       <div
         className={style({
-          display: 'flex',
-          flexDirection: 'column',
+          display: "flex",
+          flexDirection: "column",
           rowGap: 8,
-          alignItems: 'center',
+          alignItems: "center",
         })}
       >
         <Heading
           slot="title"
           styles={style({
-            font: 'heading-lg',
-            textAlign: 'center',
+            font: "heading-lg",
+            textAlign: "center",
             marginY: 0,
           })}
         >
@@ -433,27 +434,27 @@ function ExportDialog({ result }: ResultsProps) {
         </Heading>
         <pre
           className={style({
-            font: 'code',
-            backgroundColor: 'ButtonFace',
-            padding: 'text-to-visual',
-            borderRadius: 'default',
-            overflow: 'auto',
-            width: 'full',
+            font: "code",
+            backgroundColor: "ButtonFace",
+            padding: "text-to-visual",
+            borderRadius: "default",
+            overflow: "auto",
+            width: "full",
             margin: 0,
-            textAlign: 'start',
+            textAlign: "start",
           })}
         >
           {css}
         </pre>
         <CloseButton
           styles={style({
-            position: 'absolute',
+            position: "absolute",
             top: 12,
             insetEnd: 12,
           })}
         />
         <ActionButton onPress={handleCopy}>
-          {isCopied ? 'Copied!' : 'Copy to Clipboard'}
+          {isCopied ? "Copied!" : "Copy to Clipboard"}
         </ActionButton>
       </div>
     </CustomDialog>

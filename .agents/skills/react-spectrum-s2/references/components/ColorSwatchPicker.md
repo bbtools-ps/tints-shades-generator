@@ -3,7 +3,10 @@
 A ColorSwatchPicker displays a list of color swatches and allows a user to select one of them.
 
 ```tsx
-import {ColorSwatchPicker, ColorSwatch} from '@react-spectrum/s2/ColorSwatchPicker';
+import {
+  ColorSwatchPicker,
+  ColorSwatch,
+} from "@react-spectrum/s2/ColorSwatchPicker";
 
 <ColorSwatchPicker>
   <ColorSwatch color="#f00" />
@@ -12,26 +15,30 @@ import {ColorSwatchPicker, ColorSwatch} from '@react-spectrum/s2/ColorSwatchPick
   <ColorSwatch color="#ff0" />
   <ColorSwatch color="#f0f" />
   <ColorSwatch color="#0ff" />
-</ColorSwatchPicker>
+</ColorSwatchPicker>;
 ```
 
 ## Value
 
-Use the `value` or `defaultValue` prop to set the selected color, and `onChange` to handle selection changes.  The value may be a string or `Color` object, parsed using the `parseColor` function.
+Use the `value` or `defaultValue` prop to set the selected color, and `onChange` to handle selection changes. The value may be a string or `Color` object, parsed using the `parseColor` function.
 
 ```tsx
-import {ColorSwatchPicker, ColorSwatch, parseColor} from '@react-spectrum/s2/ColorSwatchPicker';
-import {style} from '@react-spectrum/s2/style' with {type: 'macro'};
-import {useState} from 'react';
+import {
+  ColorSwatchPicker,
+  ColorSwatch,
+  parseColor,
+} from "@react-spectrum/s2/ColorSwatchPicker";
+import { style } from "@react-spectrum/s2/style" with { type: "macro" };
+import { useState } from "react";
 
 function Example() {
-  let [value, setValue] = useState(parseColor('#e11d48'));
+  let [value, setValue] = useState(parseColor("#e11d48"));
 
   return (
     <>
       {/*- begin highlight -*/}
       <ColorSwatchPicker value={value} onChange={setValue}>
-      {/*- end highlight -*/}
+        {/*- end highlight -*/}
         <ColorSwatch color="#e11d48" />
         <ColorSwatch color="#f97316" />
         <ColorSwatch color="#eab308" />
@@ -40,7 +47,9 @@ function Example() {
         <ColorSwatch color="#8b5cf6" />
         <ColorSwatch color="#ec4899" />
       </ColorSwatchPicker>
-      <pre className={style({font: 'body'})}>Selected color: {value.toString('rgb')}</pre>
+      <pre className={style({ font: "body" })}>
+        Selected color: {value.toString("rgb")}
+      </pre>
     </>
   );
 }
@@ -61,19 +70,19 @@ function Example() {
 
 ### ColorSwatchPicker
 
-| Name | Type | Default | Description |
-|------|------|---------|-------------|
-| `children` | `ReactNode` | — | The ColorSwatches within the ColorSwatchPicker. |
-| `defaultValue` | `string | Color | undefined` | — | The default value (uncontrolled). |
-| `density` | `"compact" | "regular" | "spacious" | undefined` | 'regular' | The amount of padding between the swatches. |
-| `onChange` | `((value: Color) => void) | undefined` | — | Handler that is called when the value changes. |
-| `rounding` | `"default" | "full" | "none" | undefined` | 'none' | The corner rounding of the color swatches. |
-| `size` | `"L" | "M" | "S" | "XS" | undefined` | 'M' | The size of the color swatches. |
-| `slot` | `string | null | undefined` | — | A slot name for the component. Slots allow the component to receive props from a parent component. An explicit `null` value indicates that the local props completely override all props received from a parent. |
-| `styles` | `StylesProp | undefined` | — | Spectrum-defined styles, returned by the `style()` macro. |
-| `UNSAFE_className` | `UnsafeClassName | undefined` | — | Sets the CSS [className](https://developer.mozilla.org/en-US/docs/Web/API/Element/className) for the element. Only use as a **last resort**. Use the `style` macro via the `styles` prop instead. |
-| `UNSAFE_style` | `CSSProperties | undefined` | — | Sets inline [style](https://developer.mozilla.org/en-US/docs/Web/API/HTMLElement/style) for the element. Only use as a **last resort**. Use the `style` macro via the `styles` prop instead. |
-| `value` | `string | Color | undefined` | — | The current value (controlled). |
+| Name               | Type                      | Default    | Description                                     |
+| ------------------ | ------------------------- | ---------- | ----------------------------------------------- |
+| `children`         | `ReactNode`               | —          | The ColorSwatches within the ColorSwatchPicker. |
+| `defaultValue`     | `string                   | Color      | undefined`                                      | —                                                                                                                                                                                                 | The default value (uncontrolled).                                                                                                                                                                                |
+| `density`          | `"compact"                | "regular"  | "spacious"                                      | undefined`                                                                                                                                                                                        | 'regular'                                                                                                                                                                                                        | The amount of padding between the swatches. |
+| `onChange`         | `((value: Color) => void) | undefined` | —                                               | Handler that is called when the value changes.                                                                                                                                                    |
+| `rounding`         | `"default"                | "full"     | "none"                                          | undefined`                                                                                                                                                                                        | 'none'                                                                                                                                                                                                           | The corner rounding of the color swatches.  |
+| `size`             | `"L"                      | "M"        | "S"                                             | "XS"                                                                                                                                                                                              | undefined`                                                                                                                                                                                                       | 'M'                                         | The size of the color swatches. |
+| `slot`             | `string                   | null       | undefined`                                      | —                                                                                                                                                                                                 | A slot name for the component. Slots allow the component to receive props from a parent component. An explicit `null` value indicates that the local props completely override all props received from a parent. |
+| `styles`           | `StylesProp               | undefined` | —                                               | Spectrum-defined styles, returned by the `style()` macro.                                                                                                                                         |
+| `UNSAFE_className` | `UnsafeClassName          | undefined` | —                                               | Sets the CSS [className](https://developer.mozilla.org/en-US/docs/Web/API/Element/className) for the element. Only use as a **last resort**. Use the `style` macro via the `styles` prop instead. |
+| `UNSAFE_style`     | `CSSProperties            | undefined` | —                                               | Sets inline [style](https://developer.mozilla.org/en-US/docs/Web/API/HTMLElement/style) for the element. Only use as a **last resort**. Use the `style` macro via the `styles` prop instead.      |
+| `value`            | `string                   | Color      | undefined`                                      | —                                                                                                                                                                                                 | The current value (controlled).                                                                                                                                                                                  |
 
 ## Related Types
 
@@ -81,18 +90,18 @@ function Example() {
 
 `Color(props: IconProps & {size?: 'L' | 'S' | 'M'}): ReactNode`
 
-| Name | Type | Description |
-|------|------|-------------|
-| `aria-describedby` | `string | undefined` | Identifies the element (or elements) that describes the object. |
-| `aria-details` | `string | undefined` | Identifies the element (or elements) that provide a detailed, extended description for the object. |
-| `aria-hidden` | `boolean | "true" | "false" | undefined` | — |
-| `aria-label` | `string | undefined` | Defines a string value that labels the current element. |
-| `aria-labelledby` | `string | undefined` | Identifies the element (or elements) that labels the current element. |
-| `id` | `string | undefined` | The element's unique identifier. See [MDN](https://developer.mozilla.org/en-US/docs/Web/HTML/Global_attributes/id). |
-| `slot` | `string | null | undefined` | A slot name for the component. Slots allow the component to receive props from a parent component. An explicit `null` value indicates that the local props completely override all props received from a parent. |
-| `styles` | `StyleString<AllowedOverrides> | undefined` | — |
-| `UNSAFE_className` | `UnsafeClassName | undefined` | Sets the CSS [className](https://developer.mozilla.org/en-US/docs/Web/API/Element/className) for the element. Only use as a **last resort**. Use the `style` macro via the `styles` prop instead. |
-| `UNSAFE_style` | `CSSProperties | undefined` | Sets inline [style](https://developer.mozilla.org/en-US/docs/Web/API/HTMLElement/style) for the element. Only use as a **last resort**. Use the `style` macro via the `styles` prop instead. |
+| Name               | Type                           | Description |
+| ------------------ | ------------------------------ | ----------- |
+| `aria-describedby` | `string                        | undefined`  | Identifies the element (or elements) that describes the object.                                                                                                                                   |
+| `aria-details`     | `string                        | undefined`  | Identifies the element (or elements) that provide a detailed, extended description for the object.                                                                                                |
+| `aria-hidden`      | `boolean                       | "true"      | "false"                                                                                                                                                                                           | undefined`                                                                                                                                                                                                       | —   |
+| `aria-label`       | `string                        | undefined`  | Defines a string value that labels the current element.                                                                                                                                           |
+| `aria-labelledby`  | `string                        | undefined`  | Identifies the element (or elements) that labels the current element.                                                                                                                             |
+| `id`               | `string                        | undefined`  | The element's unique identifier. See [MDN](https://developer.mozilla.org/en-US/docs/Web/HTML/Global_attributes/id).                                                                               |
+| `slot`             | `string                        | null        | undefined`                                                                                                                                                                                        | A slot name for the component. Slots allow the component to receive props from a parent component. An explicit `null` value indicates that the local props completely override all props received from a parent. |
+| `styles`           | `StyleString<AllowedOverrides> | undefined`  | —                                                                                                                                                                                                 |
+| `UNSAFE_className` | `UnsafeClassName               | undefined`  | Sets the CSS [className](https://developer.mozilla.org/en-US/docs/Web/API/Element/className) for the element. Only use as a **last resort**. Use the `style` macro via the `styles` prop instead. |
+| `UNSAFE_style`     | `CSSProperties                 | undefined`  | Sets inline [style](https://developer.mozilla.org/en-US/docs/Web/API/HTMLElement/style) for the element. Only use as a **last resort**. Use the `style` macro via the `styles` prop instead.      |
 
 ### parseColor
 

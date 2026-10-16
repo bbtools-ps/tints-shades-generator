@@ -5,7 +5,7 @@ React Spectrum offers a collection of illustrations that can be imported from `@
 ```tsx
 import Cloud from "@react-spectrum/s2/illustrations/gradient/generic1/Cloud";
 
-<Cloud />
+<Cloud />;
 ```
 
 ## Available illustrations
@@ -237,7 +237,7 @@ Then, add it to your `.parcelrc`:
 Now you can import illustration SVGs using the `illustration:` [pipeline](https://parceljs.org/features/plugins/#named-pipelines):
 
 ```tsx
-import Illustration from 'illustration:./path/to/Illustration.svg';
+import Illustration from "illustration:./path/to/Illustration.svg";
 ```
 
 Note that you must use the name `illustration` for the pipeline.
@@ -253,5 +253,5 @@ npx @react-spectrum/s2-icon-builder -i 'path/to/illustrations/*.svg' --type illu
 This outputs a folder of TSX files with names corresponding to the input SVG files. You may rename them as you wish. To use them in your application, import them like normal components.
 
 ```tsx
-import Illustration from './path/to/destination/Illustration';
+import Illustration from "./path/to/destination/Illustration";
 ```

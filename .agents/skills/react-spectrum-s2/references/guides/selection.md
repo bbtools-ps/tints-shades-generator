@@ -11,12 +11,20 @@ Selection is represented by a [Set](https://developer.mozilla.org/en-US/docs/Web
 ## CardView example
 
 ```tsx
-import {CardView, AssetCard, CardPreview, Image, Content, Text, type Selection} from '@react-spectrum/s2/CardView';
-import {style} from '@react-spectrum/s2/style' with {type: 'macro'};
-import {useState} from 'react';
+import {
+  CardView,
+  AssetCard,
+  CardPreview,
+  Image,
+  Content,
+  Text,
+  type Selection,
+} from "@react-spectrum/s2/CardView";
+import { style } from "@react-spectrum/s2/style" with { type: "macro" };
+import { useState } from "react";
 
 function Example() {
-  let [selectedKeys, setSelectedKeys] = useState<Selection>(new Set(['lion']));
+  let [selectedKeys, setSelectedKeys] = useState<Selection>(new Set(["lion"]));
 
   return (
     <>
@@ -25,11 +33,15 @@ function Example() {
         selectionMode="multiple"
         selectedKeys={selectedKeys}
         onSelectionChange={setSelectedKeys}
-        styles={style({width: 360, maxWidth: 'full', height: 520})}
+        styles={style({ width: 360, maxWidth: "full", height: 520 })}
       >
         <AssetCard id="desert" textValue="Desert Sunset">
           <CardPreview>
-            <Image src="https://images.unsplash.com/photo-1705034598432-1694e203cdf3?q=80&w=600&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D" width={600} height={400} />
+            <Image
+              src="https://images.unsplash.com/photo-1705034598432-1694e203cdf3?q=80&w=600&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D"
+              width={600}
+              height={400}
+            />
           </CardPreview>
           <Content>
             <Text slot="title">Desert Sunset</Text>
@@ -38,7 +50,11 @@ function Example() {
         </AssetCard>
         <AssetCard id="hiking" textValue="Hiking Trail">
           <CardPreview>
-            <Image src="https://images.unsplash.com/photo-1722233987129-61dc344db8b6?q=80&w=600&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D" width={600} height={900} />
+            <Image
+              src="https://images.unsplash.com/photo-1722233987129-61dc344db8b6?q=80&w=600&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D"
+              width={600}
+              height={900}
+            />
           </CardPreview>
           <Content>
             <Text slot="title">Hiking Trail</Text>
@@ -47,7 +63,11 @@ function Example() {
         </AssetCard>
         <AssetCard id="lion" textValue="Lion">
           <CardPreview>
-            <Image src="https://images.unsplash.com/photo-1629812456605-4a044aa38fbc?q=80&w=600&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D" width={600} height={899} />
+            <Image
+              src="https://images.unsplash.com/photo-1629812456605-4a044aa38fbc?q=80&w=600&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D"
+              width={600}
+              height={899}
+            />
           </CardPreview>
           <Content>
             <Text slot="title">Lion</Text>
@@ -56,7 +76,11 @@ function Example() {
         </AssetCard>
         <AssetCard id="mountain" textValue="Mountain Sunrise">
           <CardPreview>
-            <Image src="https://images.unsplash.com/photo-1722172118908-1a97c312ce8c?q=80&w=600&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D" width={600} height={900} />
+            <Image
+              src="https://images.unsplash.com/photo-1722172118908-1a97c312ce8c?q=80&w=600&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D"
+              width={600}
+              height={900}
+            />
           </CardPreview>
           <Content>
             <Text slot="title">Mountain Sunrise</Text>
@@ -64,7 +88,10 @@ function Example() {
           </Content>
         </AssetCard>
       </CardView>
-      <p className={style({font: 'body'})}>selectedKeys: {selectedKeys === 'all' ? 'all' : [...selectedKeys].join(', ')}</p>
+      <p className={style({ font: "body" })}>
+        selectedKeys:{" "}
+        {selectedKeys === "all" ? "all" : [...selectedKeys].join(", ")}
+      </p>
     </>
   );
 }
@@ -73,13 +100,20 @@ function Example() {
 ## Menu example
 
 ```tsx
-import {Menu, MenuTrigger, MenuItem, type Selection} from '@react-spectrum/s2/Menu';
-import {ActionButton} from '@react-spectrum/s2/ActionButton';
-import {style} from '@react-spectrum/s2/style' with {type: 'macro'};
-import {useState} from 'react';
+import {
+  Menu,
+  MenuTrigger,
+  MenuItem,
+  type Selection,
+} from "@react-spectrum/s2/Menu";
+import { ActionButton } from "@react-spectrum/s2/ActionButton";
+import { style } from "@react-spectrum/s2/style" with { type: "macro" };
+import { useState } from "react";
 
 function Example() {
-  let [selectedKeys, setSelectedKeys] = useState<Selection>(new Set(['rulers']));
+  let [selectedKeys, setSelectedKeys] = useState<Selection>(
+    new Set(["rulers"])
+  );
 
   return (
     <>
@@ -96,7 +130,10 @@ function Example() {
           <MenuItem id="toolbar">Toolbar</MenuItem>
         </Menu>
       </MenuTrigger>
-      <p className={style({font: 'body'})}>selectedKeys: {selectedKeys === 'all' ? 'all' : [...selectedKeys].join(', ')}</p>
+      <p className={style({ font: "body" })}>
+        selectedKeys:{" "}
+        {selectedKeys === "all" ? "all" : [...selectedKeys].join(", ")}
+      </p>
     </>
   );
 }
@@ -105,15 +142,20 @@ function Example() {
 ## SelectBoxGroup example
 
 ```tsx
-import {SelectBoxGroup, SelectBox, Text, type Selection} from '@react-spectrum/s2/SelectBoxGroup';
-import {style} from '@react-spectrum/s2/style' with {type: 'macro'};
-import {useState} from 'react';
-import Server from '@react-spectrum/s2/illustrations/linear/Server';
-import StarFilled from '@react-spectrum/s2/illustrations/linear/Star';
-import AlertNotice from '@react-spectrum/s2/illustrations/linear/AlertNotice';
+import {
+  SelectBoxGroup,
+  SelectBox,
+  Text,
+  type Selection,
+} from "@react-spectrum/s2/SelectBoxGroup";
+import { style } from "@react-spectrum/s2/style" with { type: "macro" };
+import { useState } from "react";
+import Server from "@react-spectrum/s2/illustrations/linear/Server";
+import StarFilled from "@react-spectrum/s2/illustrations/linear/Star";
+import AlertNotice from "@react-spectrum/s2/illustrations/linear/AlertNotice";
 
 function Example() {
-  let [selectedKeys, setSelectedKeys] = useState<Selection>(new Set(['aws']));
+  let [selectedKeys, setSelectedKeys] = useState<Selection>(new Set(["aws"]));
 
   return (
     <>
@@ -122,7 +164,7 @@ function Example() {
         selectionMode="multiple"
         selectedKeys={selectedKeys}
         onSelectionChange={setSelectedKeys}
-        styles={style({width: 'full'})}
+        styles={style({ width: "full" })}
       >
         <SelectBox id="aws" textValue="AWS">
           <Server />
@@ -137,7 +179,10 @@ function Example() {
           <Text slot="label">Google Cloud Platform</Text>
         </SelectBox>
       </SelectBoxGroup>
-      <p className={style({font: 'body'})}>selectedKeys: {selectedKeys === 'all' ? 'all' : [...selectedKeys].join(', ')}</p>
+      <p className={style({ font: "body" })}>
+        selectedKeys:{" "}
+        {selectedKeys === "all" ? "all" : [...selectedKeys].join(", ")}
+      </p>
     </>
   );
 }
@@ -146,21 +191,31 @@ function Example() {
 ## TableView example
 
 ```tsx
-import {TableView, TableHeader, Column, TableBody, Row, Cell, type Selection} from '@react-spectrum/s2/TableView';
-import {style} from '@react-spectrum/s2/style' with {type: 'macro'};
-import {useState} from 'react';
+import {
+  TableView,
+  TableHeader,
+  Column,
+  TableBody,
+  Row,
+  Cell,
+  type Selection,
+} from "@react-spectrum/s2/TableView";
+import { style } from "@react-spectrum/s2/style" with { type: "macro" };
+import { useState } from "react";
 
 const rows = [
-  {id: 'lettuce', name: 'Lettuce', type: 'Vegetable', calories: 4},
-  {id: 'tomato', name: 'Tomato', type: 'Vegetable', calories: 5},
-  {id: 'cheese', name: 'Cheddar', type: 'Cheese', calories: 113},
-  {id: 'tuna', name: 'Tuna salad', type: 'Salad', calories: 187},
-  {id: 'egg', name: 'Egg salad', type: 'Salad', calories: 200},
-  {id: 'ham', name: 'Ham', type: 'Meat', calories: 205}
+  { id: "lettuce", name: "Lettuce", type: "Vegetable", calories: 4 },
+  { id: "tomato", name: "Tomato", type: "Vegetable", calories: 5 },
+  { id: "cheese", name: "Cheddar", type: "Cheese", calories: 113 },
+  { id: "tuna", name: "Tuna salad", type: "Salad", calories: 187 },
+  { id: "egg", name: "Egg salad", type: "Salad", calories: 200 },
+  { id: "ham", name: "Ham", type: "Meat", calories: 205 },
 ];
 
 function Example() {
-  let [selectedKeys, setSelectedKeys] = useState<Selection>(new Set(['cheese']));
+  let [selectedKeys, setSelectedKeys] = useState<Selection>(
+    new Set(["cheese"])
+  );
 
   return (
     <>
@@ -169,7 +224,7 @@ function Example() {
         selectionMode="multiple"
         selectedKeys={selectedKeys}
         onSelectionChange={setSelectedKeys}
-        styles={style({width: 'full'})}
+        styles={style({ width: "full" })}
       >
         <TableHeader>
           <Column isRowHeader>Name</Column>
@@ -177,7 +232,7 @@ function Example() {
           <Column>Calories</Column>
         </TableHeader>
         <TableBody items={rows}>
-          {item => (
+          {(item) => (
             <Row>
               <Cell>{item.name}</Cell>
               <Cell>{item.type}</Cell>
@@ -186,7 +241,10 @@ function Example() {
           )}
         </TableBody>
       </TableView>
-      <p className={style({font: 'body'})}>selectedKeys: {selectedKeys === 'all' ? 'all' : [...selectedKeys].join(', ')}</p>
+      <p className={style({ font: "body" })}>
+        selectedKeys:{" "}
+        {selectedKeys === "all" ? "all" : [...selectedKeys].join(", ")}
+      </p>
     </>
   );
 }
@@ -195,12 +253,14 @@ function Example() {
 ## TagGroup example
 
 ```tsx
-import {TagGroup, Tag, type Selection} from '@react-spectrum/s2/TagGroup';
-import {style} from '@react-spectrum/s2/style' with {type: 'macro'};
-import {useState} from 'react';
+import { TagGroup, Tag, type Selection } from "@react-spectrum/s2/TagGroup";
+import { style } from "@react-spectrum/s2/style" with { type: "macro" };
+import { useState } from "react";
 
 function Example() {
-  let [selectedKeys, setSelectedKeys] = useState<Selection>(new Set(['cheese']));
+  let [selectedKeys, setSelectedKeys] = useState<Selection>(
+    new Set(["cheese"])
+  );
 
   return (
     <>
@@ -217,7 +277,10 @@ function Example() {
         <Tag id="egg">Egg Salad</Tag>
         <Tag id="ham">Ham</Tag>
       </TagGroup>
-      <p className={style({font: 'body'})}>selectedKeys: {selectedKeys === 'all' ? 'all' : [...selectedKeys].join(', ')}</p>
+      <p className={style({ font: "body" })}>
+        selectedKeys:{" "}
+        {selectedKeys === "all" ? "all" : [...selectedKeys].join(", ")}
+      </p>
     </>
   );
 }
@@ -226,15 +289,20 @@ function Example() {
 ## ToggleButtonGroup example
 
 ```tsx
-import {ToggleButtonGroup, ToggleButton, Text, type Selection} from '@react-spectrum/s2/ToggleButtonGroup';
-import {style} from '@react-spectrum/s2/style' with {type: 'macro'};
-import {useState} from 'react';
-import TextBold from '@react-spectrum/s2/icons/TextBold';
-import TextItalic from '@react-spectrum/s2/icons/TextItalic';
-import TextUnderline from '@react-spectrum/s2/icons/TextUnderline';
+import {
+  ToggleButtonGroup,
+  ToggleButton,
+  Text,
+  type Selection,
+} from "@react-spectrum/s2/ToggleButtonGroup";
+import { style } from "@react-spectrum/s2/style" with { type: "macro" };
+import { useState } from "react";
+import TextBold from "@react-spectrum/s2/icons/TextBold";
+import TextItalic from "@react-spectrum/s2/icons/TextItalic";
+import TextUnderline from "@react-spectrum/s2/icons/TextUnderline";
 
 function Example() {
-  let [selectedKeys, setSelectedKeys] = useState<Selection>(new Set(['bold']));
+  let [selectedKeys, setSelectedKeys] = useState<Selection>(new Set(["bold"]));
 
   return (
     <>
@@ -257,7 +325,10 @@ function Example() {
           <Text>Underline</Text>
         </ToggleButton>
       </ToggleButtonGroup>
-      <p className={style({font: 'body'})}>selectedKeys: {selectedKeys === 'all' ? 'all' : [...selectedKeys].join(', ')}</p>
+      <p className={style({ font: "body" })}>
+        selectedKeys:{" "}
+        {selectedKeys === "all" ? "all" : [...selectedKeys].join(", ")}
+      </p>
     </>
   );
 }
@@ -266,22 +337,29 @@ function Example() {
 ## TreeView example
 
 ```tsx
-import {TreeView, TreeViewItem, TreeViewItemContent, type Selection} from '@react-spectrum/s2/TreeView';
-import {style} from '@react-spectrum/s2/style' with {type: 'macro'};
-import {useState} from 'react';
+import {
+  TreeView,
+  TreeViewItem,
+  TreeViewItemContent,
+  type Selection,
+} from "@react-spectrum/s2/TreeView";
+import { style } from "@react-spectrum/s2/style" with { type: "macro" };
+import { useState } from "react";
 
 function Example() {
-  let [selectedKeys, setSelectedKeys] = useState<Selection>(new Set(['project']));
+  let [selectedKeys, setSelectedKeys] = useState<Selection>(
+    new Set(["project"])
+  );
 
   return (
     <>
       <TreeView
         aria-label="Files"
-        defaultExpandedKeys={['documents', 'photos', 'project']}
+        defaultExpandedKeys={["documents", "photos", "project"]}
         selectionMode="multiple"
         selectedKeys={selectedKeys}
         onSelectionChange={setSelectedKeys}
-        styles={style({height: 250, width: 360, maxWidth: 'full'})}
+        styles={style({ height: 250, width: 360, maxWidth: "full" })}
       >
         <TreeViewItem id="documents" textValue="Documents">
           <TreeViewItemContent>Documents</TreeViewItemContent>
@@ -302,7 +380,10 @@ function Example() {
           </TreeViewItem>
         </TreeViewItem>
       </TreeView>
-      <p className={style({font: 'body'})}>selectedKeys: {selectedKeys === 'all' ? 'all' : [...selectedKeys].join(', ')}</p>
+      <p className={style({ font: "body" })}>
+        selectedKeys:{" "}
+        {selectedKeys === "all" ? "all" : [...selectedKeys].join(", ")}
+      </p>
     </>
   );
 }
@@ -316,27 +397,38 @@ When a select all event occurs, `onSelectionChange` is called with the string `"
 and `defaultSelectedKeys` can also be set to `"all"` to programmatically select all items. The application must adjust its handling of bulk actions in this case to apply to the entire collection rather than only the keys available to it locally.
 
 ```tsx
-import {TableView, TableHeader, Column, TableBody, Row, Cell, type Selection, type Key} from '@react-spectrum/s2/TableView';
-import {ActionBar, ActionButton, Text} from '@react-spectrum/s2/ActionBar';
-import Delete from '@react-spectrum/s2/icons/Delete';
-import {style} from '@react-spectrum/s2/style' with {type: 'macro'};
-import {useState} from 'react';
+import {
+  TableView,
+  TableHeader,
+  Column,
+  TableBody,
+  Row,
+  Cell,
+  type Selection,
+  type Key,
+} from "@react-spectrum/s2/TableView";
+import { ActionBar, ActionButton, Text } from "@react-spectrum/s2/ActionBar";
+import Delete from "@react-spectrum/s2/icons/Delete";
+import { style } from "@react-spectrum/s2/style" with { type: "macro" };
+import { useState } from "react";
 
 const rows = [
-  {name: 'Games', date: '6/7/2020', type: 'File folder'},
-  {name: 'Program Files', date: '4/7/2021', type: 'File folder'},
-  {name: 'bootmgr', date: '11/20/2010', type: 'System file'},
-  {name: 'log.txt', date: '1/18/2016', type: 'Text Document'}
+  { name: "Games", date: "6/7/2020", type: "File folder" },
+  { name: "Program Files", date: "4/7/2021", type: "File folder" },
+  { name: "bootmgr", date: "11/20/2010", type: "System file" },
+  { name: "log.txt", date: "1/18/2016", type: "Text Document" },
 ];
 
 function Example() {
   let [selectedKeys, setSelectedKeys] = useState<Selection>(new Set<Key>());
 
   function performBulkAction(selectedKeys: Selection) {
-    if (selectedKeys === 'all') {
-      alert('Performing action on all items');
+    if (selectedKeys === "all") {
+      alert("Performing action on all items");
     } else {
-      alert(`Performing action on selected items: ${[...selectedKeys].join(', ')}`);
+      alert(
+        `Performing action on selected items: ${[...selectedKeys].join(", ")}`
+      );
     }
   }
 
@@ -355,14 +447,15 @@ function Example() {
             </ActionButton>
           </ActionBar>
         )}
-        styles={style({width: 'full', height: 200})}>
+        styles={style({ width: "full", height: 200 })}
+      >
         <TableHeader>
           <Column isRowHeader>Name</Column>
           <Column>Type</Column>
           <Column>Date Modified</Column>
         </TableHeader>
         <TableBody items={rows}>
-          {item => (
+          {(item) => (
             <Row id={item.name}>
               <Cell>{item.name}</Cell>
               <Cell>{item.type}</Cell>
@@ -371,7 +464,10 @@ function Example() {
           )}
         </TableBody>
       </TableView>
-      <p className={style({font: 'body'})}>selectedKeys: {selectedKeys === 'all' ? 'all' : [...selectedKeys].join(', ')}</p>
+      <p className={style({ font: "body" })}>
+        selectedKeys:{" "}
+        {selectedKeys === "all" ? "all" : [...selectedKeys].join(", ")}
+      </p>
     </div>
   );
 }
@@ -388,12 +484,20 @@ ComboBox, SegmentedControl, and Tabs only support single selection and use the `
 ## CardView example
 
 ```tsx
-import {CardView, AssetCard, CardPreview, Image, Content, Text, type Selection} from '@react-spectrum/s2/CardView';
-import {style} from '@react-spectrum/s2/style' with {type: 'macro'};
-import {useState} from 'react';
+import {
+  CardView,
+  AssetCard,
+  CardPreview,
+  Image,
+  Content,
+  Text,
+  type Selection,
+} from "@react-spectrum/s2/CardView";
+import { style } from "@react-spectrum/s2/style" with { type: "macro" };
+import { useState } from "react";
 
 function Example() {
-  let [selectedKeys, setSelectedKeys] = useState<Selection>(new Set(['lion']));
+  let [selectedKeys, setSelectedKeys] = useState<Selection>(new Set(["lion"]));
 
   return (
     <>
@@ -402,11 +506,15 @@ function Example() {
         selectionMode="single"
         selectedKeys={selectedKeys}
         onSelectionChange={setSelectedKeys}
-        styles={style({width: 360, maxWidth: 'full', height: 320})}
+        styles={style({ width: 360, maxWidth: "full", height: 320 })}
       >
         <AssetCard id="desert" textValue="Desert Sunset">
           <CardPreview>
-            <Image src="https://images.unsplash.com/photo-1705034598432-1694e203cdf3?q=80&w=600&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D" width={600} height={400} />
+            <Image
+              src="https://images.unsplash.com/photo-1705034598432-1694e203cdf3?q=80&w=600&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D"
+              width={600}
+              height={400}
+            />
           </CardPreview>
           <Content>
             <Text slot="title">Desert Sunset</Text>
@@ -415,7 +523,11 @@ function Example() {
         </AssetCard>
         <AssetCard id="hiking" textValue="Hiking Trail">
           <CardPreview>
-            <Image src="https://images.unsplash.com/photo-1722233987129-61dc344db8b6?q=80&w=600&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D" width={600} height={900} />
+            <Image
+              src="https://images.unsplash.com/photo-1722233987129-61dc344db8b6?q=80&w=600&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D"
+              width={600}
+              height={900}
+            />
           </CardPreview>
           <Content>
             <Text slot="title">Hiking Trail</Text>
@@ -424,7 +536,11 @@ function Example() {
         </AssetCard>
         <AssetCard id="lion" textValue="Lion">
           <CardPreview>
-            <Image src="https://images.unsplash.com/photo-1629812456605-4a044aa38fbc?q=80&w=600&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D" width={600} height={899} />
+            <Image
+              src="https://images.unsplash.com/photo-1629812456605-4a044aa38fbc?q=80&w=600&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D"
+              width={600}
+              height={899}
+            />
           </CardPreview>
           <Content>
             <Text slot="title">Lion</Text>
@@ -433,7 +549,11 @@ function Example() {
         </AssetCard>
         <AssetCard id="mountain" textValue="Mountain Sunrise">
           <CardPreview>
-            <Image src="https://images.unsplash.com/photo-1722172118908-1a97c312ce8c?q=80&w=600&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D" width={600} height={900} />
+            <Image
+              src="https://images.unsplash.com/photo-1722172118908-1a97c312ce8c?q=80&w=600&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D"
+              width={600}
+              height={900}
+            />
           </CardPreview>
           <Content>
             <Text slot="title">Mountain Sunrise</Text>
@@ -441,7 +561,10 @@ function Example() {
           </Content>
         </AssetCard>
       </CardView>
-      <p className={style({font: 'body'})}>selectedKeys: {selectedKeys === 'all' ? 'all' : [...selectedKeys].join(', ')}</p>
+      <p className={style({ font: "body" })}>
+        selectedKeys:{" "}
+        {selectedKeys === "all" ? "all" : [...selectedKeys].join(", ")}
+      </p>
     </>
   );
 }
@@ -450,12 +573,12 @@ function Example() {
 ## ComboBox example
 
 ```tsx
-import {ComboBox, ComboBoxItem, type Key} from '@react-spectrum/s2/ComboBox';
-import {style} from '@react-spectrum/s2/style' with {type: 'macro'};
-import {useState} from 'react';
+import { ComboBox, ComboBoxItem, type Key } from "@react-spectrum/s2/ComboBox";
+import { style } from "@react-spectrum/s2/style" with { type: "macro" };
+import { useState } from "react";
 
 function Example() {
-  let [selectedKey, setSelectedKey] = useState<Key | null>('kangaroo');
+  let [selectedKey, setSelectedKey] = useState<Key | null>("kangaroo");
 
   return (
     <>
@@ -472,7 +595,7 @@ function Example() {
         <ComboBoxItem id="bison">Bison</ComboBoxItem>
         <ComboBoxItem id="skunk">Skunk</ComboBoxItem>
       </ComboBox>
-      <p className={style({font: 'body'})}>selectedKey: {selectedKey}</p>
+      <p className={style({ font: "body" })}>selectedKey: {selectedKey}</p>
     </>
   );
 }
@@ -481,13 +604,18 @@ function Example() {
 ## Menu example
 
 ```tsx
-import {Menu, MenuTrigger, MenuItem, type Selection} from '@react-spectrum/s2/Menu';
-import {ActionButton} from '@react-spectrum/s2/ActionButton';
-import {style} from '@react-spectrum/s2/style' with {type: 'macro'};
-import {useState} from 'react';
+import {
+  Menu,
+  MenuTrigger,
+  MenuItem,
+  type Selection,
+} from "@react-spectrum/s2/Menu";
+import { ActionButton } from "@react-spectrum/s2/ActionButton";
+import { style } from "@react-spectrum/s2/style" with { type: "macro" };
+import { useState } from "react";
 
 function Example() {
-  let [selectedKeys, setSelectedKeys] = useState<Selection>(new Set(['grid']));
+  let [selectedKeys, setSelectedKeys] = useState<Selection>(new Set(["grid"]));
 
   return (
     <>
@@ -504,7 +632,10 @@ function Example() {
           <MenuItem id="toolbar">Toolbar</MenuItem>
         </Menu>
       </MenuTrigger>
-      <p className={style({font: 'body'})}>selectedKeys: {selectedKeys === 'all' ? 'all' : [...selectedKeys].join(', ')}</p>
+      <p className={style({ font: "body" })}>
+        selectedKeys:{" "}
+        {selectedKeys === "all" ? "all" : [...selectedKeys].join(", ")}
+      </p>
     </>
   );
 }
@@ -513,12 +644,16 @@ function Example() {
 ## SegmentedControl example
 
 ```tsx
-import {SegmentedControl, SegmentedControlItem, type Key} from '@react-spectrum/s2/SegmentedControl';
-import {style} from '@react-spectrum/s2/style' with {type: 'macro'};
-import {useState} from 'react';
+import {
+  SegmentedControl,
+  SegmentedControlItem,
+  type Key,
+} from "@react-spectrum/s2/SegmentedControl";
+import { style } from "@react-spectrum/s2/style" with { type: "macro" };
+import { useState } from "react";
 
 function Example() {
-  let [selectedKey, setSelectedKey] = useState<Key>('month');
+  let [selectedKey, setSelectedKey] = useState<Key>("month");
 
   return (
     <>
@@ -532,7 +667,7 @@ function Example() {
         <SegmentedControlItem id="month">Month</SegmentedControlItem>
         <SegmentedControlItem id="year">Year</SegmentedControlItem>
       </SegmentedControl>
-      <p className={style({font: 'body'})}>selectedKey: {selectedKey}</p>
+      <p className={style({ font: "body" })}>selectedKey: {selectedKey}</p>
     </>
   );
 }
@@ -541,15 +676,20 @@ function Example() {
 ## SelectBoxGroup example
 
 ```tsx
-import {SelectBoxGroup, SelectBox, Text, type Selection} from '@react-spectrum/s2/SelectBoxGroup';
-import {style} from '@react-spectrum/s2/style' with {type: 'macro'};
-import {useState} from 'react';
-import Server from '@react-spectrum/s2/illustrations/linear/Server';
-import StarFilled from '@react-spectrum/s2/illustrations/linear/Star';
-import AlertNotice from '@react-spectrum/s2/illustrations/linear/AlertNotice';
+import {
+  SelectBoxGroup,
+  SelectBox,
+  Text,
+  type Selection,
+} from "@react-spectrum/s2/SelectBoxGroup";
+import { style } from "@react-spectrum/s2/style" with { type: "macro" };
+import { useState } from "react";
+import Server from "@react-spectrum/s2/illustrations/linear/Server";
+import StarFilled from "@react-spectrum/s2/illustrations/linear/Star";
+import AlertNotice from "@react-spectrum/s2/illustrations/linear/AlertNotice";
 
 function Example() {
-  let [selectedKeys, setSelectedKeys] = useState<Selection>(new Set(['aws']));
+  let [selectedKeys, setSelectedKeys] = useState<Selection>(new Set(["aws"]));
 
   return (
     <>
@@ -558,7 +698,7 @@ function Example() {
         selectionMode="single"
         selectedKeys={selectedKeys}
         onSelectionChange={setSelectedKeys}
-        styles={style({width: 'full'})}
+        styles={style({ width: "full" })}
       >
         <SelectBox id="aws" textValue="AWS">
           <Server />
@@ -573,7 +713,10 @@ function Example() {
           <Text slot="label">Google Cloud Platform</Text>
         </SelectBox>
       </SelectBoxGroup>
-      <p className={style({font: 'body'})}>selectedKeys: {selectedKeys === 'all' ? 'all' : [...selectedKeys].join(', ')}</p>
+      <p className={style({ font: "body" })}>
+        selectedKeys:{" "}
+        {selectedKeys === "all" ? "all" : [...selectedKeys].join(", ")}
+      </p>
     </>
   );
 }
@@ -582,19 +725,29 @@ function Example() {
 ## TableView example
 
 ```tsx
-import {TableView, TableHeader, Column, TableBody, Row, Cell, type Selection} from '@react-spectrum/s2/TableView';
-import {style} from '@react-spectrum/s2/style' with {type: 'macro'};
-import {useState} from 'react';
+import {
+  TableView,
+  TableHeader,
+  Column,
+  TableBody,
+  Row,
+  Cell,
+  type Selection,
+} from "@react-spectrum/s2/TableView";
+import { style } from "@react-spectrum/s2/style" with { type: "macro" };
+import { useState } from "react";
 
 const rows = [
-  {id: 'lettuce', name: 'Lettuce', type: 'Vegetable'},
-  {id: 'tomato', name: 'Tomato', type: 'Vegetable'},
-  {id: 'cheese', name: 'Cheddar', type: 'Cheese'},
-  {id: 'tuna', name: 'Tuna salad', type: 'Salad'}
+  { id: "lettuce", name: "Lettuce", type: "Vegetable" },
+  { id: "tomato", name: "Tomato", type: "Vegetable" },
+  { id: "cheese", name: "Cheddar", type: "Cheese" },
+  { id: "tuna", name: "Tuna salad", type: "Salad" },
 ];
 
 function Example() {
-  let [selectedKeys, setSelectedKeys] = useState<Selection>(new Set(['cheese']));
+  let [selectedKeys, setSelectedKeys] = useState<Selection>(
+    new Set(["cheese"])
+  );
 
   return (
     <>
@@ -603,14 +756,14 @@ function Example() {
         selectionMode="single"
         selectedKeys={selectedKeys}
         onSelectionChange={setSelectedKeys}
-        styles={style({width: 'full'})}
+        styles={style({ width: "full" })}
       >
         <TableHeader>
           <Column isRowHeader>Name</Column>
           <Column>Type</Column>
         </TableHeader>
         <TableBody items={rows}>
-          {item => (
+          {(item) => (
             <Row>
               <Cell>{item.name}</Cell>
               <Cell>{item.type}</Cell>
@@ -618,7 +771,10 @@ function Example() {
           )}
         </TableBody>
       </TableView>
-      <p className={style({font: 'body'})}>selectedKeys: {selectedKeys === 'all' ? 'all' : [...selectedKeys].join(', ')}</p>
+      <p className={style({ font: "body" })}>
+        selectedKeys:{" "}
+        {selectedKeys === "all" ? "all" : [...selectedKeys].join(", ")}
+      </p>
     </>
   );
 }
@@ -627,12 +783,18 @@ function Example() {
 ## Tabs example
 
 ```tsx
-import {Tabs, TabList, Tab, TabPanel, type Key} from '@react-spectrum/s2/Tabs';
-import {style} from '@react-spectrum/s2/style' with {type: 'macro'};
-import {useState} from 'react';
+import {
+  Tabs,
+  TabList,
+  Tab,
+  TabPanel,
+  type Key,
+} from "@react-spectrum/s2/Tabs";
+import { style } from "@react-spectrum/s2/style" with { type: "macro" };
+import { useState } from "react";
 
 function Example() {
-  let [selectedKey, setSelectedKey] = useState<Key>('files');
+  let [selectedKey, setSelectedKey] = useState<Key>("files");
 
   return (
     <>
@@ -650,7 +812,7 @@ function Example() {
         <TabPanel id="files">Files content</TabPanel>
         <TabPanel id="settings">Settings content</TabPanel>
       </Tabs>
-      <p className={style({font: 'body'})}>selectedKey: {selectedKey}</p>
+      <p className={style({ font: "body" })}>selectedKey: {selectedKey}</p>
     </>
   );
 }
@@ -659,12 +821,14 @@ function Example() {
 ## TagGroup example
 
 ```tsx
-import {TagGroup, Tag, type Selection} from '@react-spectrum/s2/TagGroup';
-import {style} from '@react-spectrum/s2/style' with {type: 'macro'};
-import {useState} from 'react';
+import { TagGroup, Tag, type Selection } from "@react-spectrum/s2/TagGroup";
+import { style } from "@react-spectrum/s2/style" with { type: "macro" };
+import { useState } from "react";
 
 function Example() {
-  let [selectedKeys, setSelectedKeys] = useState<Selection>(new Set(['cheese']));
+  let [selectedKeys, setSelectedKeys] = useState<Selection>(
+    new Set(["cheese"])
+  );
 
   return (
     <>
@@ -679,7 +843,10 @@ function Example() {
         <Tag id="cheese">Cheese</Tag>
         <Tag id="tuna">Tuna Salad</Tag>
       </TagGroup>
-      <p className={style({font: 'body'})}>selectedKeys: {selectedKeys === 'all' ? 'all' : [...selectedKeys].join(', ')}</p>
+      <p className={style({ font: "body" })}>
+        selectedKeys:{" "}
+        {selectedKeys === "all" ? "all" : [...selectedKeys].join(", ")}
+      </p>
     </>
   );
 }
@@ -688,15 +855,20 @@ function Example() {
 ## ToggleButtonGroup example
 
 ```tsx
-import {ToggleButtonGroup, ToggleButton, Text, type Selection} from '@react-spectrum/s2/ToggleButtonGroup';
-import {style} from '@react-spectrum/s2/style' with {type: 'macro'};
-import {useState} from 'react';
-import AlignLeft from '@react-spectrum/s2/icons/AlignLeft';
-import AlignCenter from '@react-spectrum/s2/icons/AlignCenter';
-import AlignRight from '@react-spectrum/s2/icons/AlignRight';
+import {
+  ToggleButtonGroup,
+  ToggleButton,
+  Text,
+  type Selection,
+} from "@react-spectrum/s2/ToggleButtonGroup";
+import { style } from "@react-spectrum/s2/style" with { type: "macro" };
+import { useState } from "react";
+import AlignLeft from "@react-spectrum/s2/icons/AlignLeft";
+import AlignCenter from "@react-spectrum/s2/icons/AlignCenter";
+import AlignRight from "@react-spectrum/s2/icons/AlignRight";
 
 function Example() {
-  let [selectedKeys, setSelectedKeys] = useState<Selection>(new Set(['left']));
+  let [selectedKeys, setSelectedKeys] = useState<Selection>(new Set(["left"]));
 
   return (
     <>
@@ -719,7 +891,10 @@ function Example() {
           <Text>Right</Text>
         </ToggleButton>
       </ToggleButtonGroup>
-      <p className={style({font: 'body'})}>selectedKeys: {selectedKeys === 'all' ? 'all' : [...selectedKeys].join(', ')}</p>
+      <p className={style({ font: "body" })}>
+        selectedKeys:{" "}
+        {selectedKeys === "all" ? "all" : [...selectedKeys].join(", ")}
+      </p>
     </>
   );
 }
@@ -728,22 +903,29 @@ function Example() {
 ## TreeView example
 
 ```tsx
-import {TreeView, TreeViewItem, TreeViewItemContent, type Selection} from '@react-spectrum/s2/TreeView';
-import {style} from '@react-spectrum/s2/style' with {type: 'macro'};
-import {useState} from 'react';
+import {
+  TreeView,
+  TreeViewItem,
+  TreeViewItemContent,
+  type Selection,
+} from "@react-spectrum/s2/TreeView";
+import { style } from "@react-spectrum/s2/style" with { type: "macro" };
+import { useState } from "react";
 
 function Example() {
-  let [selectedKeys, setSelectedKeys] = useState<Selection>(new Set(['documents']));
+  let [selectedKeys, setSelectedKeys] = useState<Selection>(
+    new Set(["documents"])
+  );
 
   return (
     <>
       <TreeView
         aria-label="Files"
-        defaultExpandedKeys={['documents', 'photos']}
+        defaultExpandedKeys={["documents", "photos"]}
         selectionMode="single"
         selectedKeys={selectedKeys}
         onSelectionChange={setSelectedKeys}
-        styles={style({height: 250, width: 360, maxWidth: 'full'})}
+        styles={style({ height: 250, width: 360, maxWidth: "full" })}
       >
         <TreeViewItem id="documents" textValue="Documents">
           <TreeViewItemContent>Documents</TreeViewItemContent>
@@ -758,7 +940,10 @@ function Example() {
           </TreeViewItem>
         </TreeViewItem>
       </TreeView>
-      <p className={style({font: 'body'})}>selectedKeys: {selectedKeys === 'all' ? 'all' : [...selectedKeys].join(', ')}</p>
+      <p className={style({ font: "body" })}>
+        selectedKeys:{" "}
+        {selectedKeys === "all" ? "all" : [...selectedKeys].join(", ")}
+      </p>
     </>
   );
 }
@@ -773,22 +958,34 @@ On touch devices, actions are the primary tap interaction. Long pressing enters 
 ## CardView example
 
 ```tsx
-import {CardView, AssetCard, CardPreview, Image, Content, Text} from '@react-spectrum/s2/CardView';
-import {style} from '@react-spectrum/s2/style' with {type: 'macro'};
+import {
+  CardView,
+  AssetCard,
+  CardPreview,
+  Image,
+  Content,
+  Text,
+} from "@react-spectrum/s2/CardView";
+import { style } from "@react-spectrum/s2/style" with { type: "macro" };
 
 <CardView
   aria-label="Nature photos"
   selectionMode="multiple"
-  styles={style({width: 'full', height: 320})}
+  styles={style({ width: "full", height: 320 })}
 >
   <AssetCard
     id="desert"
     textValue="Desert Sunset"
     /*- begin highlight -*/
-    onAction={() => alert('Opening Desert Sunset')}>
+    onAction={() => alert("Opening Desert Sunset")}
+  >
     {/*- end highlight -*/}
     <CardPreview>
-      <Image src="https://images.unsplash.com/photo-1705034598432-1694e203cdf3?q=80&w=600&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D" width={600} height={400} />
+      <Image
+        src="https://images.unsplash.com/photo-1705034598432-1694e203cdf3?q=80&w=600&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D"
+        width={600}
+        height={400}
+      />
     </CardPreview>
     <Content>
       <Text slot="title">Desert Sunset</Text>
@@ -798,40 +995,54 @@ import {style} from '@react-spectrum/s2/style' with {type: 'macro'};
   <AssetCard
     id="hiking"
     textValue="Hiking Trail"
-    onAction={() => alert('Opening Hiking Trail')}>
+    onAction={() => alert("Opening Hiking Trail")}
+  >
     <CardPreview>
-      <Image src="https://images.unsplash.com/photo-1722233987129-61dc344db8b6?q=80&w=600&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D" width={600} height={900} />
+      <Image
+        src="https://images.unsplash.com/photo-1722233987129-61dc344db8b6?q=80&w=600&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D"
+        width={600}
+        height={900}
+      />
     </CardPreview>
     <Content>
       <Text slot="title">Hiking Trail</Text>
       <Text slot="description">JPEG • 1/10/2022</Text>
     </Content>
   </AssetCard>
-  <AssetCard
-    id="lion"
-    textValue="Lion"
-    onAction={() => alert('Opening Lion')}>
+  <AssetCard id="lion" textValue="Lion" onAction={() => alert("Opening Lion")}>
     <CardPreview>
-      <Image src="https://images.unsplash.com/photo-1629812456605-4a044aa38fbc?q=80&w=600&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D" width={600} height={899} />
+      <Image
+        src="https://images.unsplash.com/photo-1629812456605-4a044aa38fbc?q=80&w=600&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D"
+        width={600}
+        height={899}
+      />
     </CardPreview>
     <Content>
       <Text slot="title">Lion</Text>
       <Text slot="description">JPEG • 8/28/2021</Text>
     </Content>
   </AssetCard>
-</CardView>
+</CardView>;
 ```
 
 ## TableView example
 
 ```tsx
-import {TableView, TableHeader, Column, Row, TableBody, Cell} from '@react-spectrum/s2/TableView';
-import {style} from '@react-spectrum/s2/style' with {type: 'macro'};
+import {
+  TableView,
+  TableHeader,
+  Column,
+  Row,
+  TableBody,
+  Cell,
+} from "@react-spectrum/s2/TableView";
+import { style } from "@react-spectrum/s2/style" with { type: "macro" };
 
 <TableView
   aria-label="Table"
   selectionMode="multiple"
-  styles={style({width: 'full'})}>
+  styles={style({ width: "full" })}
+>
   <TableHeader>
     <Column isRowHeader>Name</Column>
     <Column>Type</Column>
@@ -839,58 +1050,63 @@ import {style} from '@react-spectrum/s2/style' with {type: 'macro'};
   </TableHeader>
   <TableBody>
     {/*- begin highlight -*/}
-    <Row onAction={() => alert('Opening Games')}>
-    {/*- end highlight -*/}
+    <Row onAction={() => alert("Opening Games")}>
+      {/*- end highlight -*/}
       <Cell>Games</Cell>
       <Cell>File folder</Cell>
       <Cell>6/7/2020</Cell>
     </Row>
-    <Row onAction={() => alert('Opening Documents')}>
+    <Row onAction={() => alert("Opening Documents")}>
       <Cell>Documents</Cell>
       <Cell>File folder</Cell>
       <Cell>4/7/2021</Cell>
     </Row>
-    <Row onAction={() => alert('Opening Photos')}>
+    <Row onAction={() => alert("Opening Photos")}>
       <Cell>Photos</Cell>
       <Cell>File folder</Cell>
       <Cell>11/20/2010</Cell>
     </Row>
   </TableBody>
-</TableView>
+</TableView>;
 ```
 
 ## TreeView example
 
 ```tsx
-import {TreeView, TreeViewItem, TreeViewItemContent} from '@react-spectrum/s2/TreeView';
-import {style} from '@react-spectrum/s2/style' with {type: 'macro'};
+import {
+  TreeView,
+  TreeViewItem,
+  TreeViewItemContent,
+} from "@react-spectrum/s2/TreeView";
+import { style } from "@react-spectrum/s2/style" with { type: "macro" };
 
 <TreeView
   aria-label="Files"
   selectionMode="multiple"
-  defaultExpandedKeys={['computer']}
-  styles={style({height: 250, width: 360, maxWidth: 'full'})}>
+  defaultExpandedKeys={["computer"]}
+  styles={style({ height: 250, width: 360, maxWidth: "full" })}
+>
   <TreeViewItem id="computer" textValue="My Computer">
     <TreeViewItemContent>My Computer</TreeViewItemContent>
     <TreeViewItem
       textValue="Games"
       /*- begin highlight -*/
-      onAction={() => alert('Opening Games')} >
+      onAction={() => alert("Opening Games")}
+    >
       {/*- end highlight -*/}
       <TreeViewItemContent>Games</TreeViewItemContent>
     </TreeViewItem>
     <TreeViewItem
       textValue="Documents"
-      onAction={() => alert('Opening Documents')} >
+      onAction={() => alert("Opening Documents")}
+    >
       <TreeViewItemContent>Documents</TreeViewItemContent>
     </TreeViewItem>
-    <TreeViewItem
-      textValue="Photos"
-      onAction={() => alert('Opening Photos')} >
+    <TreeViewItem textValue="Photos" onAction={() => alert("Opening Photos")}>
       <TreeViewItemContent>Photos</TreeViewItemContent>
     </TreeViewItem>
   </TreeViewItem>
-</TreeView>
+</TreeView>;
 ```
 
 In dynamic collections, it may be more convenient to use the `onAction` prop at the collection level instead of on individual items. This receives the id of the pressed item.
@@ -898,24 +1114,56 @@ In dynamic collections, it may be more convenient to use the `onAction` prop at 
 ## CardView example
 
 ```tsx
-import {CardView, AssetCard, CardPreview, Image, Content, Text} from '@react-spectrum/s2/CardView';
-import {style} from '@react-spectrum/s2/style' with {type: 'macro'};
+import {
+  CardView,
+  AssetCard,
+  CardPreview,
+  Image,
+  Content,
+  Text,
+} from "@react-spectrum/s2/CardView";
+import { style } from "@react-spectrum/s2/style" with { type: "macro" };
 
 const photos = [
-  {id: 'desert', title: 'Desert Sunset', description: 'PNG • 2/3/2024', image: 'https://images.unsplash.com/photo-1705034598432-1694e203cdf3?q=80&w=600&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D', width: 600, height: 400},
-  {id: 'hiking', title: 'Hiking Trail', description: 'JPEG • 1/10/2022', image: 'https://images.unsplash.com/photo-1722233987129-61dc344db8b6?q=80&w=600&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D', width: 600, height: 900},
-  {id: 'lion', title: 'Lion', description: 'JPEG • 8/28/2021', image: 'https://images.unsplash.com/photo-1629812456605-4a044aa38fbc?q=80&w=600&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D', width: 600, height: 899}
+  {
+    id: "desert",
+    title: "Desert Sunset",
+    description: "PNG • 2/3/2024",
+    image:
+      "https://images.unsplash.com/photo-1705034598432-1694e203cdf3?q=80&w=600&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
+    width: 600,
+    height: 400,
+  },
+  {
+    id: "hiking",
+    title: "Hiking Trail",
+    description: "JPEG • 1/10/2022",
+    image:
+      "https://images.unsplash.com/photo-1722233987129-61dc344db8b6?q=80&w=600&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
+    width: 600,
+    height: 900,
+  },
+  {
+    id: "lion",
+    title: "Lion",
+    description: "JPEG • 8/28/2021",
+    image:
+      "https://images.unsplash.com/photo-1629812456605-4a044aa38fbc?q=80&w=600&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
+    width: 600,
+    height: 899,
+  },
 ];
 
 <CardView
   aria-label="Nature photos"
   selectionMode="multiple"
   /*- begin highlight -*/
-  onAction={id => alert(`Opening ${id}`)}
+  onAction={(id) => alert(`Opening ${id}`)}
   /*- end highlight -*/
-  styles={style({width: 'full', height: 320})}
-  items={photos}>
-  {photo => (
+  styles={style({ width: "full", height: 320 })}
+  items={photos}
+>
+  {(photo) => (
     <AssetCard id={photo.id} textValue={photo.title}>
       <CardPreview>
         <Image src={photo.image} width={photo.width} height={photo.height} />
@@ -926,35 +1174,43 @@ const photos = [
       </Content>
     </AssetCard>
   )}
-</CardView>
+</CardView>;
 ```
 
 ## TableView example
 
 ```tsx
-import {TableView, TableHeader, Column, Row, TableBody, Cell} from '@react-spectrum/s2/TableView';
-import {style} from '@react-spectrum/s2/style' with {type: 'macro'};
+import {
+  TableView,
+  TableHeader,
+  Column,
+  Row,
+  TableBody,
+  Cell,
+} from "@react-spectrum/s2/TableView";
+import { style } from "@react-spectrum/s2/style" with { type: "macro" };
 
 const files = [
-  {id: 'games', name: 'Games', type: 'Folder', date: '6/7/2020'},
-  {id: 'documents', name: 'Documents', type: 'Folder', date: '4/7/2021'},
-  {id: 'photos', name: 'Photos', type: 'Folder', date: '11/20/2010'}
+  { id: "games", name: "Games", type: "Folder", date: "6/7/2020" },
+  { id: "documents", name: "Documents", type: "Folder", date: "4/7/2021" },
+  { id: "photos", name: "Photos", type: "Folder", date: "11/20/2010" },
 ];
 
 <TableView
   aria-label="Table"
   selectionMode="multiple"
   /*- begin highlight -*/
-  onAction={id => alert(`Opening ${id}`)}
+  onAction={(id) => alert(`Opening ${id}`)}
   /*- end highlight -*/
-  styles={style({width: 'full'})}>
+  styles={style({ width: "full" })}
+>
   <TableHeader>
     <Column isRowHeader>Name</Column>
     <Column>Type</Column>
     <Column>Date Modified</Column>
   </TableHeader>
   <TableBody items={files}>
-    {item => (
+    {(item) => (
       <Row>
         <Cell>{item.name}</Cell>
         <Cell>{item.type}</Cell>
@@ -962,40 +1218,46 @@ const files = [
       </Row>
     )}
   </TableBody>
-</TableView>
+</TableView>;
 ```
 
 ## TreeView example
 
 ```tsx
-import {TreeView, TreeViewItem, TreeViewItemContent, Collection} from '@react-spectrum/s2/TreeView';
-import {style} from '@react-spectrum/s2/style' with {type: 'macro'};
+import {
+  TreeView,
+  TreeViewItem,
+  TreeViewItemContent,
+  Collection,
+} from "@react-spectrum/s2/TreeView";
+import { style } from "@react-spectrum/s2/style" with { type: "macro" };
 
 const files = [
-  {id: 'games', name: 'Games'},
-  {id: 'documents', name: 'Documents'},
-  {id: 'photos', name: 'Photos'}
+  { id: "games", name: "Games" },
+  { id: "documents", name: "Documents" },
+  { id: "photos", name: "Photos" },
 ];
 
 <TreeView
   aria-label="Files"
   selectionMode="multiple"
-  defaultExpandedKeys={['computer']}
+  defaultExpandedKeys={["computer"]}
   /*- begin highlight -*/
-  onAction={id => alert(`Opening ${id}`)}
+  onAction={(id) => alert(`Opening ${id}`)}
   /*- end highlight -*/
-  styles={style({height: 250, width: 360, maxWidth: 'full'})}>
+  styles={style({ height: 250, width: 360, maxWidth: "full" })}
+>
   <TreeViewItem id="computer" textValue="My Computer">
     <TreeViewItemContent>My Computer</TreeViewItemContent>
     <Collection items={files}>
-      {item => (
+      {(item) => (
         <TreeViewItem textValue={item.name}>
           <TreeViewItemContent>{item.name}</TreeViewItemContent>
         </TreeViewItem>
       )}
     </Collection>
   </TreeViewItem>
-</TreeView>
+</TreeView>;
 ```
 
 ## Disabled items
@@ -1005,13 +1267,20 @@ An item can be disabled with the `isDisabled` prop. By default, disabled items a
 ## CardView example
 
 ```tsx
-import {CardView, AssetCard, CardPreview, Image, Content, Text} from '@react-spectrum/s2/CardView';
-import {style} from '@react-spectrum/s2/style' with {type: 'macro'};
+import {
+  CardView,
+  AssetCard,
+  CardPreview,
+  Image,
+  Content,
+  Text,
+} from "@react-spectrum/s2/CardView";
+import { style } from "@react-spectrum/s2/style" with { type: "macro" };
 
 <CardView
   aria-label="Pokemon"
   selectionMode="multiple"
-  styles={style({width: 'full', height: 320})}
+  styles={style({ width: "full", height: 320 })}
 >
   <AssetCard id="charizard" textValue="Charizard">
     <CardPreview>
@@ -1033,7 +1302,7 @@ import {style} from '@react-spectrum/s2/style' with {type: 'macro'};
   </AssetCard>
   {/*- begin highlight -*/}
   <AssetCard id="venusaur" textValue="Venusaur" isDisabled>
-  {/*- end highlight -*/}
+    {/*- end highlight -*/}
     <CardPreview>
       <Image src="https://img.pokemondb.net/sprites/home/normal/2x/avif/venusaur.avif" />
     </CardPreview>
@@ -1051,13 +1320,13 @@ import {style} from '@react-spectrum/s2/style' with {type: 'macro'};
       <Text slot="description">Electric • Level 100</Text>
     </Content>
   </AssetCard>
-</CardView>
+</CardView>;
 ```
 
 ## ComboBox example
 
 ```tsx
-import {ComboBox, ComboBoxItem} from '@react-spectrum/s2/ComboBox';
+import { ComboBox, ComboBoxItem } from "@react-spectrum/s2/ComboBox";
 
 <ComboBox
   label="Pokemon"
@@ -1067,60 +1336,73 @@ import {ComboBox, ComboBoxItem} from '@react-spectrum/s2/ComboBox';
   <ComboBoxItem id="charizard">Charizard</ComboBoxItem>
   <ComboBoxItem id="blastoise">Blastoise</ComboBoxItem>
   {/*- begin highlight -*/}
-  <ComboBoxItem id="venusaur" isDisabled>Venusaur</ComboBoxItem>
+  <ComboBoxItem id="venusaur" isDisabled>
+    Venusaur
+  </ComboBoxItem>
   {/*- end highlight -*/}
   <ComboBoxItem id="pikachu">Pikachu</ComboBoxItem>
-</ComboBox>
+</ComboBox>;
 ```
 
 ## Menu example
 
 ```tsx
-import {Menu, MenuTrigger, MenuItem} from '@react-spectrum/s2/Menu';
-import {ActionButton} from '@react-spectrum/s2/ActionButton';
+import { Menu, MenuTrigger, MenuItem } from "@react-spectrum/s2/Menu";
+import { ActionButton } from "@react-spectrum/s2/ActionButton";
 
 <MenuTrigger>
   <ActionButton>Pokemon</ActionButton>
-  <Menu selectionMode="multiple" defaultSelectedKeys={['pikachu']}>
+  <Menu selectionMode="multiple" defaultSelectedKeys={["pikachu"]}>
     <MenuItem id="charizard">Charizard</MenuItem>
     <MenuItem id="blastoise">Blastoise</MenuItem>
     {/*- begin highlight -*/}
-    <MenuItem id="venusaur" isDisabled>Venusaur</MenuItem>
+    <MenuItem id="venusaur" isDisabled>
+      Venusaur
+    </MenuItem>
     {/*- end highlight -*/}
     <MenuItem id="pikachu">Pikachu</MenuItem>
   </Menu>
-</MenuTrigger>
+</MenuTrigger>;
 ```
 
 ## SegmentedControl example
 
 ```tsx
-import {SegmentedControl, SegmentedControlItem} from '@react-spectrum/s2/SegmentedControl';
+import {
+  SegmentedControl,
+  SegmentedControlItem,
+} from "@react-spectrum/s2/SegmentedControl";
 
 <SegmentedControl aria-label="Time granularity" defaultSelectedKey="month">
   <SegmentedControlItem id="day">Day</SegmentedControlItem>
   {/*- begin highlight -*/}
-  <SegmentedControlItem id="week" isDisabled>Week</SegmentedControlItem>
+  <SegmentedControlItem id="week" isDisabled>
+    Week
+  </SegmentedControlItem>
   {/*- end highlight -*/}
   <SegmentedControlItem id="month">Month</SegmentedControlItem>
   <SegmentedControlItem id="year">Year</SegmentedControlItem>
-</SegmentedControl>
+</SegmentedControl>;
 ```
 
 ## SelectBoxGroup example
 
 ```tsx
-import {SelectBoxGroup, SelectBox, Text} from '@react-spectrum/s2/SelectBoxGroup';
-import {style} from '@react-spectrum/s2/style' with {type: 'macro'};
-import Server from '@react-spectrum/s2/illustrations/linear/Server';
-import StarFilled from '@react-spectrum/s2/illustrations/linear/Star';
-import AlertNotice from '@react-spectrum/s2/illustrations/linear/AlertNotice';
+import {
+  SelectBoxGroup,
+  SelectBox,
+  Text,
+} from "@react-spectrum/s2/SelectBoxGroup";
+import { style } from "@react-spectrum/s2/style" with { type: "macro" };
+import Server from "@react-spectrum/s2/illustrations/linear/Server";
+import StarFilled from "@react-spectrum/s2/illustrations/linear/Star";
+import AlertNotice from "@react-spectrum/s2/illustrations/linear/AlertNotice";
 
 <SelectBoxGroup
   aria-label="Cloud providers"
   selectionMode="multiple"
-  defaultSelectedKeys={['aws']}
-  styles={style({width: 'full'})}
+  defaultSelectedKeys={["aws"]}
+  styles={style({ width: "full" })}
 >
   <SelectBox id="aws" textValue="AWS">
     <Server />
@@ -1132,23 +1414,31 @@ import AlertNotice from '@react-spectrum/s2/illustrations/linear/AlertNotice';
   </SelectBox>
   {/*- begin highlight -*/}
   <SelectBox id="gcp" textValue="GCP" isDisabled>
-  {/*- end highlight -*/}
+    {/*- end highlight -*/}
     <StarFilled />
     <Text slot="label">Google Cloud Platform</Text>
   </SelectBox>
-</SelectBoxGroup>
+</SelectBoxGroup>;
 ```
 
 ## TableView example
 
 ```tsx
-import {TableView, TableHeader, Column, Row, TableBody, Cell} from '@react-spectrum/s2/TableView';
-import {style} from '@react-spectrum/s2/style' with {type: 'macro'};
+import {
+  TableView,
+  TableHeader,
+  Column,
+  Row,
+  TableBody,
+  Cell,
+} from "@react-spectrum/s2/TableView";
+import { style } from "@react-spectrum/s2/style" with { type: "macro" };
 
 <TableView
   aria-label="Pokemon"
   selectionMode="multiple"
-  styles={style({width: 'full'})}>
+  styles={style({ width: "full" })}
+>
   <TableHeader>
     <Column isRowHeader>Name</Column>
     <Column>Type</Column>
@@ -1167,7 +1457,7 @@ import {style} from '@react-spectrum/s2/style' with {type: 'macro'};
     </Row>
     {/*- begin highlight -*/}
     <Row id="venusaur" isDisabled>
-    {/*- end highlight -*/}
+      {/*- end highlight -*/}
       <Cell>Venusaur</Cell>
       <Cell>Grass, Poison</Cell>
       <Cell>83</Cell>
@@ -1178,20 +1468,22 @@ import {style} from '@react-spectrum/s2/style' with {type: 'macro'};
       <Cell>100</Cell>
     </Row>
   </TableBody>
-</TableView>
+</TableView>;
 ```
 
 ## Tabs example
 
 ```tsx
-import {Tabs, TabList, Tab, TabPanel} from '@react-spectrum/s2/Tabs';
+import { Tabs, TabList, Tab, TabPanel } from "@react-spectrum/s2/Tabs";
 
 <Tabs aria-label="Tabs" defaultSelectedKey="files">
   <TabList>
     <Tab id="home">Home</Tab>
     <Tab id="files">Files</Tab>
     {/*- begin highlight -*/}
-    <Tab id="search" isDisabled>Search</Tab>
+    <Tab id="search" isDisabled>
+      Search
+    </Tab>
     {/*- end highlight -*/}
     <Tab id="settings">Settings</Tab>
   </TabList>
@@ -1199,38 +1491,40 @@ import {Tabs, TabList, Tab, TabPanel} from '@react-spectrum/s2/Tabs';
   <TabPanel id="files">Files content</TabPanel>
   <TabPanel id="search">Search content</TabPanel>
   <TabPanel id="settings">Settings content</TabPanel>
-</Tabs>
+</Tabs>;
 ```
 
 ## TagGroup example
 
 ```tsx
-import {TagGroup, Tag} from '@react-spectrum/s2/TagGroup';
+import { TagGroup, Tag } from "@react-spectrum/s2/TagGroup";
 
-<TagGroup
-  label="Pokemon"
-  selectionMode="multiple">
+<TagGroup label="Pokemon" selectionMode="multiple">
   <Tag>Charizard</Tag>
   <Tag>Blastoise</Tag>
   {/*- begin highlight -*/}
   <Tag isDisabled>Venusaur</Tag>
   {/*- end highlight -*/}
   <Tag>Pikachu</Tag>
-</TagGroup>
+</TagGroup>;
 ```
 
 ## ToggleButtonGroup example
 
 ```tsx
-import {ToggleButtonGroup, ToggleButton, Text} from '@react-spectrum/s2/ToggleButtonGroup';
-import TextBold from '@react-spectrum/s2/icons/TextBold';
-import TextItalic from '@react-spectrum/s2/icons/TextItalic';
-import TextUnderline from '@react-spectrum/s2/icons/TextUnderline';
+import {
+  ToggleButtonGroup,
+  ToggleButton,
+  Text,
+} from "@react-spectrum/s2/ToggleButtonGroup";
+import TextBold from "@react-spectrum/s2/icons/TextBold";
+import TextItalic from "@react-spectrum/s2/icons/TextItalic";
+import TextUnderline from "@react-spectrum/s2/icons/TextUnderline";
 
 <ToggleButtonGroup
   aria-label="Text style"
   selectionMode="multiple"
-  defaultSelectedKeys={['bold']}
+  defaultSelectedKeys={["bold"]}
 >
   <ToggleButton id="bold">
     <TextBold />
@@ -1238,7 +1532,7 @@ import TextUnderline from '@react-spectrum/s2/icons/TextUnderline';
   </ToggleButton>
   {/*- begin highlight -*/}
   <ToggleButton id="italic" isDisabled>
-  {/*- end highlight -*/}
+    {/*- end highlight -*/}
     <TextItalic />
     <Text>Italic</Text>
   </ToggleButton>
@@ -1246,20 +1540,25 @@ import TextUnderline from '@react-spectrum/s2/icons/TextUnderline';
     <TextUnderline />
     <Text>Underline</Text>
   </ToggleButton>
-</ToggleButtonGroup>
+</ToggleButtonGroup>;
 ```
 
 ## TreeView example
 
 ```tsx
-import {TreeView, TreeViewItem, TreeViewItemContent} from '@react-spectrum/s2/TreeView';
-import {style} from '@react-spectrum/s2/style' with {type: 'macro'};
+import {
+  TreeView,
+  TreeViewItem,
+  TreeViewItemContent,
+} from "@react-spectrum/s2/TreeView";
+import { style } from "@react-spectrum/s2/style" with { type: "macro" };
 
 <TreeView
   aria-label="Pokemon evolution"
-  styles={style({height: 250, width: 360, maxWidth: 'full'})}
-  defaultExpandedKeys={['bulbasaur', 'ivysaur']}
-  selectionMode="multiple">
+  styles={style({ height: 250, width: 360, maxWidth: "full" })}
+  defaultExpandedKeys={["bulbasaur", "ivysaur"]}
+  selectionMode="multiple"
+>
   <TreeViewItem id="bulbasaur" textValue="Bulbasaur">
     <TreeViewItemContent>Bulbasaur</TreeViewItemContent>
     <TreeViewItem id="ivysaur" textValue="Ivysaur">
@@ -1289,7 +1588,7 @@ import {style} from '@react-spectrum/s2/style' with {type: 'macro'};
       </TreeViewItem>
     </TreeViewItem>
   </TreeViewItem>
-</TreeView>
+</TreeView>;
 ```
 
 In dynamic collections, it may be more convenient to use the `disabledKeys` prop at the collection level instead of `isDisabled` on individual items. This accepts a list of item ids that are disabled.
@@ -1297,46 +1596,58 @@ In dynamic collections, it may be more convenient to use the `disabledKeys` prop
 ## CardView example
 
 ```tsx
-import {CardView, AssetCard, CardPreview, Image, Content, Text} from '@react-spectrum/s2/CardView';
-import {style} from '@react-spectrum/s2/style' with {type: 'macro'};
+import {
+  CardView,
+  AssetCard,
+  CardPreview,
+  Image,
+  Content,
+  Text,
+} from "@react-spectrum/s2/CardView";
+import { style } from "@react-spectrum/s2/style" with { type: "macro" };
 
 const items = [
-  {id: 1, name: 'Charizard', type: 'Fire, Flying', level: 67},
-  {id: 2, name: 'Blastoise', type: 'Water', level: 56},
-  {id: 3, name: 'Venusaur', type: 'Grass, Poison', level: 83},
-  {id: 4, name: 'Pikachu', type: 'Electric', level: 100}
+  { id: 1, name: "Charizard", type: "Fire, Flying", level: 67 },
+  { id: 2, name: "Blastoise", type: "Water", level: 56 },
+  { id: 3, name: "Venusaur", type: "Grass, Poison", level: 83 },
+  { id: 4, name: "Pikachu", type: "Electric", level: 100 },
 ];
 
 <CardView
   aria-label="Pokemon"
   selectionMode="multiple"
   disabledKeys={[3]}
-  styles={style({width: 'full', height: 320})}
-  items={items}>
-  {item => (
+  styles={style({ width: "full", height: 320 })}
+  items={items}
+>
+  {(item) => (
     <AssetCard id={item.id} textValue={item.name}>
       <CardPreview>
-        <Image src={`https://img.pokemondb.net/sprites/home/normal/2x/avif/${item.name.toLowerCase()}.avif`} />
+        <Image
+          src={`https://img.pokemondb.net/sprites/home/normal/2x/avif/${item.name.toLowerCase()}.avif`}
+        />
       </CardPreview>
       <Content>
         <Text slot="title">{item.name}</Text>
-        <Text slot="description">{item.type} • Level {item.level}</Text>
+        <Text slot="description">
+          {item.type} • Level {item.level}
+        </Text>
       </Content>
     </AssetCard>
   )}
-</CardView>
+</CardView>;
 ```
 
 ## ComboBox example
 
 ```tsx
-import {ComboBox, ComboBoxItem} from '@react-spectrum/s2/ComboBox';
+import { ComboBox, ComboBoxItem } from "@react-spectrum/s2/ComboBox";
 
 const items = [
-  {id: 1, name: 'Charizard'},
-  {id: 2, name: 'Blastoise'},
-  {id: 3, name: 'Venusaur'},
-  {id: 4, name: 'Pikachu'}
+  { id: 1, name: "Charizard" },
+  { id: 2, name: "Blastoise" },
+  { id: 3, name: "Venusaur" },
+  { id: 4, name: "Pikachu" },
 ];
 
 <ComboBox
@@ -1344,22 +1655,23 @@ const items = [
   placeholder="Select a Pokemon"
   defaultSelectedKey={4}
   disabledKeys={[3]}
-  items={items}>
-  {item => <ComboBoxItem>{item.name}</ComboBoxItem>}
-</ComboBox>
+  items={items}
+>
+  {(item) => <ComboBoxItem>{item.name}</ComboBoxItem>}
+</ComboBox>;
 ```
 
 ## Menu example
 
 ```tsx
-import {Menu, MenuTrigger, MenuItem} from '@react-spectrum/s2/Menu';
-import {ActionButton} from '@react-spectrum/s2/ActionButton';
+import { Menu, MenuTrigger, MenuItem } from "@react-spectrum/s2/Menu";
+import { ActionButton } from "@react-spectrum/s2/ActionButton";
 
 const items = [
-  {id: 1, name: 'Charizard'},
-  {id: 2, name: 'Blastoise'},
-  {id: 3, name: 'Venusaur'},
-  {id: 4, name: 'Pikachu'}
+  { id: 1, name: "Charizard" },
+  { id: 2, name: "Blastoise" },
+  { id: 3, name: "Venusaur" },
+  { id: 4, name: "Pikachu" },
 ];
 
 <MenuTrigger>
@@ -1368,25 +1680,30 @@ const items = [
     selectionMode="multiple"
     defaultSelectedKeys={[4]}
     disabledKeys={[3]}
-    items={items}>
-    {item => <MenuItem>{item.name}</MenuItem>}
+    items={items}
+  >
+    {(item) => <MenuItem>{item.name}</MenuItem>}
   </Menu>
-</MenuTrigger>
+</MenuTrigger>;
 ```
 
 ## SelectBoxGroup example
 
 ```tsx
-import {SelectBoxGroup, SelectBox, Text} from '@react-spectrum/s2/SelectBoxGroup';
-import {style} from '@react-spectrum/s2/style' with {type: 'macro'};
-import Server from '@react-spectrum/s2/illustrations/linear/Server';
-import StarFilled from '@react-spectrum/s2/illustrations/linear/Star';
-import AlertNotice from '@react-spectrum/s2/illustrations/linear/AlertNotice';
+import {
+  SelectBoxGroup,
+  SelectBox,
+  Text,
+} from "@react-spectrum/s2/SelectBoxGroup";
+import { style } from "@react-spectrum/s2/style" with { type: "macro" };
+import Server from "@react-spectrum/s2/illustrations/linear/Server";
+import StarFilled from "@react-spectrum/s2/illustrations/linear/Star";
+import AlertNotice from "@react-spectrum/s2/illustrations/linear/AlertNotice";
 
 const items = [
-  {id: 1, name: 'AWS', illustration: <Server />},
-  {id: 2, name: 'Azure', illustration: <AlertNotice />},
-  {id: 3, name: 'GCP', illustration: <StarFilled />}
+  { id: 1, name: "AWS", illustration: <Server /> },
+  { id: 2, name: "Azure", illustration: <AlertNotice /> },
+  { id: 3, name: "GCP", illustration: <StarFilled /> },
 ];
 
 <SelectBoxGroup
@@ -1394,42 +1711,51 @@ const items = [
   selectionMode="multiple"
   defaultSelectedKeys={[1]}
   disabledKeys={[3]}
-  styles={style({width: 'full'})}
-  items={items}>
-  {((item) => (
+  styles={style({ width: "full" })}
+  items={items}
+>
+  {(item) => (
     <SelectBox textValue={item.name}>
       {item.illustration}
       <Text slot="label">{item.name}</Text>
     </SelectBox>
-  ))}
-</SelectBoxGroup>
+  )}
+</SelectBoxGroup>;
 ```
 
 ## TableView example
 
 ```tsx
-import {TableView, TableHeader, Column, Row, TableBody, Cell} from '@react-spectrum/s2/TableView';
-import {style} from '@react-spectrum/s2/style' with {type: 'macro'};
+import {
+  TableView,
+  TableHeader,
+  Column,
+  Row,
+  TableBody,
+  Cell,
+} from "@react-spectrum/s2/TableView";
+import { style } from "@react-spectrum/s2/style" with { type: "macro" };
 
 let items = [
-  {id: 1, name: 'Charizard', type: 'Fire, Flying', level: 67},
-  {id: 2, name: 'Blastoise', type: 'Water', level: 56},
-  {id: 3, name: 'Venusaur', type: 'Grass, Poison', level: 83},
-  {id: 4, name: 'Pikachu', type: 'Electric', level: 100}
+  { id: 1, name: "Charizard", type: "Fire, Flying", level: 67 },
+  { id: 2, name: "Blastoise", type: "Water", level: 56 },
+  { id: 3, name: "Venusaur", type: "Grass, Poison", level: 83 },
+  { id: 4, name: "Pikachu", type: "Electric", level: 100 },
 ];
 
 <TableView
   aria-label="Pokemon"
   disabledKeys={[3]}
   selectionMode="multiple"
-  styles={style({width: 'full'})}>
+  styles={style({ width: "full" })}
+>
   <TableHeader>
     <Column isRowHeader>Name</Column>
     <Column>Type</Column>
     <Column>Level</Column>
   </TableHeader>
   <TableBody items={items}>
-    {item => (
+    {(item) => (
       <Row>
         <Cell>{item.name}</Cell>
         <Cell>{item.type}</Cell>
@@ -1437,35 +1763,41 @@ let items = [
       </Row>
     )}
   </TableBody>
-</TableView>
+</TableView>;
 ```
 
 ## TagGroup example
 
 ```tsx
-import {TagGroup, Tag} from '@react-spectrum/s2/TagGroup';
+import { TagGroup, Tag } from "@react-spectrum/s2/TagGroup";
 
 const items = [
-  {id: 1, name: 'Charizard'},
-  {id: 2, name: 'Blastoise'},
-  {id: 3, name: 'Venusaur'},
-  {id: 4, name: 'Pikachu'}
+  { id: 1, name: "Charizard" },
+  { id: 2, name: "Blastoise" },
+  { id: 3, name: "Venusaur" },
+  { id: 4, name: "Pikachu" },
 ];
 
 <TagGroup
   label="Pokemon"
   selectionMode="multiple"
   disabledKeys={[3]}
-  items={items}>
-  {item => <Tag>{item.name}</Tag>}
-</TagGroup>
+  items={items}
+>
+  {(item) => <Tag>{item.name}</Tag>}
+</TagGroup>;
 ```
 
 ## TreeView example
 
 ```tsx
-import {TreeView, TreeViewItem, TreeViewItemContent, Collection} from '@react-spectrum/s2/TreeView';
-import {style} from '@react-spectrum/s2/style' with {type: 'macro'};
+import {
+  TreeView,
+  TreeViewItem,
+  TreeViewItemContent,
+  Collection,
+} from "@react-spectrum/s2/TreeView";
+import { style } from "@react-spectrum/s2/style" with { type: "macro" };
 
 type PokemonItem = {
   id: number;
@@ -1476,39 +1808,70 @@ type PokemonItem = {
 };
 
 let items: PokemonItem[] = [
-  {id: 1, name: 'Bulbasaur', type: 'Grass', level: 14, children: [
-    {id: 2, name: 'Ivysaur', type: 'Grass', level: 30, children: [
-      {id: 3, name: 'Venusaur', type: 'Grass', level: 83}
-    ]}
-  ]},
-  {id: 4, name: 'Charmander', type: 'Fire', level: 16, children: [
-    {id: 5, name: 'Charmeleon', type: 'Fire', level: 32, children: [
-      {id: 6, name: 'Charizard', type: 'Fire, Flying', level: 67}
-    ]}
-  ]},
-  {id: 7, name: 'Squirtle', type: 'Water', level: 8, children: [
-    {id: 8, name: 'Wartortle', type: 'Water', level: 34, children: [
-      {id: 9, name: 'Blastoise', type: 'Water', level: 56}
-    ]}
-  ]}
+  {
+    id: 1,
+    name: "Bulbasaur",
+    type: "Grass",
+    level: 14,
+    children: [
+      {
+        id: 2,
+        name: "Ivysaur",
+        type: "Grass",
+        level: 30,
+        children: [{ id: 3, name: "Venusaur", type: "Grass", level: 83 }],
+      },
+    ],
+  },
+  {
+    id: 4,
+    name: "Charmander",
+    type: "Fire",
+    level: 16,
+    children: [
+      {
+        id: 5,
+        name: "Charmeleon",
+        type: "Fire",
+        level: 32,
+        children: [
+          { id: 6, name: "Charizard", type: "Fire, Flying", level: 67 },
+        ],
+      },
+    ],
+  },
+  {
+    id: 7,
+    name: "Squirtle",
+    type: "Water",
+    level: 8,
+    children: [
+      {
+        id: 8,
+        name: "Wartortle",
+        type: "Water",
+        level: 34,
+        children: [{ id: 9, name: "Blastoise", type: "Water", level: 56 }],
+      },
+    ],
+  },
 ];
 
 <TreeView
   aria-label="Pokemon evolution"
-  styles={style({height: 250, width: 360, maxWidth: 'full'})}
+  styles={style({ height: 250, width: 360, maxWidth: "full" })}
   defaultExpandedKeys={[1, 2]}
   selectionMode="multiple"
   disabledKeys={[3]}
-  items={items}>
+  items={items}
+>
   {function renderItem(item) {
     return (
       <TreeViewItem textValue={item.name}>
         <TreeViewItemContent>{item.name}</TreeViewItemContent>
-        <Collection items={item.children}>
-          {renderItem}
-        </Collection>
+        <Collection items={item.children}>{renderItem}</Collection>
       </TreeViewItem>
-    )
+    );
   }}
-</TreeView>
+</TreeView>;
 ```

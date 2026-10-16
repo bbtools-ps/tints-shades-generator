@@ -4,89 +4,151 @@ Handles drop interactions for a collection component, with support for tradition
 touch based drag and drop, in addition to full parity for keyboard and screen reader users.
 
 ```tsx
-import React from 'react';
-import {useListBox, useOption} from 'react-aria/useListBox';
-import {useListState} from 'react-stately/useListState';
-import {Item} from 'react-stately/Item';
-import type {Node} from '@react-types/shared';
-import {useFocusRing} from 'react-aria/useFocusRing';
-import {mergeProps} from 'react-aria/mergeProps';
-import {useDroppableCollectionState} from 'react-stately/useDroppableCollectionState';
-import {useDroppableCollection, useDroppableItem, useDropIndicator} from 'react-aria/useDroppableCollection';
-import {useDrag} from 'react-aria/useDrag';
-import {ListKeyboardDelegate} from 'react-aria/ListKeyboardDelegate';
-import {ListDropTargetDelegate} from 'react-aria/ListDropTargetDelegate';
-import 'vanilla-starter/theme.css';
+import React from "react";
+import { useListBox, useOption } from "react-aria/useListBox";
+import { useListState } from "react-stately/useListState";
+import { Item } from "react-stately/Item";
+import type { Node } from "@react-types/shared";
+import { useFocusRing } from "react-aria/useFocusRing";
+import { mergeProps } from "react-aria/mergeProps";
+import { useDroppableCollectionState } from "react-stately/useDroppableCollectionState";
+import {
+  useDroppableCollection,
+  useDroppableItem,
+  useDropIndicator,
+} from "react-aria/useDroppableCollection";
+import { useDrag } from "react-aria/useDrag";
+import { ListKeyboardDelegate } from "react-aria/ListKeyboardDelegate";
+import { ListDropTargetDelegate } from "react-aria/ListDropTargetDelegate";
+import "vanilla-starter/theme.css";
 
-function ListBox(props: Parameters<typeof useListState>[0] & Parameters<typeof useListBox>[0] & {label?: React.ReactNode, onItemDrop?: Parameters<typeof useDroppableCollection>[0]['onItemDrop']}) {
+function ListBox(
+  props: Parameters<typeof useListState>[0] &
+    Parameters<typeof useListBox>[0] & {
+      label?: React.ReactNode;
+      onItemDrop?: Parameters<typeof useDroppableCollection>[0]["onItemDrop"];
+    }
+) {
   // Set up the list box as normal. See the useListBox docs for details.
   let state = useListState(props);
   let ref = React.useRef<HTMLUListElement>(null);
-  let {listBoxProps} = useListBox(props, state, ref);
+  let { listBoxProps } = useListBox(props, state, ref);
 
   // Set up the drop state and keyboard/drop target delegates.
   let dropState = useDroppableCollectionState({
     ...props,
     collection: state.collection,
-    selectionManager: state.selectionManager
+    selectionManager: state.selectionManager,
   });
-  let {collectionProps} = useDroppableCollection({
-    ...props,
-    keyboardDelegate: new ListKeyboardDelegate(state.collection, state.disabledKeys, ref),
-    dropTargetDelegate: new ListDropTargetDelegate(state.collection, ref)
-  }, dropState, ref);
+  let { collectionProps } = useDroppableCollection(
+    {
+      ...props,
+      keyboardDelegate: new ListKeyboardDelegate(
+        state.collection,
+        state.disabledKeys,
+        ref
+      ),
+      dropTargetDelegate: new ListDropTargetDelegate(state.collection, ref),
+    },
+    dropState,
+    ref
+  );
 
-  let isDropTarget = dropState.isDropTarget({type: 'root'});
+  let isDropTarget = dropState.isDropTarget({ type: "root" });
 
   return (
     <ul
       {...mergeProps(listBoxProps, collectionProps)}
       ref={ref}
-      style={{padding: 0, margin: 0, listStyle: 'none', width: 220, borderRadius: 8, color: 'var(--text-color)', border: `1px solid ${isDropTarget ? 'var(--focus-ring-color)' : 'var(--gray-300)'}`}}>
-      <DropIndicator target={{type: 'root'}} dropState={dropState} />
-      {[...state.collection].map(item => (
-        <Option key={item.key} item={item} state={state} dropState={dropState} />
+      style={{
+        padding: 0,
+        margin: 0,
+        listStyle: "none",
+        width: 220,
+        borderRadius: 8,
+        color: "var(--text-color)",
+        border: `1px solid ${isDropTarget ? "var(--focus-ring-color)" : "var(--gray-300)"}`,
+      }}
+    >
+      <DropIndicator target={{ type: "root" }} dropState={dropState} />
+      {[...state.collection].map((item) => (
+        <Option
+          key={item.key}
+          item={item}
+          state={state}
+          dropState={dropState}
+        />
       ))}
     </ul>
   );
 }
 
-function Option({item, state, dropState}: {item: Node<unknown>, state: ReturnType<typeof useListState>, dropState: ReturnType<typeof useDroppableCollectionState>}) {
+function Option({
+  item,
+  state,
+  dropState,
+}: {
+  item: Node<unknown>;
+  state: ReturnType<typeof useListState>;
+  dropState: ReturnType<typeof useDroppableCollectionState>;
+}) {
   let ref = React.useRef<HTMLLIElement>(null);
-  let {optionProps} = useOption({key: item.key}, state, ref);
-  let {isFocusVisible, focusProps} = useFocusRing();
+  let { optionProps } = useOption({ key: item.key }, state, ref);
+  let { isFocusVisible, focusProps } = useFocusRing();
   // Register the item as a drop target.
-  let {dropProps, isDropTarget} = useDroppableItem(
-    {target: {type: 'item', key: item.key, dropPosition: 'on'}},
+  let { dropProps, isDropTarget } = useDroppableItem(
+    { target: { type: "item", key: item.key, dropPosition: "on" } },
     dropState,
     ref
   );
 
   return (
     <>
-      <DropIndicator target={{type: 'item', key: item.key, dropPosition: 'before'}} dropState={dropState} />
+      <DropIndicator
+        target={{ type: "item", key: item.key, dropPosition: "before" }}
+        dropState={dropState}
+      />
       <li
         {...mergeProps(optionProps, dropProps, focusProps)}
         ref={ref}
         style={{
-          padding: '8px 12px',
-          outline: isFocusVisible ? '2px solid var(--focus-ring-color)' : 'none',
+          padding: "8px 12px",
+          outline: isFocusVisible
+            ? "2px solid var(--focus-ring-color)"
+            : "none",
           outlineOffset: -2,
-          background: isDropTarget ? 'var(--highlight-background)' : 'transparent',
-          color: isDropTarget ? 'var(--highlight-foreground)' : 'var(--text-color)'
-        }}>
+          background: isDropTarget
+            ? "var(--highlight-background)"
+            : "transparent",
+          color: isDropTarget
+            ? "var(--highlight-foreground)"
+            : "var(--text-color)",
+        }}
+      >
         {item.rendered}
       </li>
-      {state.collection.getKeyAfter(item.key) == null &&
-        <DropIndicator target={{type: 'item', key: item.key, dropPosition: 'after'}} dropState={dropState} />}
+      {state.collection.getKeyAfter(item.key) == null && (
+        <DropIndicator
+          target={{ type: "item", key: item.key, dropPosition: "after" }}
+          dropState={dropState}
+        />
+      )}
     </>
   );
 }
 
-function DropIndicator(props: Parameters<typeof useDropIndicator>[0] & {dropState: ReturnType<typeof useDroppableCollectionState>}) {
+function DropIndicator(
+  props: Parameters<typeof useDropIndicator>[0] & {
+    dropState: ReturnType<typeof useDroppableCollectionState>;
+  }
+) {
   // Drop indicators must use role="option" inside a listbox to keep the ARIA tree valid.
   let ref = React.useRef<HTMLLIElement>(null);
-  let {dropIndicatorProps, isHidden, isDropTarget} = useDropIndicator(props, props.dropState, ref);
+  let { dropIndicatorProps, isHidden, isDropTarget } = useDropIndicator(
+    props,
+    props.dropState,
+    ref
+  );
   if (isHidden) {
     return null;
   }
@@ -96,13 +158,20 @@ function DropIndicator(props: Parameters<typeof useDropIndicator>[0] & {dropStat
       {...dropIndicatorProps}
       role="option"
       ref={ref}
-      style={{width: '100%', height: 2, margin: '-1px 0', outline: 'none', background: isDropTarget ? 'var(--focus-ring-color)' : 'transparent'}} />
+      style={{
+        width: "100%",
+        height: 2,
+        margin: "-1px 0",
+        outline: "none",
+        background: isDropTarget ? "var(--focus-ring-color)" : "transparent",
+      }}
+    />
   );
 }
 
 function Draggable() {
-  let {dragProps, isDragging} = useDrag({
-    getItems: () => [{'text/plain': 'budget.xls'}]
+  let { dragProps, isDragging } = useDrag({
+    getItems: () => [{ "text/plain": "budget.xls" }],
   });
 
   return (
@@ -110,30 +179,40 @@ function Draggable() {
       {...dragProps}
       role="button"
       tabIndex={0}
-      style={{padding: '8px 12px', borderRadius: 8, cursor: 'grab', width: 'fit-content', color: 'var(--text-color)', border: '1px solid var(--gray-300)', opacity: isDragging ? 0.5 : 1}}>
+      style={{
+        padding: "8px 12px",
+        borderRadius: 8,
+        cursor: "grab",
+        width: "fit-content",
+        color: "var(--text-color)",
+        border: "1px solid var(--gray-300)",
+        opacity: isDragging ? 0.5 : 1,
+      }}
+    >
       budget.xls
     </div>
   );
 }
 
-<div style={{display: 'flex', gap: 16, alignItems: 'start'}}>
+<div style={{ display: "flex", gap: 16, alignItems: "start" }}>
   <Draggable />
   <ListBox
     aria-label="Files"
     selectionMode="single"
-    onItemDrop={e => alert(`Dropped on ${e.target.key}`)}>
+    onItemDrop={(e) => alert(`Dropped on ${e.target.key}`)}
+  >
     <Item key="documents">Documents</Item>
     <Item key="proposal">proposal.doc</Item>
     <Item key="presentation">presentation.ppt</Item>
   </ListBox>
-</div>
+</div>;
 ```
 
 ## API
 
 <FunctionAPIGroup functions={[
-    {function: statelyDocs.exports.useDroppableCollectionState, links: statelyDocs.links},
-    {function: docs.exports.useDroppableCollection, links: docs.links},
-    {function: docs.exports.useDroppableItem, links: docs.links},
-    {function: docs.exports.useDropIndicator, links: docs.links},
-  ]}/>
+{function: statelyDocs.exports.useDroppableCollectionState, links: statelyDocs.links},
+{function: docs.exports.useDroppableCollection, links: docs.links},
+{function: docs.exports.useDroppableItem, links: docs.links},
+{function: docs.exports.useDropIndicator, links: docs.links},
+]}/>

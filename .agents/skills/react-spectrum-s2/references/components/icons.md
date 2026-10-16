@@ -5,7 +5,7 @@ React Spectrum offers a set of open source icons that can be imported from `@rea
 ```tsx
 import Edit from "@react-spectrum/s2/icons/Edit";
 
-<Edit />
+<Edit />;
 ```
 
 ## Available icons
@@ -428,52 +428,52 @@ Icons support a more limited set of the style macro through a special macro call
 ### iconStyle
 
 ```tsx
-import {iconStyle} from '@react-spectrum/s2/style' with {type: 'macro'};
-import Edit from '@react-spectrum/s2/icons/Edit';
+import { iconStyle } from "@react-spectrum/s2/style" with { type: "macro" };
+import Edit from "@react-spectrum/s2/icons/Edit";
 
-<Edit styles={iconStyle({size: 'XL', color: 'positive'})} />
+<Edit styles={iconStyle({ size: "XL", color: "positive" })} />;
 ```
 
 ### Icon colors
 
-| Color |
-|-------|
-| white |
-| black |
-| accent |
-| neutral |
-| negative |
+| Color       |
+| ----------- |
+| white       |
+| black       |
+| accent      |
+| neutral     |
+| negative    |
 | informative |
-| positive |
-| notice |
-| gray |
-| red |
-| orange |
-| yellow |
-| chartreuse |
-| celery |
-| seafoam |
-| cyan |
-| blue |
-| indigo |
-| purple |
-| fuchsia |
-| magenta |
-| pink |
-| turquoise |
-| cinnamon |
-| brown |
-| silver |
+| positive    |
+| notice      |
+| gray        |
+| red         |
+| orange      |
+| yellow      |
+| chartreuse  |
+| celery      |
+| seafoam     |
+| cyan        |
+| blue        |
+| indigo      |
+| purple      |
+| fuchsia     |
+| magenta     |
+| pink        |
+| turquoise   |
+| cinnamon    |
+| brown       |
+| silver      |
 
 ### Icon sizes
 
 | Size | Pixels |
-|------|--------|
-| XS | 14px |
-| S | 16px |
-| M | 20px |
-| L | 22px |
-| XL | 26px |
+| ---- | ------ |
+| XS   | 14px   |
+| S    | 16px   |
+| M    | 20px   |
+| L    | 22px   |
+| XL   | 26px   |
 
 ## Custom icons
 

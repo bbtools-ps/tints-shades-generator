@@ -45,25 +45,17 @@ interface ItemValue {
 let tree = useTreeData<ItemValue>({
   initialItems: [
     {
-      name: 'People',
-      items: [
-        {name: 'David'},
-        {name: 'Sam'},
-        {name: 'Jane'}
-      ]
+      name: "People",
+      items: [{ name: "David" }, { name: "Sam" }, { name: "Jane" }],
     },
     {
-      name: 'Animals',
-      items: [
-        {name: 'Aardvark'},
-        {name: 'Kangaroo'},
-        {name: 'Snake'}
-      ]
-    }
+      name: "Animals",
+      items: [{ name: "Aardvark" }, { name: "Kangaroo" }, { name: "Snake" }],
+    },
   ],
-  initialSelectedKeys: ['Sam', 'Kangaroo'],
-  getKey: item => item.name,
-  getChildren: item => item.items || []
+  initialSelectedKeys: ["Sam", "Kangaroo"],
+  getKey: (item) => item.name,
+  getChildren: (item) => item.items || [],
 });
 
 <ListBox
@@ -72,16 +64,17 @@ let tree = useTreeData<ItemValue>({
   selectionMode="multiple"
   selectedKeys={tree.selectedKeys}
   onSelectionChange={(keys) => {
-    if (keys !== 'all') {
+    if (keys !== "all") {
       tree.setSelectedKeys(keys);
     }
-  }}>
-  {node =>
+  }}
+>
+  {(node) => (
     <Section title={node.value.name} items={node.children}>
-      {node => <Item>{node.value.name}</Item>}
+      {(node) => <Item>{node.value.name}</Item>}
     </Section>
-  }
-</ListBox>
+  )}
+</ListBox>;
 ```
 
 ### Inserting items
@@ -91,52 +84,52 @@ Pass a `parentKey` to insert into, or `null` to insert a root item.
 
 ```tsx
 // Insert an item into the root, after 'People'
-tree.insert(null, 1, {name: 'Plants'});
+tree.insert(null, 1, { name: "Plants" });
 
 // Insert an item into the 'People' node, after 'David'
-tree.insert('People', 1, {name: 'Judy'});
+tree.insert("People", 1, { name: "Judy" });
 ```
 
 ```tsx
 // Insert an item before another item
-tree.insertAfter('Kangaroo', {name: 'Horse'});
+tree.insertAfter("Kangaroo", { name: "Horse" });
 
 // Insert multiple items before another item
-tree.insertAfter('Kangaroo', {name: 'Horse'}, {name: 'Giraffe'});
+tree.insertAfter("Kangaroo", { name: "Horse" }, { name: "Giraffe" });
 ```
 
 ```tsx
 // Insert an item after another item
-tree.insertAfter('Kangaroo', {name: 'Horse'});
+tree.insertAfter("Kangaroo", { name: "Horse" });
 
 // Insert multiple items after another item
-tree.insertAfter('Kangaroo', {name: 'Horse'}, {name: 'Giraffe'});
+tree.insertAfter("Kangaroo", { name: "Horse" }, { name: "Giraffe" });
 ```
 
 ```tsx
 // Append an item to the root
-tree.append(null, {name: 'Plants'});
+tree.append(null, { name: "Plants" });
 
 // Append an item to the 'People' node
-tree.append('People', {name: 'Plants'});
+tree.append("People", { name: "Plants" });
 ```
 
 ```tsx
 // Prepend an item to the root
-tree.prepend(null, {name: 'Plants'});
+tree.prepend(null, { name: "Plants" });
 
 // Prepend an item at the start of the 'People' node
-tree.prepend('People', {name: 'Plants'});
+tree.prepend("People", { name: "Plants" });
 ```
 
 ### Removing items
 
 ```tsx
 // Remove an item
-list.remove('Kangaroo');
+list.remove("Kangaroo");
 
 // Remove multiple items
-list.remove('Kangaroo', 'Snake');
+list.remove("Kangaroo", "Snake");
 ```
 
 ```tsx
@@ -148,17 +141,17 @@ list.removeSelectedItems();
 
 ```tsx
 // Move an item within the same parent
-tree.move('Sam', 'People', 0);
+tree.move("Sam", "People", 0);
 
 // Move an item to a different parent
-tree.move('Sam', 'Animals', 1);
+tree.move("Sam", "Animals", 1);
 
 // Move an item to the root
-tree.move('Sam', null, 1);
+tree.move("Sam", null, 1);
 ```
 
 ### Updating items
 
 ```tsx
-tree.update('Sam', {name: 'Samantha'});
+tree.update("Sam", { name: "Samantha" });
 ```

@@ -7,8 +7,8 @@ Many components display a collection of items, and provide functionality such as
 A **static collection** is a collection that does not change over time (e.g. hard coded). This is common for components like menus where the items are built into the application rather than user data.
 
 ```tsx
-import {Menu, MenuTrigger, MenuItem} from '@react-spectrum/s2/Menu';
-import {ActionButton} from '@react-spectrum/s2/ActionButton';
+import { Menu, MenuTrigger, MenuItem } from "@react-spectrum/s2/Menu";
+import { ActionButton } from "@react-spectrum/s2/ActionButton";
 
 <MenuTrigger>
   <ActionButton>Menu</ActionButton>
@@ -17,7 +17,7 @@ import {ActionButton} from '@react-spectrum/s2/ActionButton';
     <MenuItem>Edit</MenuItem>
     <MenuItem>Delete</MenuItem>
   </Menu>
-</MenuTrigger>
+</MenuTrigger>;
 ```
 
 ### Sections
@@ -27,8 +27,15 @@ Sections or groups of items can be constructed by wrapping the items in a sectio
 ## Menu example
 
 ```tsx
-import {Menu, MenuTrigger, MenuItem, MenuSection, Header, Heading} from '@react-spectrum/s2/Menu';
-import {ActionButton} from '@react-spectrum/s2/ActionButton';
+import {
+  Menu,
+  MenuTrigger,
+  MenuItem,
+  MenuSection,
+  Header,
+  Heading,
+} from "@react-spectrum/s2/Menu";
+import { ActionButton } from "@react-spectrum/s2/ActionButton";
 
 <MenuTrigger>
   <ActionButton>Menu</ActionButton>
@@ -51,13 +58,19 @@ import {ActionButton} from '@react-spectrum/s2/ActionButton';
       <MenuItem>Right</MenuItem>
     </MenuSection>
   </Menu>
-</MenuTrigger>
+</MenuTrigger>;
 ```
 
 ## Picker example
 
 ```tsx
-import {Picker, PickerSection, PickerItem, Header, Heading} from '@react-spectrum/s2/Picker';
+import {
+  Picker,
+  PickerSection,
+  PickerItem,
+  Header,
+  Heading,
+} from "@react-spectrum/s2/Picker";
 
 <Picker label="Text style">
   {/*- begin highlight -*/}
@@ -77,7 +90,7 @@ import {Picker, PickerSection, PickerItem, Header, Heading} from '@react-spectru
     <PickerItem id="middle">Middle</PickerItem>
     <PickerItem id="right">Right</PickerItem>
   </PickerSection>
-</Picker>
+</Picker>;
 ```
 
 ## Dynamic collections
@@ -87,34 +100,39 @@ A **dynamic collection** is a collection that is based on external data, for exa
 Use the `items` prop to provide an array of objects, and a function to render each item as the `children`. This is similar to using `array.map` to render the children, but automatically memoizes the rendering of each item to improve performance.
 
 ```tsx
-import {TagGroup, Tag, Text} from '@react-spectrum/s2/TagGroup';
-import {ActionButton} from '@react-spectrum/s2/ActionButton';
-import {style} from '@react-spectrum/s2/style' with {type: 'macro'};
-import AddIcon from '@react-spectrum/s2/icons/Add';
-import {useState} from 'react';
+import { TagGroup, Tag, Text } from "@react-spectrum/s2/TagGroup";
+import { ActionButton } from "@react-spectrum/s2/ActionButton";
+import { style } from "@react-spectrum/s2/style" with { type: "macro" };
+import AddIcon from "@react-spectrum/s2/icons/Add";
+import { useState } from "react";
 
 function Example() {
   let [animals, setAnimals] = useState([
-    {id: 1, name: 'Aardvark'},
-    {id: 2, name: 'Kangaroo'},
-    {id: 3, name: 'Snake'}
+    { id: 1, name: "Aardvark" },
+    { id: 2, name: "Kangaroo" },
+    { id: 3, name: "Snake" },
   ]);
 
   let addItem = () => {
-    setAnimals([
-      ...animals,
-      {id: animals.length + 1, name: 'Lion'}
-    ]);
+    setAnimals([...animals, { id: animals.length + 1, name: "Lion" }]);
   };
 
   return (
-    <div className={style({display: 'flex', flexDirection: 'column', gap: 32, width: 320, maxWidth: 'full'})}>
+    <div
+      className={style({
+        display: "flex",
+        flexDirection: "column",
+        gap: 32,
+        width: 320,
+        maxWidth: "full",
+      })}
+    >
       {/*- begin highlight -*/}
       <TagGroup label="Animals" items={animals}>
-        {item => <Tag>{item.name}</Tag>}
+        {(item) => <Tag>{item.name}</Tag>}
       </TagGroup>
       {/*- end highlight -*/}
-      <ActionButton onPress={addItem} styles={style({alignSelf: 'start'})}>
+      <ActionButton onPress={addItem} styles={style({ alignSelf: "start" })}>
         <AddIcon />
         <Text>Add item</Text>
       </ActionButton>
@@ -133,21 +151,17 @@ function Example() {
 All items in a collection must have a unique id, which is used for [selection](selection.md) and to track item updates. By default, React Spectrum looks for an `id` property on each object in the `items` array. You can also specify an `id` prop when rendering each item. This example uses `item.name` as the `id`.
 
 ```tsx
-let animals = [
-  {name: 'Aardvark'},
-  {name: 'Kangaroo'},
-  {name: 'Snake'}
-];
+let animals = [{ name: "Aardvark" }, { name: "Kangaroo" }, { name: "Snake" }];
 
 <Picker label="Animals" items={animals}>
-  {item => (
+  {(item) => (
     /*- begin highlight -*/
     <PickerItem id={item.name}>
-    {/*- end highlight -*/}
+      {/*- end highlight -*/}
       {item.name}
     </PickerItem>
   )}
-</Picker>
+</Picker>;
 ```
 
 <InlineAlert variant="notice">
@@ -160,28 +174,70 @@ let animals = [
 Dynamic collections are automatically memoized to improve performance. Rendered item elements are cached based on the object identity of the list item. If rendering an item depends on additional external state, the `dependencies` prop must be provided. This invalidates rendered elements similar to dependencies in React's `useMemo` hook.
 
 ```tsx
-import {CardView, AssetCard, CardPreview, Image, Content, Text} from '@react-spectrum/s2/CardView';
-import {style} from '@react-spectrum/s2/style' with {type: 'macro'};
-import {ToggleButtonGroup, ToggleButton} from '@react-spectrum/s2/ToggleButtonGroup';
-import {useState} from 'react';
+import {
+  CardView,
+  AssetCard,
+  CardPreview,
+  Image,
+  Content,
+  Text,
+} from "@react-spectrum/s2/CardView";
+import { style } from "@react-spectrum/s2/style" with { type: "macro" };
+import {
+  ToggleButtonGroup,
+  ToggleButton,
+} from "@react-spectrum/s2/ToggleButtonGroup";
+import { useState } from "react";
 
 const items = [
-  {id: 1, name: 'Charizard', type: 'Fire, Flying', image: 'https://img.pokemondb.net/sprites/home/normal/2x/avif/charizard.avif'},
-  {id: 2, name: 'Blastoise', type: 'Water', image: 'https://img.pokemondb.net/sprites/home/normal/2x/avif/blastoise.avif'},
-  {id: 3, name: 'Venusaur', type: 'Grass, Poison', image: 'https://img.pokemondb.net/sprites/home/normal/2x/avif/venusaur.avif'},
-  {id: 4, name: 'Pikachu', type: 'Electric', image: 'https://img.pokemondb.net/sprites/home/normal/2x/avif/pikachu.avif'}
+  {
+    id: 1,
+    name: "Charizard",
+    type: "Fire, Flying",
+    image:
+      "https://img.pokemondb.net/sprites/home/normal/2x/avif/charizard.avif",
+  },
+  {
+    id: 2,
+    name: "Blastoise",
+    type: "Water",
+    image:
+      "https://img.pokemondb.net/sprites/home/normal/2x/avif/blastoise.avif",
+  },
+  {
+    id: 3,
+    name: "Venusaur",
+    type: "Grass, Poison",
+    image:
+      "https://img.pokemondb.net/sprites/home/normal/2x/avif/venusaur.avif",
+  },
+  {
+    id: 4,
+    name: "Pikachu",
+    type: "Electric",
+    image: "https://img.pokemondb.net/sprites/home/normal/2x/avif/pikachu.avif",
+  },
 ];
 
 export default function Example() {
   let [showType, setShowType] = useState(false);
 
   return (
-    <div className={style({display: 'flex', flexDirection: 'column', gap: 16, width: 320, maxWidth: 'full', alignItems: 'center'})}>
+    <div
+      className={style({
+        display: "flex",
+        flexDirection: "column",
+        gap: 16,
+        width: 320,
+        maxWidth: "full",
+        alignItems: "center",
+      })}
+    >
       <ToggleButtonGroup
         aria-label="Display options"
         selectionMode="multiple"
-        selectedKeys={showType ? ['type'] : []}
-        onSelectionChange={keys => setShowType(keys.has('type'))}
+        selectedKeys={showType ? ["type"] : []}
+        onSelectionChange={(keys) => setShowType(keys.has("type"))}
       >
         <ToggleButton id="type">Show type</ToggleButton>
       </ToggleButtonGroup>
@@ -192,9 +248,9 @@ export default function Example() {
         /*- begin highlight -*/
         dependencies={[showType]}
         /*- end highlight -*/
-        styles={style({width: 'full', height: 420})}
+        styles={style({ width: "full", height: 420 })}
       >
-        {item => (
+        {(item) => (
           <AssetCard textValue={item.name}>
             <CardPreview>
               <Image src={item.image} />
@@ -213,25 +269,32 @@ export default function Example() {
 }
 ```
 
-Note that adding dependencies will result in the *entire* list being invalidated when a dependency changes. To avoid this and invalidate only an individual item, update the item object itself rather than accessing external state.
+Note that adding dependencies will result in the _entire_ list being invalidated when a dependency changes. To avoid this and invalidate only an individual item, update the item object itself rather than accessing external state.
 
 ### Combining collections
 
 To combine multiple sources of data, or mix static and dynamic items, use the `<Collection>` component.
 
 ```tsx
-import {Picker, PickerSection, PickerItem, Header, Heading, Collection} from '@react-spectrum/s2/Picker';
+import {
+  Picker,
+  PickerSection,
+  PickerItem,
+  Header,
+  Heading,
+  Collection,
+} from "@react-spectrum/s2/Picker";
 
 let animals = [
-  {id: 1, species: 'Aardvark'},
-  {id: 2, species: 'Kangaroo'},
-  {id: 3, species: 'Snake'}
+  { id: 1, species: "Aardvark" },
+  { id: 2, species: "Kangaroo" },
+  { id: 3, species: "Snake" },
 ];
 
 let people = [
-  {id: 4, name: 'David'},
-  {id: 5, name: 'Mike'},
-  {id: 6, name: 'Jane'}
+  { id: 4, name: "David" },
+  { id: 5, name: "Mike" },
+  { id: 6, name: "Jane" },
 ];
 
 <Picker label="Select an item">
@@ -241,7 +304,7 @@ let people = [
     </Header>
     {/*- begin highlight -*/}
     <Collection items={animals}>
-      {item => <PickerItem id={item.species}>{item.species}</PickerItem>}
+      {(item) => <PickerItem id={item.species}>{item.species}</PickerItem>}
     </Collection>
     {/*- end highlight -*/}
   </PickerSection>
@@ -250,10 +313,10 @@ let people = [
       <Heading>People</Heading>
     </Header>
     <Collection items={people}>
-      {item => <PickerItem id={item.name}>{item.name}</PickerItem>}
+      {(item) => <PickerItem id={item.name}>{item.name}</PickerItem>}
     </Collection>
   </PickerSection>
-</Picker>
+</Picker>;
 ```
 
 <InlineAlert variant="notice">
@@ -268,29 +331,35 @@ Data can be loaded asynchronously using any data fetching library. [useAsyncList
 Many components support infinite scrolling via the `loadingState` and `onLoadMore` props. These trigger loading of additional pages of items automatically as the user scrolls.
 
 ```tsx
-import {TableView, TableHeader, Column, TableBody, Row, Cell} from '@react-spectrum/s2/TableView';
-import {useAsyncList} from '@react-spectrum/s2/useAsyncList';
-import {style} from '@react-spectrum/s2/style' with {type: 'macro'};
+import {
+  TableView,
+  TableHeader,
+  Column,
+  TableBody,
+  Row,
+  Cell,
+} from "@react-spectrum/s2/TableView";
+import { useAsyncList } from "@react-spectrum/s2/useAsyncList";
+import { style } from "@react-spectrum/s2/style" with { type: "macro" };
 
 interface Character {
-  name: string
+  name: string;
 }
 
 function AsyncLoadingExample() {
   /*- begin focus -*/
   let list = useAsyncList<Character>({
-    async load({signal, cursor}) {
-      let res = await fetch(
-        cursor || `https://pokeapi.co/api/v2/pokemon`,
-        {signal}
-      );
+    async load({ signal, cursor }) {
+      let res = await fetch(cursor || `https://pokeapi.co/api/v2/pokemon`, {
+        signal,
+      });
       let json = await res.json();
 
       return {
         items: json.results,
-        cursor: json.next
+        cursor: json.next,
       };
-    }
+    },
   });
   /*- end focus -*/
 
@@ -300,7 +369,7 @@ function AsyncLoadingExample() {
       selectionMode="single"
       loadingState={list.loadingState}
       onLoadMore={list.loadMore}
-      styles={style({width: 'full', height: 320})}
+      styles={style({ width: "full", height: 320 })}
     >
       <TableHeader>
         <Column isRowHeader>Name</Column>

@@ -3,22 +3,25 @@
 Build custom Spectrum 2 components by combining unstyled **React Aria Components** (behavior + accessibility) with the **[`style` macro](styling.md)** (Spectrum 2 design tokens). The macro runs at build time and emits atomic CSS class names, so custom components stay visually consistent with the rest of the library.
 
 ```tsx
-import {Button} from 'react-aria-components/Button';
-import {style, focusRing} from '@react-spectrum/s2/style' with {type: 'macro'};
+import { Button } from "react-aria-components/Button";
+import {
+  style,
+  focusRing,
+} from "@react-spectrum/s2/style" with { type: "macro" };
 
 const buttonStyles = style({
   ...focusRing(),
-  backgroundColor: 'accent',
-  color: 'neutral',
+  backgroundColor: "accent",
+  color: "neutral",
   paddingX: 16,
   paddingY: 8,
-  borderRadius: 'pill',
-  borderStyle: 'none',
-  font: 'ui',
-  transition: 'default'
+  borderRadius: "pill",
+  borderStyle: "none",
+  font: "ui",
+  transition: "default",
 });
 
-function MyButton({children}) {
+function MyButton({ children }) {
   return <Button className={buttonStyles}>{children}</Button>;
 }
 ```
@@ -33,14 +36,14 @@ React Aria components expose interaction state via render props passed to `class
 const buttonStyles = style({
   ...focusRing(),
   backgroundColor: {
-    default: 'accent',
-    isHovered: 'accent-700',
-    isPressed: 'accent-600'
+    default: "accent",
+    isHovered: "accent-700",
+    isPressed: "accent-600",
   },
   // ...
 });
 
-<Button className={buttonStyles}>…</Button>
+<Button className={buttonStyles}>…</Button>;
 ```
 
 Common render props: `isHovered`, `isPressed`, `isFocused`, `isFocusVisible`, `isDisabled`, `isSelected`. Overlay components also expose `isEntering` / `isExiting`. Each component documents its full set in its **API** section. TypeScript autocompletes available conditions when `style()` is inlined into `className`.
@@ -53,14 +56,16 @@ Add arbitrary condition keys (e.g. `variant`) and merge your props with the rend
 const buttonStyles = style({
   backgroundColor: {
     variant: {
-      primary: 'accent',
-      secondary: 'neutral-subtle'
-    }
+      primary: "accent",
+      secondary: "neutral-subtle",
+    },
   },
   // ...
 });
 
-<Button className={renderProps => buttonStyles({...renderProps, variant})}>…</Button>
+<Button className={(renderProps) => buttonStyles({ ...renderProps, variant })}>
+  …
+</Button>;
 ```
 
 ### Nesting conditions
@@ -83,22 +88,23 @@ backgroundColor: {
 Extend the React Aria component's `Props` interface and spread `...props` so `aria-*`, event handlers, and behavior props (`isDisabled`, `autoFocus`, …) forward automatically. Forward refs with `React.forwardRef` — required by utilities like [`pressScale`](#press-scaling).
 
 ```tsx
-import {forwardRef} from 'react';
-import {Button, ButtonProps} from 'react-aria-components/Button';
+import { forwardRef } from "react";
+import { Button, ButtonProps } from "react-aria-components/Button";
 
 interface MyButtonProps extends ButtonProps {
-  variant?: 'primary' | 'secondary';
+  variant?: "primary" | "secondary";
 }
 
 const MyButton = forwardRef<HTMLButtonElement, MyButtonProps>(function MyButton(
-  {variant = 'primary', ...props},
+  { variant = "primary", ...props },
   ref
 ) {
   return (
     <Button
       {...props}
       ref={ref}
-      className={renderProps => buttonStyles({...renderProps, variant})} />
+      className={(renderProps) => buttonStyles({ ...renderProps, variant })}
+    />
   );
 });
 ```
@@ -110,11 +116,14 @@ To prevent consumers from overriding styling, `Omit<ButtonProps, 'className' | '
 `baseColor(token)` expands a single token into all four interaction states (`default`, `isHovered`, `isFocusVisible`, `isPressed`). Use for backgrounds and borders.
 
 ```tsx
-import {style, baseColor} from '@react-spectrum/s2/style' with {type: 'macro'};
+import {
+  style,
+  baseColor,
+} from "@react-spectrum/s2/style" with { type: "macro" };
 
 const styles = style({
-  backgroundColor: baseColor('accent'),
-  borderColor: baseColor('gray-200')
+  backgroundColor: baseColor("accent"),
+  borderColor: baseColor("gray-200"),
 });
 ```
 
@@ -178,6 +187,7 @@ Sizing props (`width`, `height`, `size`, `maxWidth`, …) accept the same numeri
 The `font` shorthand sets `fontFamily`, `fontSize`, `fontWeight`, `lineHeight`, and `color` in one go. Apply per-element, not globally. Override individual props as needed.
 
 Presets:
+
 - **Heading** — `heading-2xs`, `heading-xs`, `heading-sm`, `heading`, `heading-lg`, `heading-xl`, `heading-2xl`, `heading-3xl`
 - **Title** — `title-xs`, `title-sm`, `title`, `title-lg`, `title-xl`, `title-2xl`, `title-3xl`
 - **Body** — `body-xs`, `body-sm`, `body`, `body-lg`, `body-xl`, `body-2xl`, `body-3xl`
@@ -192,7 +202,10 @@ Semantic text colors: `neutral` (primary), `neutral-subdued` (secondary), `disab
 Spread `focusRing()` into a `style` call to apply the Spectrum 2 focus indicator on `isFocusVisible`.
 
 ```tsx
-import {style, focusRing} from '@react-spectrum/s2/style' with {type: 'macro'};
+import {
+  style,
+  focusRing,
+} from "@react-spectrum/s2/style" with { type: "macro" };
 
 const styles = style({
   ...focusRing(),
@@ -205,9 +218,9 @@ const styles = style({
 `pressScale(ref)` returns a render prop for the `style` prop that applies the Spectrum 3D press scale. Requires a ref to measure the element.
 
 ```tsx
-import {pressScale} from '@react-spectrum/s2';
+import { pressScale } from "@react-spectrum/s2";
 
-function MyButton({children}) {
+function MyButton({ children }) {
   let ref = useRef(null);
   return (
     <Button ref={ref} className={buttonStyles} style={pressScale(ref)}>
@@ -219,25 +232,25 @@ function MyButton({children}) {
 
 ## Animations
 
-`Popover`, `Modal`, `Dialog`, and `Tooltip` expose `isEntering` and `isExiting` render props. Set resting values in `default`; set entering/exiting *from*/*to* values; add `transition` + `transitionDuration`.
+`Popover`, `Modal`, `Dialog`, and `Tooltip` expose `isEntering` and `isExiting` render props. Set resting values in `default`; set entering/exiting _from_/_to_ values; add `transition` + `transitionDuration`.
 
 ```tsx
 const popoverStyles = style({
-  backgroundColor: 'layer-2',
-  borderRadius: 'lg',
+  backgroundColor: "layer-2",
+  borderRadius: "lg",
   padding: 16,
   opacity: {
     default: 1,
     isEntering: 0,
-    isExiting: 0
+    isExiting: 0,
   },
   translateY: {
     default: 0,
     isEntering: 4,
-    isExiting: 4
+    isExiting: 4,
   },
-  transition: '[opacity, translate]',
-  transitionDuration: 200
+  transition: "[opacity, translate]",
+  transitionDuration: 200,
 });
 ```
 
@@ -248,21 +261,24 @@ const popoverStyles = style({
 Import from `@react-spectrum/s2/icons`. Size and color icons with `iconStyle` (a specialized `style`). Inside a custom component, set the `--iconPrimary` CSS variable on the parent to control fill color.
 
 ```tsx
-import {style, iconStyle} from '@react-spectrum/s2/style' with {type: 'macro'};
-import EditIcon from '@react-spectrum/s2/icons/Edit';
+import {
+  style,
+  iconStyle,
+} from "@react-spectrum/s2/style" with { type: "macro" };
+import EditIcon from "@react-spectrum/s2/icons/Edit";
 
 const buttonStyles = style({
-  backgroundColor: 'accent',
-  '--iconPrimary': {
-    type: 'fill',
-    value: 'white'
+  backgroundColor: "accent",
+  "--iconPrimary": {
+    type: "fill",
+    value: "white",
   },
   // ...
 });
 
 <Button className={buttonStyles} aria-label="Edit">
-  <EditIcon styles={iconStyle({size: 'S'})} />
-</Button>
+  <EditIcon styles={iconStyle({ size: "S" })} />
+</Button>;
 ```
 
 ## CSS variables
@@ -271,21 +287,21 @@ Define CSS variables in a parent `style` call with a `type` (the CSS property ca
 
 ```tsx
 const parentStyles = style({
-  '--cardBg': {
-    type: 'backgroundColor',
-    value: 'gray-50'
+  "--cardBg": {
+    type: "backgroundColor",
+    value: "gray-50",
   },
-  '--cardBorder': {
-    type: 'borderColor',
-    value: 'gray-200'
-  }
+  "--cardBorder": {
+    type: "borderColor",
+    value: "gray-200",
+  },
 });
 
 const childStyles = style({
-  backgroundColor: '--cardBg',
-  borderColor: '--cardBorder',
+  backgroundColor: "--cardBg",
+  borderColor: "--cardBorder",
   borderWidth: 1,
-  borderStyle: 'solid'
+  borderStyle: "solid",
 });
 ```
 
@@ -304,6 +320,7 @@ transition: '[opacity, translate]'
 ```
 
 Safer conversion helpers:
+
 - `space(px)` → pixel value to `rem` token (e.g. `space(12)` → `[0.75rem]`)
 - `fontRelative(px)` → pixel value to font-relative `em` (scales with current font size)
 
@@ -312,10 +329,13 @@ Safer conversion helpers:
 For pseudo-elements, complex selectors, or `@keyframes` that `style` can't express:
 
 ```tsx
-import {css} from '@react-spectrum/s2/style' with {type: 'macro'};
+import { css } from "@react-spectrum/s2/style" with { type: "macro" };
 
 const styles = css`
-  &::before { content: '✱'; color: red; }
+  &::before {
+    content: "✱";
+    color: red;
+  }
 `;
 ```
 
@@ -324,9 +344,9 @@ const styles = css`
 Use the **runtime** `mergeStyles` from `@react-spectrum/s2` (not the macro) to merge multiple `style()` results — it resolves atomic class conflicts so the last value wins.
 
 ```tsx
-import {mergeStyles} from '@react-spectrum/s2';
+import { mergeStyles } from "@react-spectrum/s2";
 
-<div className={mergeStyles(baseCard, highlightedCard)}>…</div>
+<div className={mergeStyles(baseCard, highlightedCard)}>…</div>;
 ```
 
 ## Other utilities

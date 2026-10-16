@@ -4,9 +4,9 @@ A ColorArea allows users to adjust two channels of an RGB, HSL or HSB color valu
 two-dimensional gradient background.
 
 ```tsx
-import {ColorArea} from '@react-spectrum/s2/ColorArea';
+import { ColorArea } from "@react-spectrum/s2/ColorArea";
 
-<ColorArea />
+<ColorArea />;
 ```
 
 ## Value
@@ -16,12 +16,12 @@ Use the `value` or `defaultValue` prop to set the color value, and the `xChannel
 The `onChange` event is called as the user drags, and `onChangeEnd` is called when the thumb is released. These are always called with a `Color` object.
 
 ```tsx
-import {ColorArea, parseColor} from '@react-spectrum/s2/ColorArea';
-import {style} from '@react-spectrum/s2/style' with {type: 'macro'};
-import {useState} from 'react';
+import { ColorArea, parseColor } from "@react-spectrum/s2/ColorArea";
+import { style } from "@react-spectrum/s2/style" with { type: "macro" };
+import { useState } from "react";
 
 function Example() {
-  let [currentValue, setCurrentValue] = useState(parseColor('#9B80FF'));
+  let [currentValue, setCurrentValue] = useState(parseColor("#9B80FF"));
   let [finalValue, setFinalValue] = useState(currentValue);
 
   return (
@@ -32,11 +32,13 @@ function Example() {
         /*- begin highlight -*/
         value={currentValue}
         onChange={setCurrentValue}
-        onChangeEnd={setFinalValue} />
-        {/*- end highlight -*/}
-      <pre className={style({font: 'body'})}>
-        onChange value: {currentValue.toString('hex')}{'\n'}
-        onChangeEnd value: {finalValue.toString('hex')}
+        onChangeEnd={setFinalValue}
+      />
+      {/*- end highlight -*/}
+      <pre className={style({ font: "body" })}>
+        onChange value: {currentValue.toString("hex")}
+        {"\n"}
+        onChangeEnd value: {finalValue.toString("hex")}
       </pre>
     </>
   );
@@ -45,28 +47,28 @@ function Example() {
 
 ## API
 
-| Name | Type | Default | Description |
-|------|------|---------|-------------|
-| `aria-describedby` | `string | undefined` | — | Identifies the element (or elements) that describes the object. |
-| `aria-details` | `string | undefined` | — | Identifies the element (or elements) that provide a detailed, extended description for the object. |
-| `aria-label` | `string | undefined` | — | Defines a string value that labels the current element. |
-| `aria-labelledby` | `string | undefined` | — | Identifies the element (or elements) that labels the current element. |
-| `colorSpace` | `ColorSpace | undefined` | — | The color space that the color area operates in. The `xChannel` and `yChannel` must be in this color space. If not provided, this defaults to the color space of the `color` or `defaultColor` value. |
-| `defaultValue` | `string | Color | undefined` | — | The default value (uncontrolled). |
-| `form` | `string | undefined` | — | The `<form>` element to associate the ColorArea with. The value of this attribute must be the id of a `<form>` in the same document. See [MDN](https://developer.mozilla.org/en-US/docs/Web/HTML/Reference/Elements/input#form). |
-| `id` | `string | undefined` | — | The element's unique identifier. See [MDN](https://developer.mozilla.org/en-US/docs/Web/HTML/Global_attributes/id). |
-| `isDisabled` | `boolean | undefined` | — | Whether the ColorArea is disabled. |
-| `onChange` | `((value: Color) => void) | undefined` | — | Handler that is called when the value changes, as the user drags. |
-| `onChangeEnd` | `((value: Color) => void) | undefined` | — | Handler that is called when the user stops dragging. |
-| `slot` | `string | null | undefined` | — | A slot name for the component. Slots allow the component to receive props from a parent component. An explicit `null` value indicates that the local props completely override all props received from a parent. |
-| `styles` | `StylesProp | undefined` | — | Spectrum-defined styles, returned by the `style()` macro. |
-| `UNSAFE_className` | `UnsafeClassName | undefined` | — | Sets the CSS [className](https://developer.mozilla.org/en-US/docs/Web/API/Element/className) for the element. Only use as a **last resort**. Use the `style` macro via the `styles` prop instead. |
-| `UNSAFE_style` | `CSSProperties | undefined` | — | Sets inline [style](https://developer.mozilla.org/en-US/docs/Web/API/HTMLElement/style) for the element. Only use as a **last resort**. Use the `style` macro via the `styles` prop instead. |
-| `value` | `string | Color | undefined` | — | The current value (controlled). |
-| `xChannel` | `ColorChannel | undefined` | — | Color channel for the horizontal axis. |
-| `xName` | `string | undefined` | — | The name of the x channel input element, used when submitting an HTML form. See [MDN](https://developer.mozilla.org/en-US/docs/Web/HTML/Element/input#htmlattrdefname). |
-| `yChannel` | `ColorChannel | undefined` | — | Color channel for the vertical axis. |
-| `yName` | `string | undefined` | — | The name of the y channel input element, used when submitting an HTML form. See [MDN](https://developer.mozilla.org/en-US/docs/Web/HTML/Element/input#htmlattrdefname). |
+| Name               | Type                      | Default    | Description |
+| ------------------ | ------------------------- | ---------- | ----------- |
+| `aria-describedby` | `string                   | undefined` | —           | Identifies the element (or elements) that describes the object.                                                                                                                                                                  |
+| `aria-details`     | `string                   | undefined` | —           | Identifies the element (or elements) that provide a detailed, extended description for the object.                                                                                                                               |
+| `aria-label`       | `string                   | undefined` | —           | Defines a string value that labels the current element.                                                                                                                                                                          |
+| `aria-labelledby`  | `string                   | undefined` | —           | Identifies the element (or elements) that labels the current element.                                                                                                                                                            |
+| `colorSpace`       | `ColorSpace               | undefined` | —           | The color space that the color area operates in. The `xChannel` and `yChannel` must be in this color space. If not provided, this defaults to the color space of the `color` or `defaultColor` value.                            |
+| `defaultValue`     | `string                   | Color      | undefined`  | —                                                                                                                                                                                                                                | The default value (uncontrolled).                                                                                                                                                                                |
+| `form`             | `string                   | undefined` | —           | The `<form>` element to associate the ColorArea with. The value of this attribute must be the id of a `<form>` in the same document. See [MDN](https://developer.mozilla.org/en-US/docs/Web/HTML/Reference/Elements/input#form). |
+| `id`               | `string                   | undefined` | —           | The element's unique identifier. See [MDN](https://developer.mozilla.org/en-US/docs/Web/HTML/Global_attributes/id).                                                                                                              |
+| `isDisabled`       | `boolean                  | undefined` | —           | Whether the ColorArea is disabled.                                                                                                                                                                                               |
+| `onChange`         | `((value: Color) => void) | undefined` | —           | Handler that is called when the value changes, as the user drags.                                                                                                                                                                |
+| `onChangeEnd`      | `((value: Color) => void) | undefined` | —           | Handler that is called when the user stops dragging.                                                                                                                                                                             |
+| `slot`             | `string                   | null       | undefined`  | —                                                                                                                                                                                                                                | A slot name for the component. Slots allow the component to receive props from a parent component. An explicit `null` value indicates that the local props completely override all props received from a parent. |
+| `styles`           | `StylesProp               | undefined` | —           | Spectrum-defined styles, returned by the `style()` macro.                                                                                                                                                                        |
+| `UNSAFE_className` | `UnsafeClassName          | undefined` | —           | Sets the CSS [className](https://developer.mozilla.org/en-US/docs/Web/API/Element/className) for the element. Only use as a **last resort**. Use the `style` macro via the `styles` prop instead.                                |
+| `UNSAFE_style`     | `CSSProperties            | undefined` | —           | Sets inline [style](https://developer.mozilla.org/en-US/docs/Web/API/HTMLElement/style) for the element. Only use as a **last resort**. Use the `style` macro via the `styles` prop instead.                                     |
+| `value`            | `string                   | Color      | undefined`  | —                                                                                                                                                                                                                                | The current value (controlled).                                                                                                                                                                                  |
+| `xChannel`         | `ColorChannel             | undefined` | —           | Color channel for the horizontal axis.                                                                                                                                                                                           |
+| `xName`            | `string                   | undefined` | —           | The name of the x channel input element, used when submitting an HTML form. See [MDN](https://developer.mozilla.org/en-US/docs/Web/HTML/Element/input#htmlattrdefname).                                                          |
+| `yChannel`         | `ColorChannel             | undefined` | —           | Color channel for the vertical axis.                                                                                                                                                                                             |
+| `yName`            | `string                   | undefined` | —           | The name of the y channel input element, used when submitting an HTML form. See [MDN](https://developer.mozilla.org/en-US/docs/Web/HTML/Element/input#htmlattrdefname).                                                          |
 
 ## Related Types
 
@@ -74,18 +76,18 @@ function Example() {
 
 `Color(props: IconProps & {size?: 'L' | 'S' | 'M'}): ReactNode`
 
-| Name | Type | Description |
-|------|------|-------------|
-| `aria-describedby` | `string | undefined` | Identifies the element (or elements) that describes the object. |
-| `aria-details` | `string | undefined` | Identifies the element (or elements) that provide a detailed, extended description for the object. |
-| `aria-hidden` | `boolean | "true" | "false" | undefined` | — |
-| `aria-label` | `string | undefined` | Defines a string value that labels the current element. |
-| `aria-labelledby` | `string | undefined` | Identifies the element (or elements) that labels the current element. |
-| `id` | `string | undefined` | The element's unique identifier. See [MDN](https://developer.mozilla.org/en-US/docs/Web/HTML/Global_attributes/id). |
-| `slot` | `string | null | undefined` | A slot name for the component. Slots allow the component to receive props from a parent component. An explicit `null` value indicates that the local props completely override all props received from a parent. |
-| `styles` | `StyleString<AllowedOverrides> | undefined` | — |
-| `UNSAFE_className` | `UnsafeClassName | undefined` | Sets the CSS [className](https://developer.mozilla.org/en-US/docs/Web/API/Element/className) for the element. Only use as a **last resort**. Use the `style` macro via the `styles` prop instead. |
-| `UNSAFE_style` | `CSSProperties | undefined` | Sets inline [style](https://developer.mozilla.org/en-US/docs/Web/API/HTMLElement/style) for the element. Only use as a **last resort**. Use the `style` macro via the `styles` prop instead. |
+| Name               | Type                           | Description |
+| ------------------ | ------------------------------ | ----------- |
+| `aria-describedby` | `string                        | undefined`  | Identifies the element (or elements) that describes the object.                                                                                                                                   |
+| `aria-details`     | `string                        | undefined`  | Identifies the element (or elements) that provide a detailed, extended description for the object.                                                                                                |
+| `aria-hidden`      | `boolean                       | "true"      | "false"                                                                                                                                                                                           | undefined`                                                                                                                                                                                                       | —   |
+| `aria-label`       | `string                        | undefined`  | Defines a string value that labels the current element.                                                                                                                                           |
+| `aria-labelledby`  | `string                        | undefined`  | Identifies the element (or elements) that labels the current element.                                                                                                                             |
+| `id`               | `string                        | undefined`  | The element's unique identifier. See [MDN](https://developer.mozilla.org/en-US/docs/Web/HTML/Global_attributes/id).                                                                               |
+| `slot`             | `string                        | null        | undefined`                                                                                                                                                                                        | A slot name for the component. Slots allow the component to receive props from a parent component. An explicit `null` value indicates that the local props completely override all props received from a parent. |
+| `styles`           | `StyleString<AllowedOverrides> | undefined`  | —                                                                                                                                                                                                 |
+| `UNSAFE_className` | `UnsafeClassName               | undefined`  | Sets the CSS [className](https://developer.mozilla.org/en-US/docs/Web/API/Element/className) for the element. Only use as a **last resort**. Use the `style` macro via the `styles` prop instead. |
+| `UNSAFE_style`     | `CSSProperties                 | undefined`  | Sets inline [style](https://developer.mozilla.org/en-US/docs/Web/API/HTMLElement/style) for the element. Only use as a **last resort**. Use the `style` macro via the `styles` prop instead.      |
 
 ### parseColor
 

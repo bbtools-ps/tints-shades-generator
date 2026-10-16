@@ -3,9 +3,9 @@
 A ColorWheel allows users to adjust the hue of an HSL or HSB color value on a circular track.
 
 ```tsx
-import {ColorWheel} from '@react-spectrum/s2/ColorWheel';
+import { ColorWheel } from "@react-spectrum/s2/ColorWheel";
 
-<ColorWheel />
+<ColorWheel />;
 ```
 
 ## Value
@@ -15,13 +15,15 @@ Use the `value` or `defaultValue` prop to set the color value. The value may be 
 The `onChange` event is called as the user drags, and `onChangeEnd` is called when the thumb is released. These are always called with a `Color` object.
 
 ```tsx
-import {ColorWheel} from '@react-spectrum/s2/ColorWheel';
-import {useState} from 'react';
-import {parseColor} from '@react-stately/color';
-import {style} from '@react-spectrum/s2/style' with {type: 'macro'};
+import { ColorWheel } from "@react-spectrum/s2/ColorWheel";
+import { useState } from "react";
+import { parseColor } from "@react-stately/color";
+import { style } from "@react-spectrum/s2/style" with { type: "macro" };
 
 function Example() {
-  let [currentValue, setCurrentValue] = useState(parseColor('hsl(50, 100%, 50%)'));
+  let [currentValue, setCurrentValue] = useState(
+    parseColor("hsl(50, 100%, 50%)")
+  );
   let [finalValue, setFinalValue] = useState(currentValue);
 
   return (
@@ -30,11 +32,13 @@ function Example() {
         /*- begin highlight -*/
         value={currentValue}
         onChange={setCurrentValue}
-        onChangeEnd={setFinalValue} />
-        {/*- end highlight -*/}
-      <pre className={style({font: 'body'})}>
-        onChange value: {currentValue.toString('hex')}{'\n'}
-        onChangeEnd value: {finalValue.toString('hex')}
+        onChangeEnd={setFinalValue}
+      />
+      {/*- end highlight -*/}
+      <pre className={style({ font: "body" })}>
+        onChange value: {currentValue.toString("hex")}
+        {"\n"}
+        onChangeEnd value: {finalValue.toString("hex")}
       </pre>
     </>
   );
@@ -45,7 +49,7 @@ function Example() {
 
 ColorWheel works well alongside other color components to create complete color picking experiences.
 
-```tsx render hideImports
+````tsx render hideImports
 "use client";
 import {ColorWheel, ColorSlider, ColorSwatch} from '@react-spectrum/s2';
 import {useState} from 'react';
@@ -122,3 +126,4 @@ function Example() {
 `parseColor(value: string): IColor`
 
 Parses a color from a string value. Throws an error if the string could not be parsed.
+````

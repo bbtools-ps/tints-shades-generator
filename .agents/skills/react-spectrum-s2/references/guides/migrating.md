@@ -166,7 +166,7 @@ No updates needed.
 ### ContextualHelpTrigger
 
 - Component has been renamed to `UnavailableMenuItemTrigger`
-- Replace `Dialog` with  `ContextualHelpPopover`, and child elements with their S2 counterparts.
+- Replace `Dialog` with `ContextualHelpPopover`, and child elements with their S2 counterparts.
 
 ### DateField
 
@@ -430,18 +430,20 @@ If migrating from TreeView version 3.0.0-beta.3 or before, please do the followi
 Update `Well` to be a `div` and apply styles using the style macro:
 
 ```tsx
-<div className={style({
-  display: 'block',
-  textAlign: 'start',
-  padding: 16,
-  minWidth: 160,
-  marginTop: 4,
-  borderWidth: 1,
-  borderRadius: 'sm',
-  borderStyle: 'solid',
-  borderColor: 'transparent-black-75',
-  font: 'body-sm'
-})} />
+<div
+  className={style({
+    display: "block",
+    textAlign: "start",
+    padding: 16,
+    minWidth: 160,
+    marginTop: 4,
+    borderWidth: 1,
+    borderRadius: "sm",
+    borderStyle: "solid",
+    borderColor: "transparent-black-75",
+    font: "body-sm",
+  })}
+/>
 ```
 
 ## Style props
@@ -454,13 +456,13 @@ Affected style props: `borderWidth`, `borderStartWidth`, `borderEndWidth`, `bord
 
 Border widths should be updated to use pixel values. Use the following mappings:
 
-| Spectrum 1 | Spectrum 2 |
-| ------ | ------ |
-| `'none'` | `0` |
-| `'thin'` | `1` |
-| `'thick'` | `2` |
-| `'thicker'` | `4` |
-| `'thickest'` | `'[8px]'` |
+| Spectrum 1   | Spectrum 2 |
+| ------------ | ---------- |
+| `'none'`     | `0`        |
+| `'thin'`     | `1`        |
+| `'thick'`    | `2`        |
+| `'thicker'`  | `4`        |
+| `'thickest'` | `'[8px]'`  |
 
 ### Border radius
 
@@ -468,13 +470,13 @@ Affected style props: `borderRadius`, `borderTopStartRadius`, `borderTopEndRadiu
 
 Border radius values should be updated to use pixel values. Use the following mappings:
 
-| Spectrum 1 | Spectrum 2 |
-| ------ | ------ |
-| `'xsmall'` | `'[1px]'` |
-| `'small'` | `'sm'` |
+| Spectrum 1  | Spectrum 2  |
+| ----------- | ----------- |
+| `'xsmall'`  | `'[1px]'`   |
+| `'small'`   | `'sm'`      |
 | `'regular'` | `'default'` |
-| `'medium'` | `'lg'` |
-| `'large'` | `'xl'` |
+| `'medium'`  | `'lg'`      |
+| `'large'`   | `'xl'`      |
 
 ### Dimension values
 
@@ -482,97 +484,97 @@ Affected style props: `width`, `minWidth`, `maxWidth`, `height`, `minHeight`, `m
 
 Dimension values should be converted to pixel values. Use the following mappings:
 
-| Spectrum 1 | Spectrum 2 |
-| ------ | ------ |
-| `'size-0'` | `0` |
-| `'size-10'` | `1` |
-| `'size-25'` | `2` |
-| `'size-40'` | `3` |
-| `'size-50'` | `4` |
-| `'size-65'` | `5` |
-| `'size-75'` | `6` |
-| `'size-85'` | `7` |
-| `'size-100'` | `8` |
-| `'size-115'` | `9` |
-| `'size-125'` | `10` |
-| `'size-130'` | `11` |
-| `'size-150'` | `12` |
-| `'size-160'` | `13` |
-| `'size-175'` | `14` |
-| `'size-200'` | `16` |
-| `'size-225'` | `18` |
-| `'size-250'` | `20` |
-| `'size-275'` | `22` |
-| `'size-300'` | `24` |
-| `'size-325'` | `26` |
-| `'size-350'` | `28` |
-| `'size-400'` | `32` |
-| `'size-450'` | `36` |
-| `'size-500'` | `40` |
-| `'size-550'` | `44` |
-| `'size-600'` | `48` |
-| `'size-675'` | `54` |
-| `'size-700'` | `56` |
-| `'size-800'` | `64` |
-| `'size-900'` | `72` |
-| `'size-1000'` | `80` |
-| `'size-1200'` | `96` |
-| `'size-1250'` | `100` |
-| `'size-1600'` | `128` |
-| `'size-1700'` | `136` |
-| `'size-2000'` | `160` |
-| `'size-2400'` | `192` |
-| `'size-3000'` | `240` |
-| `'size-3400'` | `272` |
-| `'size-3600'` | `288` |
-| `'size-4600'` | `368` |
-| `'size-5000'` | `400` |
-| `'size-6000'` | `480` |
-| `'static-size-0'` | `0` |
-| `'static-size-10'` | `1` |
-| `'static-size-25'` | `2` |
-| `'static-size-40'` | `3` |
-| `'static-size-50'` | `4` |
-| `'static-size-65'` | `5` |
-| `'static-size-100'` | `8` |
-| `'static-size-115'` | `9` |
-| `'static-size-125'` | `10` |
-| `'static-size-130'` | `11` |
-| `'static-size-150'` | `12` |
-| `'static-size-160'` | `13` |
-| `'static-size-175'` | `14` |
-| `'static-size-200'` | `16` |
-| `'static-size-225'` | `18` |
-| `'static-size-250'` | `20` |
-| `'static-size-300'` | `24` |
-| `'static-size-400'` | `32` |
-| `'static-size-450'` | `36` |
-| `'static-size-500'` | `40` |
-| `'static-size-550'` | `44` |
-| `'static-size-600'` | `48` |
-| `'static-size-700'` | `56` |
-| `'static-size-800'` | `64` |
-| `'static-size-900'` | `72` |
-| `'static-size-1000'` | `80` |
-| `'static-size-1200'` | `96` |
-| `'static-size-1700'` | `136` |
-| `'static-size-2400'` | `192` |
-| `'static-size-2600'` | `208` |
-| `'static-size-3400'` | `272` |
-| `'static-size-3600'` | `288` |
-| `'static-size-4600'` | `368` |
-| `'static-size-5000'` | `400` |
-| `'static-size-6000'` | `480` |
-| `'single-line-height'` | `32` |
-| `'single-line-width'` | `192` |
+| Spectrum 1             | Spectrum 2 |
+| ---------------------- | ---------- |
+| `'size-0'`             | `0`        |
+| `'size-10'`            | `1`        |
+| `'size-25'`            | `2`        |
+| `'size-40'`            | `3`        |
+| `'size-50'`            | `4`        |
+| `'size-65'`            | `5`        |
+| `'size-75'`            | `6`        |
+| `'size-85'`            | `7`        |
+| `'size-100'`           | `8`        |
+| `'size-115'`           | `9`        |
+| `'size-125'`           | `10`       |
+| `'size-130'`           | `11`       |
+| `'size-150'`           | `12`       |
+| `'size-160'`           | `13`       |
+| `'size-175'`           | `14`       |
+| `'size-200'`           | `16`       |
+| `'size-225'`           | `18`       |
+| `'size-250'`           | `20`       |
+| `'size-275'`           | `22`       |
+| `'size-300'`           | `24`       |
+| `'size-325'`           | `26`       |
+| `'size-350'`           | `28`       |
+| `'size-400'`           | `32`       |
+| `'size-450'`           | `36`       |
+| `'size-500'`           | `40`       |
+| `'size-550'`           | `44`       |
+| `'size-600'`           | `48`       |
+| `'size-675'`           | `54`       |
+| `'size-700'`           | `56`       |
+| `'size-800'`           | `64`       |
+| `'size-900'`           | `72`       |
+| `'size-1000'`          | `80`       |
+| `'size-1200'`          | `96`       |
+| `'size-1250'`          | `100`      |
+| `'size-1600'`          | `128`      |
+| `'size-1700'`          | `136`      |
+| `'size-2000'`          | `160`      |
+| `'size-2400'`          | `192`      |
+| `'size-3000'`          | `240`      |
+| `'size-3400'`          | `272`      |
+| `'size-3600'`          | `288`      |
+| `'size-4600'`          | `368`      |
+| `'size-5000'`          | `400`      |
+| `'size-6000'`          | `480`      |
+| `'static-size-0'`      | `0`        |
+| `'static-size-10'`     | `1`        |
+| `'static-size-25'`     | `2`        |
+| `'static-size-40'`     | `3`        |
+| `'static-size-50'`     | `4`        |
+| `'static-size-65'`     | `5`        |
+| `'static-size-100'`    | `8`        |
+| `'static-size-115'`    | `9`        |
+| `'static-size-125'`    | `10`       |
+| `'static-size-130'`    | `11`       |
+| `'static-size-150'`    | `12`       |
+| `'static-size-160'`    | `13`       |
+| `'static-size-175'`    | `14`       |
+| `'static-size-200'`    | `16`       |
+| `'static-size-225'`    | `18`       |
+| `'static-size-250'`    | `20`       |
+| `'static-size-300'`    | `24`       |
+| `'static-size-400'`    | `32`       |
+| `'static-size-450'`    | `36`       |
+| `'static-size-500'`    | `40`       |
+| `'static-size-550'`    | `44`       |
+| `'static-size-600'`    | `48`       |
+| `'static-size-700'`    | `56`       |
+| `'static-size-800'`    | `64`       |
+| `'static-size-900'`    | `72`       |
+| `'static-size-1000'`   | `80`       |
+| `'static-size-1200'`   | `96`       |
+| `'static-size-1700'`   | `136`      |
+| `'static-size-2400'`   | `192`      |
+| `'static-size-2600'`   | `208`      |
+| `'static-size-3400'`   | `272`      |
+| `'static-size-3600'`   | `288`      |
+| `'static-size-4600'`   | `368`      |
+| `'static-size-5000'`   | `400`      |
+| `'static-size-6000'`   | `480`      |
+| `'single-line-height'` | `32`       |
+| `'single-line-width'`  | `192`      |
 
 ### Break points
 
 Break points previously used in style props can be used in the style macro with updated keys. Use the following mappings:
 
 | Spectrum 1 | Spectrum 2 |
-| ------ | ------ |
-| `base` | `default` |
-| `S` | `sm` |
-| `M` | `md` |
-| `L` | `lg` |
+| ---------- | ---------- |
+| `base`     | `default`  |
+| `S`        | `sm`       |
+| `M`        | `md`       |
+| `L`        | `lg`       |

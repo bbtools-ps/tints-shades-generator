@@ -1,9 +1,9 @@
-import Checkmark from '@react-spectrum/s2/icons/Checkmark';
-import Copy from '@react-spectrum/s2/icons/Copy';
-import { style } from '@react-spectrum/s2/style' with { type: 'macro' };
-import { formatHex, type Oklch } from 'culori';
-import { useState } from 'react';
-import classes from './ColorSwatch.module.css';
+import Checkmark from "@react-spectrum/s2/icons/Checkmark";
+import Copy from "@react-spectrum/s2/icons/Copy";
+import { style } from "@react-spectrum/s2/style" with { type: "macro" };
+import { formatHex, type Oklch } from "culori";
+import { useState } from "react";
+import classes from "./ColorSwatch.module.css";
 
 interface ColorSwatchProps {
   oklch: Oklch;
@@ -39,9 +39,9 @@ export default function ColorSwatch({
       className={classes.container}
       style={{
         backgroundColor: `oklch(${oklch.l} ${oklch.c} ${oklch.h})`,
-        borderColor: 'ButtonHighlight',
-        borderWidth: '3px',
-        borderStyle: 'solid',
+        borderColor: "ButtonHighlight",
+        borderWidth: "3px",
+        borderStyle: "solid",
       }}
       autoFocus={autoFocus}
       onFocus={() => setSelectedColor(oklch)}
@@ -52,12 +52,12 @@ export default function ColorSwatch({
       <div className={classes.copy}>
         <div
           className={style({
-            backgroundColor: 'Background',
-            width: 'full',
-            height: 'full',
-            display: 'flex',
-            justifyContent: 'center',
-            alignItems: 'center',
+            backgroundColor: "Background",
+            width: "full",
+            height: "full",
+            display: "flex",
+            justifyContent: "center",
+            alignItems: "center",
           })}
         >
           {copied ? <Checkmark /> : <Copy />}

@@ -37,21 +37,18 @@ for the listbox, which will automatically be updated when items are removed from
 
 ```tsx
 let list = useListData({
-  initialItems: [
-    {name: 'Aardvark'},
-    {name: 'Kangaroo'},
-    {name: 'Snake'}
-  ],
-  initialSelectedKeys: ['Kangaroo'],
-  getKey: item => item.name
+  initialItems: [{ name: "Aardvark" }, { name: "Kangaroo" }, { name: "Snake" }],
+  initialSelectedKeys: ["Kangaroo"],
+  getKey: (item) => item.name,
 });
 
 <ListBox
   items={list.items}
   selectedKeys={list.selectedKeys}
-  onSelectionChange={list.setSelectedKeys}>
-  {item => <Item key={item.name}>{item.name}</Item>}
-</ListBox>
+  onSelectionChange={list.setSelectedKeys}
+>
+  {(item) => <Item key={item.name}>{item.name}</Item>}
+</ListBox>;
 ```
 
 ### Inserting items
@@ -61,52 +58,52 @@ Each of these methods also accepts multiple items, so you can insert multiple it
 
 ```tsx
 // Insert an item after the first one
-list.insert(1, {name: 'Horse'});
+list.insert(1, { name: "Horse" });
 
 // Insert multiple items
-list.insert(1, {name: 'Horse'}, {name: 'Giraffe'});
+list.insert(1, { name: "Horse" }, { name: "Giraffe" });
 ```
 
 ```tsx
 // Insert an item before another item
-list.insertBefore('Kangaroo', {name: 'Horse'});
+list.insertBefore("Kangaroo", { name: "Horse" });
 
 // Insert multiple items before another item
-list.insertBefore('Kangaroo', {name: 'Horse'}, {name: 'Giraffe'});
+list.insertBefore("Kangaroo", { name: "Horse" }, { name: "Giraffe" });
 ```
 
 ```tsx
 // Insert an item after another item
-list.insertAfter('Kangaroo', {name: 'Horse'});
+list.insertAfter("Kangaroo", { name: "Horse" });
 
 // Insert multiple items after another item
-list.insertAfter('Kangaroo', {name: 'Horse'}, {name: 'Giraffe'});
+list.insertAfter("Kangaroo", { name: "Horse" }, { name: "Giraffe" });
 ```
 
 ```tsx
 // Append an item
-list.append({name: 'Horse'});
+list.append({ name: "Horse" });
 
 // Append multiple items
-list.append({name: 'Horse'}, {name: 'Giraffe'});
+list.append({ name: "Horse" }, { name: "Giraffe" });
 ```
 
 ```tsx
 // Prepend an item
-list.prepend({name: 'Horse'});
+list.prepend({ name: "Horse" });
 
 // Prepend multiple items
-list.prepend({name: 'Horse'}, {name: 'Giraffe'});
+list.prepend({ name: "Horse" }, { name: "Giraffe" });
 ```
 
 ### Removing items
 
 ```tsx
 // Remove an item
-list.remove('Kangaroo');
+list.remove("Kangaroo");
 
 // Remove multiple items
-list.remove('Kangaroo', 'Snake');
+list.remove("Kangaroo", "Snake");
 ```
 
 ```tsx
@@ -117,11 +114,11 @@ list.removeSelectedItems();
 ### Moving items
 
 ```tsx
-list.move('Snake', 0);
+list.move("Snake", 0);
 ```
 
 ### Updating items
 
 ```tsx
-list.update('Snake', {name: 'Rattle Snake'});
+list.update("Snake", { name: "Rattle Snake" });
 ```

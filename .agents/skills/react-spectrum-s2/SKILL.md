@@ -21,6 +21,7 @@ When writing tests that exercise S2 components, consult [Testing with React Spec
 React Spectrum S2 is built on top of React Aria Components. The S2 components add Spectrum 2 styling, behavior, and slot structure on top of the unstyled React Aria primitives. Always prefer S2 components for React Spectrum work because they are pre-styled, design-system compliant, and cover most common UI patterns.
 
 Only reach for React Aria Components directly when:
+
 - Building a custom component because no S2 component matches the requirements. Follow [Creating Custom Components](references/guides/creating-custom-components.md) and pair the React Aria primitive with the S2 `style` macro for Spectrum styling.
 - You need a utility such as `FocusScope`, `VisuallyHidden`, `useFocusRing`, `mergeProps`, etc.
 
@@ -31,18 +32,35 @@ The React Aria Components documentation is bundled under `references/react-aria/
 Use subpath imports matching the documentation — don't import from the package barrel `'@react-spectrum/s2'`:
 
 ```tsx
-import {Button} from '@react-spectrum/s2/Button';
-import {Card, CardPreview, Image, Content, Text, Footer} from '@react-spectrum/s2/Card';
-import {style} from '@react-spectrum/s2/style' with {type: 'macro'};
-import Folder from '@react-spectrum/s2/icons/Folder';
-import CloudUpload from '@react-spectrum/s2/illustrations/gradient/generic2/CloudUpload';
+import { Button } from "@react-spectrum/s2/Button";
+import {
+  Card,
+  CardPreview,
+  Image,
+  Content,
+  Text,
+  Footer,
+} from "@react-spectrum/s2/Card";
+import { style } from "@react-spectrum/s2/style" with { type: "macro" };
+import Folder from "@react-spectrum/s2/icons/Folder";
+import CloudUpload from "@react-spectrum/s2/illustrations/gradient/generic2/CloudUpload";
 ```
 
 Common types and list-data hooks are re-exported from `@react-spectrum/s2` — prefer importing from there instead of `react-aria-components`, `react-stately`, or `@react-types/*`:
 
 ```tsx
-import type {Key, Selection, SortDescriptor, PressEvent, RangeValue, DateValue, DateRange, TimeValue, RouterConfig} from '@react-spectrum/s2';
-import {useListData, useTreeData, useAsyncList} from '@react-spectrum/s2';
+import type {
+  Key,
+  Selection,
+  SortDescriptor,
+  PressEvent,
+  RangeValue,
+  DateValue,
+  DateRange,
+  TimeValue,
+  RouterConfig,
+} from "@react-spectrum/s2";
+import { useListData, useTreeData, useAsyncList } from "@react-spectrum/s2";
 ```
 
 ### Use the typed Item for each collection
@@ -70,29 +88,36 @@ S2 components take a `styles` prop (plural) restricted to layout properties:
 - `height`, `minHeight`, `maxHeight` (only in specific components without an intrinsic height)
 
 ```tsx
-<Button styles={style({marginStart: 8})}>Edit</Button>
+<Button styles={style({ marginStart: 8 })}>Edit</Button>
 ```
 
 Native HTML elements and React Aria Components take `className={style(...)}` — there the macro is unrestricted:
 
 ```tsx
-import {style} from '@react-spectrum/s2/style' with {type: 'macro'};
-import {Checkbox} from 'react-aria-components';
+import { style } from "@react-spectrum/s2/style" with { type: "macro" };
+import { Checkbox } from "react-aria-components";
 
-<div className={style({display: 'grid', gap: 12, padding: 16, backgroundColor: 'gray-75'})}>
-  <h2 className={style({font: 'heading-sm'})}>Preferences</h2>
+<div
+  className={style({
+    display: "grid",
+    gap: 12,
+    padding: 16,
+    backgroundColor: "gray-75",
+  })}
+>
+  <h2 className={style({ font: "heading-sm" })}>Preferences</h2>
   <Checkbox
     className={style({
-      display: 'flex',
-      alignItems: 'center',
+      display: "flex",
+      alignItems: "center",
       gap: 8,
       color: {
-        default: 'neutral',
-        isSelected: 'blue-900'
-      }
+        default: "neutral",
+        isSelected: "blue-900",
+      },
     })}
   />
-</div>
+</div>;
 ```
 
 Spacing values follow a 4px grid (`0`, `2`, `4`, `8`, `12`, `16`, …).
@@ -107,19 +132,19 @@ Express runtime variation **inside** a single `style({...})` call using its cond
 
 ```tsx
 // ❌ Two near-identical style calls combined at the call site.
-const base = style({padding: 8, backgroundColor: 'gray-100'});
-const active = style({backgroundColor: 'accent'});
-<div className={`${base} ${isActive ? active : ''}`} />
+const base = style({ padding: 8, backgroundColor: "gray-100" });
+const active = style({ backgroundColor: "accent" });
+<div className={`${base} ${isActive ? active : ""}`} />;
 
 // ✅ One call with a runtime condition.
 const card = style({
   padding: 8,
   backgroundColor: {
-    default: 'gray-100',
-    isActive: 'accent'
-  }
+    default: "gray-100",
+    isActive: "accent",
+  },
 });
-<div className={card({isActive})} />
+<div className={card({ isActive })} />;
 ```
 
 If a value seems impossible to express in the macro, check the [Style Macro](references/guides/style-macro.md) reference before falling back to inline styles — most CSS properties (grid placement, overflow, position, sizing, display) are supported.
@@ -138,7 +163,6 @@ The macro is a typed token system. Raw CSS strings fail type-checking and push t
 
 Prefer **semantic** color tokens when the color carries meaning: `'accent'`, `'neutral'`, `'negative'`, `'positive'`, `'informative'`, `'notice'` for errors/success/info/warning/brand — not `'red-…'`/`'green-…'`/`'blue-…'`/`'orange-…'`. Reach for raw hue tokens only for decorative or chart colors.
 
-
 ### Don't restate default prop values
 
 `variant="primary"` on `Button`, `size="M"` on most components, `density="regular"` on collections — setting a prop to its default is noise. Omit it.
@@ -151,15 +175,15 @@ Breakpoints (min-width, mobile-first): `xs` 480, `sm` 640, `md` 768, `lg` 1024, 
 
 ```tsx
 const grid = style({
-  display: 'grid',
+  display: "grid",
   gridTemplateColumns: {
-    default: '1fr',
-    sm: 'repeat(2, 1fr)',
-    lg: 'repeat(3, 1fr)',
-    xl: 'repeat(4, 1fr)'
+    default: "1fr",
+    sm: "repeat(2, 1fr)",
+    lg: "repeat(3, 1fr)",
+    xl: "repeat(4, 1fr)",
   },
-  gap: {default: 12, md: 16, lg: 24},
-  padding: {default: 16, md: 24, lg: 32}
+  gap: { default: 12, md: 16, lg: 24 },
+  padding: { default: 16, md: 24, lg: 32 },
 });
 ```
 
@@ -179,13 +203,13 @@ S2 components define their own internal DOM and slot structure. Don't inject wra
 `Button`/`ActionButton`/`LinkButton` with **both** an icon and a text label require the label to be wrapped in `<Text>` — plain string children next to an icon render incorrectly. (Icon-only children render fine but require `aria-label`.) `Text` is re-exported from each button's own subpath:
 
 ```tsx
-import {ActionButton, Text} from '@react-spectrum/s2/ActionButton';
-import Download from '@react-spectrum/s2/icons/Download';
+import { ActionButton, Text } from "@react-spectrum/s2/ActionButton";
+import Download from "@react-spectrum/s2/icons/Download";
 
 <ActionButton>
   <Download />
   <Text>Download</Text>
-</ActionButton>
+</ActionButton>;
 ```
 
 ### Exceptions: components that accept arbitrary content
@@ -226,8 +250,10 @@ Items use `id` for selection, `onAction(key)`, sort, expansion, and React reconc
 ```tsx
 // ✅ With array.map — set BOTH `id` (for the collection) and `key` (for React).
 <ListView aria-label="Files">
-  {files.map(item => (
-    <ListViewItem key={item.id} id={item.id}>{item.name}</ListViewItem>
+  {files.map((item) => (
+    <ListViewItem key={item.id} id={item.id}>
+      {item.name}
+    </ListViewItem>
   ))}
 </ListView>
 ```
@@ -296,8 +322,8 @@ Mount a single `Provider` at the application root (inside `body`, around the top
 If your app uses `ToastQueue`, place a single `<ToastContainer />` as a sibling of the root layout, inside `Provider`.
 
 ```tsx
-import {Provider} from '@react-spectrum/s2/Provider';
-import {ToastContainer} from '@react-spectrum/s2/Toast';
+import { Provider } from "@react-spectrum/s2/Provider";
+import { ToastContainer } from "@react-spectrum/s2/Toast";
 
 function App() {
   return (
@@ -322,7 +348,12 @@ S2 form fields render their own label, description, error message, and required 
 - `aria-label="..."` — when no visible label is needed.
 
 ```tsx
-<TextField type="email" label="Email" description="We'll never share it." isRequired />
+<TextField
+  type="email"
+  label="Email"
+  description="We'll never share it."
+  isRequired
+/>
 ```
 
 Group related fields with `Form`. It handles label alignment (`labelPosition`, `labelAlign`), default sizes, the required indicator, and submission/validation flow. `Form` is not limited to a single vertical column — wrap subsets of fields in a styled native element to build multi-column or grid layouts.
@@ -338,9 +369,9 @@ Use S2's built-in icons and illustrations.
 - Search the **full** catalog; don't settle for a partial name match. `Heart` ≠ `HeartBroken`; `Edit` ≠ `EditIn`.
 
 ```tsx
-import AlertTriangle from '@react-spectrum/s2/icons/AlertTriangle';
-import DropToUpload from '@react-spectrum/s2/illustrations/gradient/generic1/DropToUpload';
-import Warning from '@react-spectrum/s2/illustrations/linear/Warning';
+import AlertTriangle from "@react-spectrum/s2/icons/AlertTriangle";
+import DropToUpload from "@react-spectrum/s2/illustrations/gradient/generic1/DropToUpload";
+import Warning from "@react-spectrum/s2/illustrations/linear/Warning";
 ```
 
 Illustrations come in Gradient (Generic 1 / Generic 2 variants) and Linear styles.
@@ -362,6 +393,7 @@ Before reporting the task as complete, exercise the project's own toolchain. The
 The `references/` directory contains detailed documentation organized as follows:
 
 ### Guides
+
 - [Component Decision Tree](references/guides/component-decision-tree.md): How to choose the right S2 component when requirements do not name one explicitly.
 - [Implementing Figma designs with React Spectrum S2](references/guides/figma-to-s2.md): How to translate Figma designs (via the Figma MCP) into S2 components and the `style` macro.
 - [Creating Custom Components](references/guides/creating-custom-components.md): How to build custom Spectrum 2 components using React Aria Components and the `style` macro.
@@ -384,4 +416,5 @@ Component documentation is in `references/components/` — one Markdown file per
 Available components: Accordion, ActionBar, ActionButton, ActionButtonGroup, ActionMenu, Avatar, AvatarGroup, Badge, Breadcrumbs, Button, ButtonGroup, Calendar, Card, CardView, Checkbox, CheckboxGroup, ColorArea, ColorField, ColorSlider, ColorSwatch, ColorSwatchPicker, ColorWheel, ComboBox, ContextualHelp, DateField, DatePicker, DateRangePicker, Dialog, Disclosure, Divider, DropZone, Form, Icons, IllustratedMessage, Illustrations, Image, InlineAlert, LabeledValue, Link, LinkButton, ListView, Menu, Meter, NumberField, Picker, Popover, ProgressBar, ProgressCircle, Provider, RadioGroup, RangeCalendar, RangeSlider, SearchField, SegmentedControl, SelectBoxGroup, SideNav, Skeleton, Slider, StatusLight, Switch, TableView, Tabs, TagGroup, TextArea, TextField, TimeField, Toast, ToggleButton, ToggleButtonGroup, Tooltip, TreeView.
 
 ### Additional References
+
 - [React Aria Components](references/react-aria/llms.txt): Documentation for unstyled accessible primitives. Use only when no React Spectrum S2 component fits the requirements.

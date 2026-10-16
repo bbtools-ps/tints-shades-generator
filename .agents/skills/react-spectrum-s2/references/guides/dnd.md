@@ -17,30 +17,38 @@ This example provides items as plain text, HTML, and a custom app-specific data 
 ## ListView example
 
 ```tsx
-import {useDragAndDrop} from '@react-spectrum/s2/useDragAndDrop';
-import {PokemonCOMPONENT, Pokemon} from './PokemonCOMPONENT';
-import {DroppableCOMPONENT} from './DroppableCOMPONENT';
+import { useDragAndDrop } from "@react-spectrum/s2/useDragAndDrop";
+import { PokemonCOMPONENT, Pokemon } from "./PokemonCOMPONENT";
+import { DroppableCOMPONENT } from "./DroppableCOMPONENT";
 
 function DraggableCOMPONENT() {
-  let {dragAndDropHooks} = useDragAndDrop<Pokemon>({
+  let { dragAndDropHooks } = useDragAndDrop<Pokemon>({
     getItems(keys, values) {
-      return values.map(item => {
+      return values.map((item) => {
         return {
-          'text/plain': `${item.name} – ${item.type}`,
-          'text/html': `<strong>${item.name}</strong> – <em>${item.type}</em>`,
-          'pokemon': JSON.stringify(item)
+          "text/plain": `${item.name} – ${item.type}`,
+          "text/html": `<strong>${item.name}</strong> – <em>${item.type}</em>`,
+          pokemon: JSON.stringify(item),
         };
       });
-    }
+    },
   });
 
   return <PokemonCOMPONENT dragAndDropHooks={dragAndDropHooks} />;
 }
 
-<div style={{display: 'flex', gap: 12, flexWrap: 'wrap', width: '100%', justifyContent: 'center'}}>
+<div
+  style={{
+    display: "flex",
+    gap: 12,
+    flexWrap: "wrap",
+    width: "100%",
+    justifyContent: "center",
+  }}
+>
   <DraggableCOMPONENT />
   <DroppableCOMPONENT />
-</div>
+</div>;
 ```
 
 ## Drag preview
@@ -50,26 +58,26 @@ While dragging, a **drag preview** is displayed under the user's mouse or finger
 ## ListView example
 
 ```tsx
-import {DragPreview, useDragAndDrop} from '@react-spectrum/s2/useDragAndDrop';
-import {Text} from '@react-spectrum/s2';
-import File from '@react-spectrum/s2/icons/File';
-import {PokemonCOMPONENT, Pokemon} from './PokemonCOMPONENT';
+import { DragPreview, useDragAndDrop } from "@react-spectrum/s2/useDragAndDrop";
+import { Text } from "@react-spectrum/s2";
+import File from "@react-spectrum/s2/icons/File";
+import { PokemonCOMPONENT, Pokemon } from "./PokemonCOMPONENT";
 
 function DraggableCOMPONENT() {
-  let {dragAndDropHooks} = useDragAndDrop<Pokemon>({
+  let { dragAndDropHooks } = useDragAndDrop<Pokemon>({
     getItems(keys, items: Pokemon[]) {
-      return items.map(item => ({
-        'text/plain': item.name
+      return items.map((item) => ({
+        "text/plain": item.name,
       }));
     },
     renderDragPreview(items) {
       return (
         <DragPreview items={items}>
           <File />
-          <Text>{items[0]['text/plain']}</Text>
+          <Text>{items[0]["text/plain"]}</Text>
         </DragPreview>
       );
-    }
+    },
   });
 
   return <PokemonCOMPONENT dragAndDropHooks={dragAndDropHooks} />;
@@ -93,33 +101,44 @@ This example uses the `acceptedDragTypes` prop to accept items that include an a
 ## ListView example
 
 ```tsx
-import {isTextDropItem, useDragAndDrop} from '@react-spectrum/s2/useDragAndDrop';
-import {useState} from 'react';
-import {PokemonCOMPONENT, Pokemon} from './PokemonCOMPONENT';
-import {DraggableCOMPONENT} from './DraggableCOMPONENT';
+import {
+  isTextDropItem,
+  useDragAndDrop,
+} from "@react-spectrum/s2/useDragAndDrop";
+import { useState } from "react";
+import { PokemonCOMPONENT, Pokemon } from "./PokemonCOMPONENT";
+import { DraggableCOMPONENT } from "./DraggableCOMPONENT";
 
 function DroppableCOMPONENT() {
   let [items, setItems] = useState<Pokemon[]>([]);
 
-  let {dragAndDropHooks} = useDragAndDrop<Pokemon>({
-    acceptedDragTypes: ['pokemon'],
+  let { dragAndDropHooks } = useDragAndDrop<Pokemon>({
+    acceptedDragTypes: ["pokemon"],
     async onRootDrop(e) {
       let items = await Promise.all(
         e.items
           .filter(isTextDropItem)
-          .map(async item => JSON.parse(await item.getText('pokemon')))
+          .map(async (item) => JSON.parse(await item.getText("pokemon")))
       );
       setItems(items);
-    }
+    },
   });
 
   return <PokemonCOMPONENT items={items} dragAndDropHooks={dragAndDropHooks} />;
 }
 
-<div style={{display: 'flex', gap: 12, flexWrap: 'wrap', width: '100%', justifyContent: 'center'}}>
+<div
+  style={{
+    display: "flex",
+    gap: 12,
+    flexWrap: "wrap",
+    width: "100%",
+    justifyContent: "center",
+  }}
+>
   <DraggableCOMPONENT />
   <DroppableCOMPONENT />
-</div>
+</div>;
 ```
 
 ### Files
@@ -127,33 +146,36 @@ function DroppableCOMPONENT() {
 A `FileDropItem` references a file on the user's device. It includes the name and mime type of the file, and methods to read the contents as plain text, or retrieve a [File](https://developer.mozilla.org/en-US/docs/Web/API/File) object for uploading. This example accepts JPEG and PNG image files, and renders them by creating a local [object URL](https://developer.mozilla.org/en-US/docs/Web/API/URL/createObjectURL).
 
 ```tsx
-import {ListView, ListViewItem} from '@react-spectrum/s2/ListView';
-import {style} from '@react-spectrum/s2/style' with {type: 'macro'};
-import {Image, Text} from '@react-spectrum/s2';
-import {useDragAndDrop, isFileDropItem} from '@react-spectrum/s2/useDragAndDrop';
-import {useState} from 'react';
+import { ListView, ListViewItem } from "@react-spectrum/s2/ListView";
+import { style } from "@react-spectrum/s2/style" with { type: "macro" };
+import { Image, Text } from "@react-spectrum/s2";
+import {
+  useDragAndDrop,
+  isFileDropItem,
+} from "@react-spectrum/s2/useDragAndDrop";
+import { useState } from "react";
 
 interface ImageItem {
-  id: number,
-  url: string,
-  name: string
+  id: number;
+  url: string;
+  name: string;
 }
 
 function DroppableListView() {
   let [items, setItems] = useState<ImageItem[]>([]);
 
-  let {dragAndDropHooks} = useDragAndDrop({
-    acceptedDragTypes: ['image/jpeg', 'image/png'],
+  let { dragAndDropHooks } = useDragAndDrop({
+    acceptedDragTypes: ["image/jpeg", "image/png"],
     async onRootDrop(e) {
       let items = await Promise.all(
-        e.items.filter(isFileDropItem).map(async item => ({
+        e.items.filter(isFileDropItem).map(async (item) => ({
           id: Math.random(),
           url: URL.createObjectURL(await item.getFile()),
-          name: item.name
+          name: item.name,
         }))
       );
       setItems(items);
-    }
+    },
   });
 
   return (
@@ -162,8 +184,9 @@ function DroppableListView() {
       items={items}
       dragAndDropHooks={dragAndDropHooks}
       renderEmptyState={() => "Drop images here"}
-      styles={style({height: 250})}>
-      {item => (
+      styles={style({ height: 250 })}
+    >
+      {(item) => (
         <ListViewItem textValue={item.name}>
           {item.url ? <Image src={item.url} alt={item.name} /> : null}
           <Text slot="label">{item.name}</Text>
@@ -179,20 +202,35 @@ function DroppableListView() {
 A `DirectoryDropItem` references the contents of a directory on the user's device. It includes the name of the directory, as well as a method to iterate through the files and folders within the directory. Include the special `DIRECTORY_DRAG_TYPE` type in `acceptedDragTypes` to limit drops to directories.
 
 ```tsx
-import {TreeView, TreeViewItem, TreeViewItemContent, Collection, Text} from '@react-spectrum/s2/TreeView';
-import {style} from '@react-spectrum/s2/style' with {type: 'macro'};
-import {useDragAndDrop, DIRECTORY_DRAG_TYPE, type DirectoryDropItem, isDirectoryDropItem} from '@react-spectrum/s2/useDragAndDrop';
-import {ReactElement, useState} from 'react';
-import File from '@react-spectrum/s2/icons/File';
-import Folder from '@react-spectrum/s2/icons/Folder';
-import {IllustratedMessage, Heading, Content} from '@react-spectrum/s2/IllustratedMessage';
-import FolderOpen from '@react-spectrum/s2/illustrations/linear/FolderOpen';
+import {
+  TreeView,
+  TreeViewItem,
+  TreeViewItemContent,
+  Collection,
+  Text,
+} from "@react-spectrum/s2/TreeView";
+import { style } from "@react-spectrum/s2/style" with { type: "macro" };
+import {
+  useDragAndDrop,
+  DIRECTORY_DRAG_TYPE,
+  type DirectoryDropItem,
+  isDirectoryDropItem,
+} from "@react-spectrum/s2/useDragAndDrop";
+import { ReactElement, useState } from "react";
+import File from "@react-spectrum/s2/icons/File";
+import Folder from "@react-spectrum/s2/icons/Folder";
+import {
+  IllustratedMessage,
+  Heading,
+  Content,
+} from "@react-spectrum/s2/IllustratedMessage";
+import FolderOpen from "@react-spectrum/s2/illustrations/linear/FolderOpen";
 
 interface DirItem {
-  id: number,
-  name: string,
-  kind: string,
-  children: DirItem[]
+  id: number;
+  name: string;
+  kind: string;
+  children: DirItem[];
 }
 
 function renderEmptyState(): ReactElement {
@@ -208,7 +246,7 @@ function renderEmptyState(): ReactElement {
 function DroppableTreeView() {
   let [files, setFiles] = useState<DirItem[]>([]);
 
-  let {dragAndDropHooks} = useDragAndDrop({
+  let { dragAndDropHooks } = useDragAndDrop({
     acceptedDragTypes: [DIRECTORY_DRAG_TYPE],
     async onRootDrop(e) {
       // Read entries in directory and update state with relevant info.
@@ -219,7 +257,7 @@ function DroppableTreeView() {
             id: Math.random(),
             name: entry.name,
             kind: entry.kind,
-            children: entry.kind === 'directory' ? await getFiles(entry) : []
+            children: entry.kind === "directory" ? await getFiles(entry) : [],
           });
         }
         return files;
@@ -227,7 +265,7 @@ function DroppableTreeView() {
 
       let dir = e.items.find(isDirectoryDropItem)!;
       setFiles(await getFiles(dir));
-    }
+    },
   });
 
   return (
@@ -236,17 +274,16 @@ function DroppableTreeView() {
       items={files}
       dragAndDropHooks={dragAndDropHooks}
       renderEmptyState={renderEmptyState}
-      styles={style({height: 250, width: 400})}>
+      styles={style({ height: 250, width: 400 })}
+    >
       {function renderItem(item: DirItem) {
         return (
           <TreeViewItem textValue={item.name}>
             <TreeViewItemContent>
-              {item.kind === 'directory' ? <Folder /> : <File />}
+              {item.kind === "directory" ? <Folder /> : <File />}
               <Text>{item.name}</Text>
             </TreeViewItemContent>
-            <Collection items={item.children}>
-              {renderItem}
-            </Collection>
+            <Collection items={item.children}>{renderItem}</Collection>
           </TreeViewItem>
         );
       }}
@@ -279,6 +316,7 @@ Collection components such as [ListView](ListView.md), [TreeView](TreeView.md), 
       role="img"
       aria-label="Between drop position"
     />
+
   </div>
 
   <Caption style={{fontStyle: 'italic'}}>The "root", "on", and "between" drop positions.</Caption>
@@ -291,33 +329,44 @@ Use the `onRootDrop` event to enable dropping on the entire collection. When a v
 ## ListView example
 
 ```tsx
-import {isTextDropItem, useDragAndDrop} from '@react-spectrum/s2/useDragAndDrop';
-import {useState} from 'react';
-import {PokemonCOMPONENT, Pokemon} from './PokemonCOMPONENT';
-import {DraggableCOMPONENT} from './DraggableCOMPONENT';
+import {
+  isTextDropItem,
+  useDragAndDrop,
+} from "@react-spectrum/s2/useDragAndDrop";
+import { useState } from "react";
+import { PokemonCOMPONENT, Pokemon } from "./PokemonCOMPONENT";
+import { DraggableCOMPONENT } from "./DraggableCOMPONENT";
 
 function DroppableCOMPONENT() {
   let [items, setItems] = useState<Pokemon[]>([]);
 
-  let {dragAndDropHooks} = useDragAndDrop<Pokemon>({
-    acceptedDragTypes: ['pokemon'],
+  let { dragAndDropHooks } = useDragAndDrop<Pokemon>({
+    acceptedDragTypes: ["pokemon"],
     async onRootDrop(e) {
       let items = await Promise.all(
         e.items
           .filter(isTextDropItem)
-          .map(async item => JSON.parse(await item.getText('pokemon')))
+          .map(async (item) => JSON.parse(await item.getText("pokemon")))
       );
       setItems(items);
-    }
+    },
   });
 
   return <PokemonCOMPONENT items={items} dragAndDropHooks={dragAndDropHooks} />;
 }
 
-<div style={{display: 'flex', gap: 12, flexWrap: 'wrap', width: '100%', justifyContent: 'center'}}>
+<div
+  style={{
+    display: "flex",
+    gap: 12,
+    flexWrap: "wrap",
+    width: "100%",
+    justifyContent: "center",
+  }}
+>
   <DraggableCOMPONENT />
   <DroppableCOMPONENT />
-</div>
+</div>;
 ```
 
 ### Dropping on items
@@ -327,33 +376,42 @@ Use the `onItemDrop` event to enable dropping on items. When a valid drag hovers
 ## ListView example
 
 ```tsx
-import {useDragAndDrop} from '@react-spectrum/s2/useDragAndDrop';
-import {PokemonCOMPONENT} from './PokemonCOMPONENT';
-import {DraggableCOMPONENT} from './DraggableCOMPONENT';
+import { useDragAndDrop } from "@react-spectrum/s2/useDragAndDrop";
+import { PokemonCOMPONENT } from "./PokemonCOMPONENT";
+import { DraggableCOMPONENT } from "./DraggableCOMPONENT";
 
 function DroppableCOMPONENT() {
-  let {dragAndDropHooks} = useDragAndDrop({
+  let { dragAndDropHooks } = useDragAndDrop({
     onItemDrop(e) {
       alert(`Dropped on ${e.target.key}`);
-    }
+    },
   });
 
   return (
     <PokemonCOMPONENT
       dragAndDropHooks={dragAndDropHooks}
       items={[
-        {id: 1, name: 'Beedrill', type: 'Bug, Poison', level: 25},
-        {id: 2, name: 'Pidgeot', type: 'Flying', level: 40},
-        {id: 3, name: 'Fearow', type: 'Flying', level: 32},
-        {id: 4, name: 'Jigglypuff', type: 'Fairy', level: 56}
-      ]} />
+        { id: 1, name: "Beedrill", type: "Bug, Poison", level: 25 },
+        { id: 2, name: "Pidgeot", type: "Flying", level: 40 },
+        { id: 3, name: "Fearow", type: "Flying", level: 32 },
+        { id: 4, name: "Jigglypuff", type: "Fairy", level: 56 },
+      ]}
+    />
   );
 }
 
-<div style={{display: 'flex', gap: 12, flexWrap: 'wrap', width: '100%', justifyContent: 'center'}}>
+<div
+  style={{
+    display: "flex",
+    gap: 12,
+    flexWrap: "wrap",
+    width: "100%",
+    justifyContent: "center",
+  }}
+>
   <DraggableCOMPONENT />
   <DroppableCOMPONENT />
-</div>
+</div>;
 ```
 
 ### Dropping between items
@@ -363,52 +421,63 @@ Use the `onInsert` event to enable dropping between items. React Spectrum render
 ## ListView example
 
 ```tsx
-import {useDragAndDrop, isTextDropItem} from '@react-spectrum/s2/useDragAndDrop';
-import {useListData} from '@react-spectrum/s2/useListData';
-import {PokemonCOMPONENT} from './PokemonCOMPONENT';
-import {DraggableCOMPONENT} from './DraggableCOMPONENT';
+import {
+  useDragAndDrop,
+  isTextDropItem,
+} from "@react-spectrum/s2/useDragAndDrop";
+import { useListData } from "@react-spectrum/s2/useListData";
+import { PokemonCOMPONENT } from "./PokemonCOMPONENT";
+import { DraggableCOMPONENT } from "./DraggableCOMPONENT";
 
 function DroppableCOMPONENT() {
   let list = useListData({
     initialItems: [
-      {id: 1, name: 'Beedrill', type: 'Bug, Poison', level: 25},
-      {id: 2, name: 'Pidgeot', type: 'Flying', level: 40},
-      {id: 3, name: 'Fearow', type: 'Flying', level: 32},
-      {id: 4, name: 'Jigglypuff', type: 'Fairy', level: 56}
-    ]
+      { id: 1, name: "Beedrill", type: "Bug, Poison", level: 25 },
+      { id: 2, name: "Pidgeot", type: "Flying", level: 40 },
+      { id: 3, name: "Fearow", type: "Flying", level: 32 },
+      { id: 4, name: "Jigglypuff", type: "Fairy", level: 56 },
+    ],
   });
 
-  let {dragAndDropHooks} = useDragAndDrop({
+  let { dragAndDropHooks } = useDragAndDrop({
     async onInsert(e) {
       let items = await Promise.all(
-        e.items
-          .filter(isTextDropItem)
-          .map(async item => {
-            let pokemon = JSON.parse(await item.getText('pokemon'));
-            let processItem = item => ({
-              ...item,
-              id: Math.random(),
-              children: item.children?.map(processItem)
-            });
-            return processItem(pokemon);
-          })
+        e.items.filter(isTextDropItem).map(async (item) => {
+          let pokemon = JSON.parse(await item.getText("pokemon"));
+          let processItem = (item) => ({
+            ...item,
+            id: Math.random(),
+            children: item.children?.map(processItem),
+          });
+          return processItem(pokemon);
+        })
       );
 
-      if (e.target.dropPosition === 'before') {
+      if (e.target.dropPosition === "before") {
         list.insertBefore(e.target.key, ...items);
-      } else if (e.target.dropPosition === 'after') {
+      } else if (e.target.dropPosition === "after") {
         list.insertAfter(e.target.key, ...items);
       }
-    }
+    },
   });
 
-  return <PokemonCOMPONENT items={list.items} dragAndDropHooks={dragAndDropHooks} />;
+  return (
+    <PokemonCOMPONENT items={list.items} dragAndDropHooks={dragAndDropHooks} />
+  );
 }
 
-<div style={{display: 'flex', gap: 12, flexWrap: 'wrap', width: '100%', justifyContent: 'center'}}>
+<div
+  style={{
+    display: "flex",
+    gap: 12,
+    flexWrap: "wrap",
+    width: "100%",
+    justifyContent: "center",
+  }}
+>
   <DraggableCOMPONENT />
   <DroppableCOMPONENT />
-</div>
+</div>;
 ```
 
 ### Reordering items
@@ -418,35 +487,37 @@ Use the `onReorder` event to enable reordering items. For components with hierar
 ## ListView example
 
 ```tsx
-import {useDragAndDrop} from '@react-spectrum/s2/useDragAndDrop';
-import {useListData} from '@react-spectrum/s2/useListData';
-import {PokemonCOMPONENT, Pokemon, defaultItems} from './PokemonCOMPONENT';
+import { useDragAndDrop } from "@react-spectrum/s2/useDragAndDrop";
+import { useListData } from "@react-spectrum/s2/useListData";
+import { PokemonCOMPONENT, Pokemon, defaultItems } from "./PokemonCOMPONENT";
 
 function ReorderableCOMPONENT() {
   let list = useListData({
-    initialItems: defaultItems
+    initialItems: defaultItems,
   });
 
-  let {dragAndDropHooks} = useDragAndDrop({
+  let { dragAndDropHooks } = useDragAndDrop({
     getItems(keys, items: Pokemon[]) {
-      return items.map(item => {
+      return items.map((item) => {
         return {
-          'text/plain': `${item.name} – ${item.type}`,
-          'text/html': `<strong>${item.name}</strong> – <em>${item.type}</em>`,
-          'pokemon': JSON.stringify(item)
+          "text/plain": `${item.name} – ${item.type}`,
+          "text/html": `<strong>${item.name}</strong> – <em>${item.type}</em>`,
+          pokemon: JSON.stringify(item),
         };
       });
     },
     onReorder(e) {
-      if (e.target.dropPosition === 'before') {
+      if (e.target.dropPosition === "before") {
         list.moveBefore(e.target.key, e.keys);
-      } else if (e.target.dropPosition === 'after') {
+      } else if (e.target.dropPosition === "after") {
         list.moveAfter(e.target.key, e.keys);
       }
-    }
+    },
   });
 
-  return <PokemonCOMPONENT items={list.items} dragAndDropHooks={dragAndDropHooks} />
+  return (
+    <PokemonCOMPONENT items={list.items} dragAndDropHooks={dragAndDropHooks} />
+  );
 }
 ```
 
@@ -457,31 +528,31 @@ Use the `onMove` event to enable moving items within a collection. This allows r
 ## ListView example
 
 ```tsx
-import {useDragAndDrop} from '@react-spectrum/s2/useDragAndDrop';
-import {useTreeData} from '@react-spectrum/s2/useTreeData';
-import {PokemonCOMPONENT, Pokemon, defaultItems} from './PokemonCOMPONENT';
+import { useDragAndDrop } from "@react-spectrum/s2/useDragAndDrop";
+import { useTreeData } from "@react-spectrum/s2/useTreeData";
+import { PokemonCOMPONENT, Pokemon, defaultItems } from "./PokemonCOMPONENT";
 
 function ReorderableCOMPONENT() {
   let tree = useTreeData({
-    initialItems: defaultItems
+    initialItems: defaultItems,
   });
 
-  let {dragAndDropHooks} = useDragAndDrop({
+  let { dragAndDropHooks } = useDragAndDrop({
     getItems(keys, items: Pokemon[]) {
-      return items.map(item => {
+      return items.map((item) => {
         return {
-          'text/plain': `${item.name} – ${item.type}`,
-          'text/html': `<strong>${item.name}</strong> – <em>${item.type}</em>`,
-          'pokemon': JSON.stringify(item)
+          "text/plain": `${item.name} – ${item.type}`,
+          "text/html": `<strong>${item.name}</strong> – <em>${item.type}</em>`,
+          pokemon: JSON.stringify(item),
         };
       });
     },
     onMove(e) {
-      if (e.target.dropPosition === 'before') {
+      if (e.target.dropPosition === "before") {
         tree.moveBefore(e.target.key, e.keys);
-      } else if (e.target.dropPosition === 'after') {
+      } else if (e.target.dropPosition === "after") {
         tree.moveAfter(e.target.key, e.keys);
-      } else if (e.target.dropPosition === 'on') {
+      } else if (e.target.dropPosition === "on") {
         // Move items to become children of the target
         let targetNode = tree.getItem(e.target.key);
         if (targetNode) {
@@ -494,16 +565,16 @@ function ReorderableCOMPONENT() {
           }
         }
       }
-    }
+    },
   });
 
   // Map tree items to Pokemon objects
-  let processItem = item => {
-    return {...item.value, children: item.children.map(processItem)}
+  let processItem = (item) => {
+    return { ...item.value, children: item.children.map(processItem) };
   };
 
   let items = tree.items.map(processItem);
-  return <PokemonCOMPONENT items={items} dragAndDropHooks={dragAndDropHooks} />
+  return <PokemonCOMPONENT items={items} dragAndDropHooks={dragAndDropHooks} />;
 }
 ```
 
@@ -514,55 +585,59 @@ This example puts together many of the examples described above, allowing users 
 ## ListView example
 
 ```tsx
-import {DragPreview, useDragAndDrop, isTextDropItem} from '@react-spectrum/s2/useDragAndDrop';
-import {useListData} from '@react-spectrum/s2/useListData';
-import {Text} from '@react-spectrum/s2';
-import File from '@react-spectrum/s2/icons/File';
-import {PokemonCOMPONENT, Pokemon, defaultItems} from './PokemonCOMPONENT';
+import {
+  DragPreview,
+  useDragAndDrop,
+  isTextDropItem,
+} from "@react-spectrum/s2/useDragAndDrop";
+import { useListData } from "@react-spectrum/s2/useListData";
+import { Text } from "@react-spectrum/s2";
+import File from "@react-spectrum/s2/icons/File";
+import { PokemonCOMPONENT, Pokemon, defaultItems } from "./PokemonCOMPONENT";
 
 interface DndCOMPONENTProps {
-  initialItems: Pokemon[],
-  'aria-label': string
+  initialItems: Pokemon[];
+  "aria-label": string;
 }
 
 function DndCOMPONENT(props: DndCOMPONENTProps) {
   let list = useListData({
-    initialItems: props.initialItems
+    initialItems: props.initialItems,
   });
 
-  let {dragAndDropHooks} = useDragAndDrop({
+  let { dragAndDropHooks } = useDragAndDrop({
     renderDragPreview(items) {
       return (
         <DragPreview items={items}>
           <File />
-          <Text>{items[0]['text/plain']}</Text>
+          <Text>{items[0]["text/plain"]}</Text>
         </DragPreview>
       );
     },
     // Provide drag data in a custom format as well as plain text.
     getItems(keys, items: Pokemon[]) {
-      return items.map(item => ({
-        'pokemon': JSON.stringify(item),
-        'text/plain': item.name
+      return items.map((item) => ({
+        pokemon: JSON.stringify(item),
+        "text/plain": item.name,
       }));
     },
 
     // Accept drops with the custom format.
-    acceptedDragTypes: ['pokemon'],
+    acceptedDragTypes: ["pokemon"],
 
     // Ensure items are always moved rather than copied.
-    getDropOperation: () => 'move',
+    getDropOperation: () => "move",
 
     // Handle drops between items from other lists.
     async onInsert(e) {
       let processedItems = await Promise.all(
         e.items
           .filter(isTextDropItem)
-          .map(async item => JSON.parse(await item.getText('pokemon')))
+          .map(async (item) => JSON.parse(await item.getText("pokemon")))
       );
-      if (e.target.dropPosition === 'before') {
+      if (e.target.dropPosition === "before") {
         list.insertBefore(e.target.key, ...processedItems);
-      } else if (e.target.dropPosition === 'after') {
+      } else if (e.target.dropPosition === "after") {
         list.insertAfter(e.target.key, ...processedItems);
       }
     },
@@ -572,16 +647,16 @@ function DndCOMPONENT(props: DndCOMPONENTProps) {
       let processedItems = await Promise.all(
         e.items
           .filter(isTextDropItem)
-          .map(async item => JSON.parse(await item.getText('pokemon')))
+          .map(async (item) => JSON.parse(await item.getText("pokemon")))
       );
       list.append(...processedItems);
     },
 
     // Handle reordering items within the same list.
     onReorder(e) {
-      if (e.target.dropPosition === 'before') {
+      if (e.target.dropPosition === "before") {
         list.moveBefore(e.target.key, e.keys);
-      } else if (e.target.dropPosition === 'after') {
+      } else if (e.target.dropPosition === "after") {
         list.moveAfter(e.target.key, e.keys);
       }
     },
@@ -589,23 +664,36 @@ function DndCOMPONENT(props: DndCOMPONENTProps) {
     // Remove the items from the source list on drop
     // if they were moved to a different list.
     onDragEnd(e) {
-      if (e.dropOperation === 'move' && !e.isInternal) {
+      if (e.dropOperation === "move" && !e.isInternal) {
         list.remove(...e.keys);
       }
-    }
+    },
   });
 
-  return <PokemonCOMPONENT items={list.items} dragAndDropHooks={dragAndDropHooks} aria-label={props['aria-label']} />
+  return (
+    <PokemonCOMPONENT
+      items={list.items}
+      dragAndDropHooks={dragAndDropHooks}
+      aria-label={props["aria-label"]}
+    />
+  );
 }
 
-<div style={{display: 'flex', gap: 12, flexWrap: 'wrap', width: '100%', justifyContent: 'center'}}>
+<div
+  style={{
+    display: "flex",
+    gap: 12,
+    flexWrap: "wrap",
+    width: "100%",
+    justifyContent: "center",
+  }}
+>
   <DndCOMPONENT
     initialItems={defaultItems}
-    aria-label="Drag and drop COMPONENT" />
-  <DndCOMPONENT
-    initialItems={[]}
-    aria-label="Drag and drop COMPONENT" />
-</div>
+    aria-label="Drag and drop COMPONENT"
+  />
+  <DndCOMPONENT initialItems={[]} aria-label="Drag and drop COMPONENT" />
+</div>;
 ```
 
 ## Drop operations
@@ -635,34 +723,45 @@ Use `getDropOperation` option to provide feedback to the user when a drag hovers
 ## ListView example
 
 ```tsx
-import {isTextDropItem, useDragAndDrop} from '@react-spectrum/s2/useDragAndDrop';
-import {useState} from 'react';
-import {PokemonCOMPONENT, Pokemon} from './PokemonCOMPONENT';
-import {DraggableCOMPONENT} from './DraggableCOMPONENT';
+import {
+  isTextDropItem,
+  useDragAndDrop,
+} from "@react-spectrum/s2/useDragAndDrop";
+import { useState } from "react";
+import { PokemonCOMPONENT, Pokemon } from "./PokemonCOMPONENT";
+import { DraggableCOMPONENT } from "./DraggableCOMPONENT";
 
 function DroppableCOMPONENT() {
   let [items, setItems] = useState<Pokemon[]>([]);
 
-  let {dragAndDropHooks} = useDragAndDrop<Pokemon>({
-    acceptedDragTypes: ['pokemon'],
-    getDropOperation: (target, types, allowedOperations) => 'copy',
+  let { dragAndDropHooks } = useDragAndDrop<Pokemon>({
+    acceptedDragTypes: ["pokemon"],
+    getDropOperation: (target, types, allowedOperations) => "copy",
     async onRootDrop(e) {
       let items = await Promise.all(
         e.items
           .filter(isTextDropItem)
-          .map(async item => JSON.parse(await item.getText('pokemon')))
+          .map(async (item) => JSON.parse(await item.getText("pokemon")))
       );
       setItems(items);
-    }
+    },
   });
 
   return <PokemonCOMPONENT items={items} dragAndDropHooks={dragAndDropHooks} />;
 }
 
-<div style={{display: 'flex', gap: 12, flexWrap: 'wrap', width: '100%', justifyContent: 'center'}}>
+<div
+  style={{
+    display: "flex",
+    gap: 12,
+    flexWrap: "wrap",
+    width: "100%",
+    justifyContent: "center",
+  }}
+>
   <DraggableCOMPONENT />
   <DroppableCOMPONENT />
-</div>
+</div>;
 ```
 
 ### getAllowedDropOperations
@@ -672,36 +771,46 @@ The drag source can also control which drop operations are allowed. In the examp
 ## ListView example
 
 ```tsx
-import {useDragAndDrop} from '@react-spectrum/s2/useDragAndDrop';
-import {useListData} from '@react-spectrum/s2/useListData';
-import {PokemonCOMPONENT, Pokemon, defaultItems} from './PokemonCOMPONENT';
-import {DroppableCOMPONENT} from './DroppableCOMPONENT';
+import { useDragAndDrop } from "@react-spectrum/s2/useDragAndDrop";
+import { useListData } from "@react-spectrum/s2/useListData";
+import { PokemonCOMPONENT, Pokemon, defaultItems } from "./PokemonCOMPONENT";
+import { DroppableCOMPONENT } from "./DroppableCOMPONENT";
 
 function DraggableCOMPONENT() {
   let list = useListData({
-    initialItems: defaultItems
+    initialItems: defaultItems,
   });
 
-  let {dragAndDropHooks} = useDragAndDrop<Pokemon>({
+  let { dragAndDropHooks } = useDragAndDrop<Pokemon>({
     getItems(keys, items: Pokemon[]) {
-      return items.map(item => {
+      return items.map((item) => {
         return {
-          'text/plain': `${item.name} – ${item.type}`,
-          'text/html': `<strong>${item.name}</strong> – <em>${item.type}</em>`,
-          'pokemon': JSON.stringify(item)
+          "text/plain": `${item.name} – ${item.type}`,
+          "text/html": `<strong>${item.name}</strong> – <em>${item.type}</em>`,
+          pokemon: JSON.stringify(item),
         };
       });
     },
-    getAllowedDropOperations: () => ['copy']
+    getAllowedDropOperations: () => ["copy"],
   });
 
-  return <PokemonCOMPONENT items={list.items} dragAndDropHooks={dragAndDropHooks} />
+  return (
+    <PokemonCOMPONENT items={list.items} dragAndDropHooks={dragAndDropHooks} />
+  );
 }
 
-<div style={{display: 'flex', gap: 12, flexWrap: 'wrap', width: '100%', justifyContent: 'center'}}>
+<div
+  style={{
+    display: "flex",
+    gap: 12,
+    flexWrap: "wrap",
+    width: "100%",
+    justifyContent: "center",
+  }}
+>
   <DraggableCOMPONENT />
   <DroppableCOMPONENT />
-</div>
+</div>;
 ```
 
 ### onDragEnd
@@ -713,40 +822,50 @@ This example removes the dragged items from the UI when a move operation is comp
 ## ListView example
 
 ```tsx
-import {useDragAndDrop} from '@react-spectrum/s2/useDragAndDrop';
-import {useListData} from '@react-spectrum/s2/useListData';
-import {PokemonCOMPONENT, Pokemon, defaultItems} from './PokemonCOMPONENT';
-import {DroppableCOMPONENT} from './DroppableCOMPONENT';
+import { useDragAndDrop } from "@react-spectrum/s2/useDragAndDrop";
+import { useListData } from "@react-spectrum/s2/useListData";
+import { PokemonCOMPONENT, Pokemon, defaultItems } from "./PokemonCOMPONENT";
+import { DroppableCOMPONENT } from "./DroppableCOMPONENT";
 
 function DraggableCOMPONENT() {
   let list = useListData({
-    initialItems: defaultItems
+    initialItems: defaultItems,
   });
 
-  let {dragAndDropHooks} = useDragAndDrop<Pokemon>({
+  let { dragAndDropHooks } = useDragAndDrop<Pokemon>({
     getItems(keys, items: Pokemon[]) {
-      return items.map(item => {
+      return items.map((item) => {
         return {
-          'text/plain': `${item.name} – ${item.type}`,
-          'text/html': `<strong>${item.name}</strong> – <em>${item.type}</em>`,
-          'pokemon': JSON.stringify(item)
+          "text/plain": `${item.name} – ${item.type}`,
+          "text/html": `<strong>${item.name}</strong> – <em>${item.type}</em>`,
+          pokemon: JSON.stringify(item),
         };
       });
     },
     onDragEnd(e) {
-      if (e.dropOperation === 'move') {
+      if (e.dropOperation === "move") {
         list.remove(...e.keys);
       }
-    }
+    },
   });
 
-  return <PokemonCOMPONENT items={list.items} dragAndDropHooks={dragAndDropHooks} />
+  return (
+    <PokemonCOMPONENT items={list.items} dragAndDropHooks={dragAndDropHooks} />
+  );
 }
 
-<div style={{display: 'flex', gap: 12, flexWrap: 'wrap', width: '100%', justifyContent: 'center'}}>
+<div
+  style={{
+    display: "flex",
+    gap: 12,
+    flexWrap: "wrap",
+    width: "100%",
+    justifyContent: "center",
+  }}
+>
   <DraggableCOMPONENT />
   <DroppableCOMPONENT />
-</div>
+</div>;
 ```
 
 ### Drop events
@@ -755,15 +874,15 @@ Drop events such as `onInsert`, `onItemDrop`, etc. also include the `dropOperati
 
 ```tsx
 let onItemDrop = async (e) => {
-  let data = JSON.parse(await e.items[0].getText('my-app-file'));
+  let data = JSON.parse(await e.items[0].getText("my-app-file"));
   switch (e.dropOperation) {
-    case 'move':
+    case "move":
       MyAppFileService.move(data.filePath, props.filePath);
       break;
-    case 'copy':
+    case "copy":
       MyAppFileService.copy(data.filePath, props.filePath);
       break;
-    case 'link':
+    case "link":
       MyAppFileService.link(data.filePath, props.filePath);
       break;
   }
@@ -805,11 +924,11 @@ Note that because mouse and touch drag and drop interactions utilize the native 
 </DragPreview>
 ```
 
-| Name | Type | Default | Description |
-|------|------|---------|-------------|
-| `children` | `ReactNode` | — | The contents of the drag preview. Supports the `label`, `description`, and `icon` slots. If no children are provided, defaults to the first drag item's plain text content. |
-| `items` | `DragItem[]` | — | The currently dragged items, sourced from renderDragPreview. |
-| `overflowMode` | `"truncate" | "wrap" | undefined` | — | The overflow mode to be applied on the drag preview. |
+| Name           | Type         | Default | Description                                                                                                                                                                 |
+| -------------- | ------------ | ------- | --------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| `children`     | `ReactNode`  | —       | The contents of the drag preview. Supports the `label`, `description`, and `icon` slots. If no children are provided, defaults to the first drag item's plain text content. |
+| `items`        | `DragItem[]` | —       | The currently dragged items, sourced from renderDragPreview.                                                                                                                |
+| `overflowMode` | `"truncate"  | "wrap"  | undefined`                                                                                                                                                                  | —   | The overflow mode to be applied on the drag preview. |
 
 ## Related Types
 
@@ -820,28 +939,28 @@ Note that because mouse and touch drag and drop interactions utilize the native 
 Provides the hooks required to enable drag and drop behavior for a drag and drop compatible
 collection component.
 
-| Name | Type | Default | Description |
-|------|------|---------|-------------|
-| `acceptedDragTypes` | `"all" | (string | symbol)[] | undefined` | 'all' | The drag types that the droppable collection accepts. If the collection accepts directories, include `DIRECTORY_DRAG_TYPE` in your array of allowed types. |
-| `dropTargetDelegate` | `DropTargetDelegate | undefined` | — | A custom delegate object that provides drop targets for pointer coordinates within the collection. |
-| `getAllowedDropOperations` | `(() => DropOperation[]) | undefined` | — | Function that returns the drop operations that are allowed for the dragged items. If not provided, all drop operations are allowed. |
-| `getDropOperation` | `((target: DropTarget, types: DragTypes, allowedOperations: DropOperation[]) => DropOperation) | undefined` | — | A function returning the drop operation to be performed when items matching the given types are dropped on the drop target. |
-| `getItems` | `((keys: Set<Key>, items: T[]) => DragItem[]) | undefined` | () => \[] | A function that returns the items being dragged. If not specified, we assume that the collection is not draggable. |
-| `isDisabled` | `boolean | undefined` | — | Whether the drag and drop events should be disabled. |
-| `onDragEnd` | `((e: DraggableCollectionEndEvent) => void) | undefined` | — | Handler that is called when the drag operation is ended, either as a result of a drop or a cancellation. |
-| `onDragMove` | `((e: DraggableCollectionMoveEvent) => void) | undefined` | — | Handler that is called when the drag is moved. |
-| `onDragStart` | `((e: DraggableCollectionStartEvent) => void) | undefined` | — | Handler that is called when a drag operation is started. |
-| `onDrop` | `((e: DroppableCollectionDropEvent) => void) | undefined` | — | Handler that is called when a valid drag is dropped on a drop target. When defined, this overrides other drop handlers such as `onInsert`, and `onItemDrop`. |
-| `onDropActivate` | `((e: DroppableCollectionActivateEvent) => void) | undefined` | — | Handler that is called after a valid drag is held over a drop target for a period of time. |
-| `onDropEnter` | `((e: DroppableCollectionEnterEvent) => void) | undefined` | — | Handler that is called when a valid drag enters a drop target. |
-| `onDropExit` | `((e: DroppableCollectionExitEvent) => void) | undefined` | — | Handler that is called when a valid drag exits a drop target. |
-| `onInsert` | `((e: DroppableCollectionInsertDropEvent) => void) | undefined` | — | Handler that is called when external items are dropped "between" items. |
-| `onItemDrop` | `((e: DroppableCollectionOnItemDropEvent) => void) | undefined` | — | Handler that is called when items are dropped "on" an item. |
-| `onMove` | `((e: DroppableCollectionReorderEvent) => void) | undefined` | — | Handler that is called when items are moved within the source collection. This handler allows dropping both on or between items, and items may be moved to a different parent item within a tree. |
-| `onReorder` | `((e: DroppableCollectionReorderEvent) => void) | undefined` | — | Handler that is called when items are reordered within the collection. This handler only allows dropping between items, not on items. It does not allow moving items to a different parent item within a tree. |
-| `onRootDrop` | `((e: DroppableCollectionRootDropEvent) => void) | undefined` | — | Handler that is called when external items are dropped on the droppable collection's root. |
-| `renderDragPreview` | `((items: DragItem[]) => JSX.Element | { element: JSX.Element; x: number; y: number; }) | undefined` | — | A function that renders a drag preview, which is shown under the user's cursor while dragging. By default, a copy of the dragged element is rendered. |
-| `shouldAcceptItemDrop` | `((target: ItemDropTarget, types: DragTypes) => boolean) | undefined` | — | A function returning whether a given target in the droppable collection is a valid "on" drop target for the current drag types. |
+| Name                       | Type                                                                                           | Default                                          | Description |
+| -------------------------- | ---------------------------------------------------------------------------------------------- | ------------------------------------------------ | ----------- |
+| `acceptedDragTypes`        | `"all"                                                                                         | (string                                          | symbol)[]   | undefined`                                                                                                                                                                                                     | 'all'                                                                                                                                                 | The drag types that the droppable collection accepts. If the collection accepts directories, include `DIRECTORY_DRAG_TYPE` in your array of allowed types. |
+| `dropTargetDelegate`       | `DropTargetDelegate                                                                            | undefined`                                       | —           | A custom delegate object that provides drop targets for pointer coordinates within the collection.                                                                                                             |
+| `getAllowedDropOperations` | `(() => DropOperation[])                                                                       | undefined`                                       | —           | Function that returns the drop operations that are allowed for the dragged items. If not provided, all drop operations are allowed.                                                                            |
+| `getDropOperation`         | `((target: DropTarget, types: DragTypes, allowedOperations: DropOperation[]) => DropOperation) | undefined`                                       | —           | A function returning the drop operation to be performed when items matching the given types are dropped on the drop target.                                                                                    |
+| `getItems`                 | `((keys: Set<Key>, items: T[]) => DragItem[])                                                  | undefined`                                       | () => \[]   | A function that returns the items being dragged. If not specified, we assume that the collection is not draggable.                                                                                             |
+| `isDisabled`               | `boolean                                                                                       | undefined`                                       | —           | Whether the drag and drop events should be disabled.                                                                                                                                                           |
+| `onDragEnd`                | `((e: DraggableCollectionEndEvent) => void)                                                    | undefined`                                       | —           | Handler that is called when the drag operation is ended, either as a result of a drop or a cancellation.                                                                                                       |
+| `onDragMove`               | `((e: DraggableCollectionMoveEvent) => void)                                                   | undefined`                                       | —           | Handler that is called when the drag is moved.                                                                                                                                                                 |
+| `onDragStart`              | `((e: DraggableCollectionStartEvent) => void)                                                  | undefined`                                       | —           | Handler that is called when a drag operation is started.                                                                                                                                                       |
+| `onDrop`                   | `((e: DroppableCollectionDropEvent) => void)                                                   | undefined`                                       | —           | Handler that is called when a valid drag is dropped on a drop target. When defined, this overrides other drop handlers such as `onInsert`, and `onItemDrop`.                                                   |
+| `onDropActivate`           | `((e: DroppableCollectionActivateEvent) => void)                                               | undefined`                                       | —           | Handler that is called after a valid drag is held over a drop target for a period of time.                                                                                                                     |
+| `onDropEnter`              | `((e: DroppableCollectionEnterEvent) => void)                                                  | undefined`                                       | —           | Handler that is called when a valid drag enters a drop target.                                                                                                                                                 |
+| `onDropExit`               | `((e: DroppableCollectionExitEvent) => void)                                                   | undefined`                                       | —           | Handler that is called when a valid drag exits a drop target.                                                                                                                                                  |
+| `onInsert`                 | `((e: DroppableCollectionInsertDropEvent) => void)                                             | undefined`                                       | —           | Handler that is called when external items are dropped "between" items.                                                                                                                                        |
+| `onItemDrop`               | `((e: DroppableCollectionOnItemDropEvent) => void)                                             | undefined`                                       | —           | Handler that is called when items are dropped "on" an item.                                                                                                                                                    |
+| `onMove`                   | `((e: DroppableCollectionReorderEvent) => void)                                                | undefined`                                       | —           | Handler that is called when items are moved within the source collection. This handler allows dropping both on or between items, and items may be moved to a different parent item within a tree.              |
+| `onReorder`                | `((e: DroppableCollectionReorderEvent) => void)                                                | undefined`                                       | —           | Handler that is called when items are reordered within the collection. This handler only allows dropping between items, not on items. It does not allow moving items to a different parent item within a tree. |
+| `onRootDrop`               | `((e: DroppableCollectionRootDropEvent) => void)                                               | undefined`                                       | —           | Handler that is called when external items are dropped on the droppable collection's root.                                                                                                                     |
+| `renderDragPreview`        | `((items: DragItem[]) => JSX.Element                                                           | { element: JSX.Element; x: number; y: number; }) | undefined`  | —                                                                                                                                                                                                              | A function that renders a drag preview, which is shown under the user's cursor while dragging. By default, a copy of the dragged element is rendered. |
+| `shouldAcceptItemDrop`     | `((target: ItemDropTarget, types: DragTypes) => boolean)                                       | undefined`                                       | —           | A function returning whether a given target in the droppable collection is a valid "on" drop target for the current drag types.                                                                                |
 
 ### DragPreview
 
@@ -851,19 +970,19 @@ The default drag preview rendered by the collection element during drag and drop
 your drag hooks' \`renderDragPreview\` to match the default visual. To customize the drag preview's
 contents, use Text with the "label" and "description" slots and/or a Icon for the leading icon.
 
-| Name | Type | Default | Description |
-|------|------|---------|-------------|
-| `children` | `ReactNode` | — | The contents of the drag preview. Supports the `label`, `description`, and `icon` slots. If no children are provided, defaults to the first drag item's plain text content. |
-| `items` | `DragItem[]` | — | The currently dragged items, sourced from renderDragPreview. |
-| `overflowMode` | `"truncate" | "wrap" | undefined` | — | The overflow mode to be applied on the drag preview. |
+| Name           | Type         | Default | Description                                                                                                                                                                 |
+| -------------- | ------------ | ------- | --------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| `children`     | `ReactNode`  | —       | The contents of the drag preview. Supports the `label`, `description`, and `icon` slots. If no children are provided, defaults to the first drag item's plain text content. |
+| `items`        | `DragItem[]` | —       | The currently dragged items, sourced from renderDragPreview.                                                                                                                |
+| `overflowMode` | `"truncate"  | "wrap"  | undefined`                                                                                                                                                                  | —   | The overflow mode to be applied on the drag preview. |
 
 ### TextDropItem
 
 ### Properties
 
-| Name | Type | Description |
-|------|------|-------------|
-| `kind` \* | `"text"` | The item kind. |
+| Name       | Type          | Description                                                                                               |
+| ---------- | ------------- | --------------------------------------------------------------------------------------------------------- |
+| `kind` \*  | `"text"`      | The item kind.                                                                                            |
 | `types` \* | `Set<string>` | The drag types available for this item. These are often mime types, but may be custom app-specific types. |
 
 ### Methods
@@ -876,10 +995,10 @@ Returns the data for the given type as a string.
 
 ### Properties
 
-| Name | Type | Description |
-|------|------|-------------|
-| `kind` \* | `"file"` | The item kind. |
-| `name` \* | `string` | The file name. |
+| Name      | Type     | Description                          |
+| --------- | -------- | ------------------------------------ |
+| `kind` \* | `"file"` | The item kind.                       |
+| `name` \* | `string` | The file name.                       |
 | `type` \* | `string` | The file type (usually a mime type). |
 
 ### Methods
@@ -896,10 +1015,10 @@ Returns the contents of the file as a string.
 
 ### Properties
 
-| Name | Type | Description |
-|------|------|-------------|
-| `kind` \* | `"directory"` | The item kind. |
-| `name` \* | `string` | The directory name. |
+| Name      | Type          | Description         |
+| --------- | ------------- | ------------------- |
+| `kind` \* | `"directory"` | The item kind.      |
+| `name` \* | `string`      | The directory name. |
 
 ### Methods
 

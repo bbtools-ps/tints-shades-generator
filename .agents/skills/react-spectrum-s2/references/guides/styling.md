@@ -7,18 +7,22 @@ Learn how to use the `style` macro to apply Spectrum tokens directly in your com
 The `style` macro runs at build time and returns a class name that applies Spectrum 2 design tokens (colors, spacing, sizing, typography, etc.). See the [reference](style-macro.md) for a full list of supported values.
 
 ```tsx
-import {style} from '@react-spectrum/s2/style' with {type: 'macro'};
+import { style } from "@react-spectrum/s2/style" with { type: "macro" };
 
-<div className={style({backgroundColor: 'red-400', color: 'white'})}>
+<div className={style({ backgroundColor: "red-400", color: "white" })}>
   {/* ... */}
-</div>
+</div>;
 ```
 
 Atomic output keeps your bundle small and scales well as your app grows. Each property/value pair is emitted once and reused everywhere.
 
 ```css
-.bJ { background-color: #ffbcb4 }
-.ac { color: #fff }
+.bJ {
+  background-color: #ffbcb4;
+}
+.ac {
+  color: #fff;
+}
 ```
 
 Colocating styles with your component code means:
@@ -40,10 +44,10 @@ Colocating styles with your component code means:
 The `styles` prop accepts a limited set of CSS properties, including layout, spacing, sizing, and positioning. Other styles such as colors and internal padding cannot be customized within Spectrum components.
 
 ```tsx
-import {style} from '@react-spectrum/s2/style' with {type: 'macro'};
-import {Button} from '@react-spectrum/s2/Button';
+import { style } from "@react-spectrum/s2/style" with { type: "macro" };
+import { Button } from "@react-spectrum/s2/Button";
 
-<Button styles={style({marginStart: 8})}>Edit</Button>
+<Button styles={style({ marginStart: 8 })}>Edit</Button>;
 ```
 
 ### Supported CSS properties
@@ -92,8 +96,8 @@ Define conditional values such as media queries, UI states (e.g. hover, press), 
     padding: {
       default: 8,
       lg: 32,
-      '@media (min-width: 2560px)': 64
-    }
+      "@media (min-width: 2560px)": 64,
+    },
   })}
 />
 ```
@@ -111,19 +115,19 @@ Conditions are mutually exclusive and ordered. The macro uses CSS cascade layers
 When runtime conditions are detected (e.g., variants, UI states), the macro returns a function to resolve styles at runtime.
 
 ```tsx
-import {style} from '@react-spectrum/s2/style' with {type: 'macro'};
+import { style } from "@react-spectrum/s2/style" with { type: "macro" };
 
 const styles = style({
   backgroundColor: {
     variant: {
-      primary: 'accent',
-      secondary: 'neutral'
-    }
-  }
+      primary: "accent",
+      secondary: "neutral",
+    },
+  },
 });
 
-function MyComponent({variant}: {variant: 'primary' | 'secondary'}) {
-  return <div className={styles({variant})} />
+function MyComponent({ variant }: { variant: "primary" | "secondary" }) {
+  return <div className={styles({ variant })} />;
 }
 ```
 
@@ -132,30 +136,30 @@ Boolean conditions starting with `is` or `allows` can be used directly without n
 ```tsx
 const styles = style({
   backgroundColor: {
-    default: 'gray-100',
-    isSelected: 'gray-900',
-    allowsRemoving: 'gray-400'
-  }
+    default: "gray-100",
+    isSelected: "gray-900",
+    allowsRemoving: "gray-400",
+  },
 });
 
-<div className={styles({isSelected: true})} />
+<div className={styles({ isSelected: true })} />;
 ```
 
 Runtime conditions work well with render props in React Aria Components. If you inline styles, you’ll get autocomplete for available conditions.
 
 ```tsx
-import {Checkbox} from 'react-aria-components/Checkbox';
-import {style} from '@react-spectrum/s2/style' with {type: 'macro'};
+import { Checkbox } from "react-aria-components/Checkbox";
+import { style } from "@react-spectrum/s2/style" with { type: "macro" };
 
 <Checkbox
   className={style({
     backgroundColor: {
-      default: 'gray-100',
-      isHovered: 'gray-200',
-      isSelected: 'gray-900'
-    }
+      default: "gray-100",
+      isHovered: "gray-200",
+      isSelected: "gray-900",
+    },
   })}
-/>
+/>;
 ```
 
 ### Nesting conditions
@@ -165,20 +169,20 @@ Nest conditions to apply styles when multiple conditions are true. Conditions at
 ```tsx
 const styles = style({
   backgroundColor: {
-    default: 'gray-25',
+    default: "gray-25",
     isSelected: {
-      default: 'neutral',
-      isEmphasized: 'accent',
-      forcedColors: 'Highlight',
+      default: "neutral",
+      isEmphasized: "accent",
+      forcedColors: "Highlight",
       isDisabled: {
-        default: 'gray-400',
-        forcedColors: 'GrayText'
-      }
-    }
-  }
+        default: "gray-400",
+        forcedColors: "GrayText",
+      },
+    },
+  },
 });
 
-<div className={styles({isSelected, isEmphasized, isDisabled})} />
+<div className={styles({ isSelected, isEmphasized, isDisabled })} />;
 ```
 
 ## Reusing styles
@@ -188,14 +192,14 @@ Extract common styles into constants and spread them into `style` calls within t
 ```tsx
 // component.tsx
 const horizontalStack = {
-  display: 'flex',
-  alignItems: 'center',
-  columnGap: 8
+  display: "flex",
+  alignItems: "center",
+  columnGap: 8,
 } as const;
 
 const styles = style({
   ...horizontalStack,
-  columnGap: 4
+  columnGap: 4,
 });
 ```
 
@@ -205,9 +209,9 @@ Create custom utilities by defining your own macros as functions in a separate f
 // style-utils.ts
 export function horizontalStack(gap: number) {
   return {
-    display: 'flex',
-    alignItems: 'center',
-    columnGap: gap
+    display: "flex",
+    alignItems: "center",
+    columnGap: gap,
   } as const;
 }
 ```
@@ -216,12 +220,12 @@ Usage:
 
 ```tsx
 // component.tsx
-import {horizontalStack} from './style-utils' with {type: 'macro'};
-import {style} from '@react-spectrum/s2/style' with {type: 'macro'};
+import { horizontalStack } from "./style-utils" with { type: "macro" };
+import { style } from "@react-spectrum/s2/style" with { type: "macro" };
 
 const styles = style({
   ...horizontalStack(4),
-  backgroundColor: 'base'
+  backgroundColor: "base",
 });
 ```
 
@@ -230,15 +234,18 @@ const styles = style({
 The style macro system includes built-in utilities for common patterns like focus rings, color helpers, spacing, sizing, animations, and more. For example, use `focusRing()` to add the standard Spectrum focus ring to interactive components:
 
 ```tsx
-import {style, focusRing} from '@react-spectrum/s2/style' with {type: 'macro'};
-import {Button} from 'react-aria-components/Button';
+import {
+  style,
+  focusRing,
+} from "@react-spectrum/s2/style" with { type: "macro" };
+import { Button } from "react-aria-components/Button";
 
 const buttonStyle = style({
   ...focusRing(),
   // ...other styles
 });
 
-<Button className={buttonStyle}>Press me</Button>
+<Button className={buttonStyle}>Press me</Button>;
 ```
 
 See the [Utilities](style-macro.md#utilities) section in the style macro reference page for a full list of available utilities and examples.
@@ -250,14 +257,14 @@ A `type` should be provided to specify the CSS property type the `value` represe
 
 ```tsx
 const parentStyle = style({
-  '--rowBackgroundColor': {
-    type: 'backgroundColor',
-    value: 'gray-400'
-  }
+  "--rowBackgroundColor": {
+    type: "backgroundColor",
+    value: "gray-400",
+  },
 });
 
 const childStyle = style({
-  backgroundColor: '--rowBackgroundColor'
+  backgroundColor: "--rowBackgroundColor",
 });
 ```
 
@@ -287,18 +294,18 @@ CSS resets are strongly discouraged. Global CSS selectors can unintentionally af
 If you want to build custom components that follow Spectrum styling, you can use the `style` macro with [React Aria Components](react-aria:.md).
 
 ```tsx
-import {Checkbox} from 'react-aria-components/Checkbox';
-import {style} from '@react-spectrum/s2/style' with {type: 'macro'};
+import { Checkbox } from "react-aria-components/Checkbox";
+import { style } from "@react-spectrum/s2/style" with { type: "macro" };
 
 <Checkbox
   className={style({
     backgroundColor: {
-      default: 'gray-100',
-      isHovered: 'gray-200',
-      isSelected: 'gray-900'
-    }
+      default: "gray-100",
+      isHovered: "gray-200",
+      isSelected: "gray-900",
+    },
   })}
-/>
+/>;
 ```
 
 ## Developer tools

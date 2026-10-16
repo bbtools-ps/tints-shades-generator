@@ -17,26 +17,24 @@ This example joins a list of values into a single localized string for two local
 using the [I18nProvider](I18nProvider.md) to specify the locale to display.
 
 ```tsx
-'use client';
-import {I18nProvider} from 'react-aria/I18nProvider';
-import {useListFormatter} from 'react-aria/useListFormatter';
+"use client";
+import { I18nProvider } from "react-aria/I18nProvider";
+import { useListFormatter } from "react-aria/useListFormatter";
 
-function List({items}) {
-  let formatter = useListFormatter({type: 'conjunction'});
+function List({ items }) {
+  let formatter = useListFormatter({ type: "conjunction" });
 
-  return (
-    <p>{formatter.format(items)}</p>
-  );
+  return <p>{formatter.format(items)}</p>;
 }
 
 <>
   <I18nProvider locale="en-US">
-    <List items={['Apples', 'Oranges', 'Bananas']} />
+    <List items={["Apples", "Oranges", "Bananas"]} />
   </I18nProvider>
   <I18nProvider locale="es-ES">
-    <List items={['manzanas', 'naranjas', 'plátanos']} />
+    <List items={["manzanas", "naranjas", "plátanos"]} />
   </I18nProvider>
-</>
+</>;
 ```
 
 ## API

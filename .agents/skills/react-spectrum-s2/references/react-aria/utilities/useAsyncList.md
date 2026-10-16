@@ -32,19 +32,16 @@ to tell it to render the loading spinner while data is loading.
 
 ```tsx
 let list = useAsyncList({
-  async load({signal}) {
-    let res = await fetch('https://pokeapi.co/api/v2/pokemon', {signal});
+  async load({ signal }) {
+    let res = await fetch("https://pokeapi.co/api/v2/pokemon", { signal });
     let json = await res.json();
-    return {items: json.results};
-  }
+    return { items: json.results };
+  },
 });
 
-<Picker
-  label="Pick a Pokemon"
-  items={list.items}
-  isLoading={list.isLoading}>
-  {item => <Item key={item.name}>{item.name}</Item>}
-</Picker>
+<Picker label="Pick a Pokemon" items={list.items} isLoading={list.isLoading}>
+  {(item) => <Item key={item.name}>{item.name}</Item>}
+</Picker>;
 ```
 
 ### Infinite loading
@@ -61,25 +58,28 @@ page loads. It passes the `onLoadMore` prop to Picker, which triggers loading mo
 
 ```tsx
 let list = useAsyncList({
-  async load({signal, cursor}) {
+  async load({ signal, cursor }) {
     // If no cursor is available, then we're loading the first page.
     // Otherwise, the cursor is the next URL to load, as returned from the previous page.
-    let res = await fetch(cursor || 'https://pokeapi.co/api/v2/pokemon', {signal});
+    let res = await fetch(cursor || "https://pokeapi.co/api/v2/pokemon", {
+      signal,
+    });
     let json = await res.json();
     return {
       items: json.results,
-      cursor: json.next
+      cursor: json.next,
     };
-  }
+  },
 });
 
 <Picker
   label="Pick a Pokemon"
   items={list.items}
   isLoading={list.isLoading}
-  onLoadMore={list.loadMore}>
-  {item => <Item key={item.name}>{item.name}</Item>}
-</Picker>
+  onLoadMore={list.loadMore}
+>
+  {(item) => <Item key={item.name}>{item.name}</Item>}
+</Picker>;
 ```
 
 ### Reloading data
@@ -107,24 +107,27 @@ items array.
 let collator = useCollator();
 
 let list = useAsyncList({
-  async load({signal}) {
+  async load({ signal }) {
     // Same load function as before
   },
-  sort({items, sortDescriptor}) {
+  sort({ items, sortDescriptor }) {
     return {
       items: items.sort((a, b) => {
         // Compare the items by the sorted column
-        let cmp = collator.compare(a[sortDescriptor.column], b[sortDescriptor.column]);
+        let cmp = collator.compare(
+          a[sortDescriptor.column],
+          b[sortDescriptor.column]
+        );
 
         // Flip the direction if descending order is specified.
-        if (sortDescriptor.direction === 'descending') {
+        if (sortDescriptor.direction === "descending") {
           cmp *= -1;
         }
 
         return cmp;
-      })
+      }),
     };
-  }
+  },
 });
 ```
 
@@ -135,19 +138,19 @@ parameter to the API.
 
 ```tsx
 let list = useAsyncList({
-  async load({signal, sortDescriptor}) {
-    let url = new URL('http://example.com/api');
+  async load({ signal, sortDescriptor }) {
+    let url = new URL("http://example.com/api");
     if (sortDescriptor) {
-      url.searchParams.append('sort_key', sortDescriptor.column);
-      url.searchParams.append('sort_direction', sortDescriptor.direction);
+      url.searchParams.append("sort_key", sortDescriptor.column);
+      url.searchParams.append("sort_direction", sortDescriptor.direction);
     }
 
-    let res = await fetch(url, {signal});
+    let res = await fetch(url, { signal });
     let json = await res.json();
     return {
-      items: json.results
+      items: json.results,
     };
-  }
+  },
 });
 ```
 
@@ -166,14 +169,17 @@ The `loadingState` prop is also used to show the appropriate loading indicator d
 
 ```tsx
 let list = useAsyncList({
-  async load({signal, filterText}) {
-    let res = await fetch(`https://swapi.py4e.com/api/people/?search=${filterText}`, {signal});
+  async load({ signal, filterText }) {
+    let res = await fetch(
+      `https://swapi.py4e.com/api/people/?search=${filterText}`,
+      { signal }
+    );
     let json = await res.json();
 
     return {
-      items: json.results
+      items: json.results,
     };
-  }
+  },
 });
 
 <ComboBox
@@ -181,9 +187,10 @@ let list = useAsyncList({
   items={list.items}
   inputValue={list.filterText}
   onInputChange={list.setFilterText}
-  loadingState={list.loadingState}>
-  {item => <Item key={item.name}>{item.name}</Item>}
-</ComboBox>
+  loadingState={list.loadingState}
+>
+  {(item) => <Item key={item.name}>{item.name}</Item>}
+</ComboBox>;
 ```
 
 ## Pre-selecting items
@@ -198,10 +205,10 @@ If you know what keys to select before items are loaded from the server, use the
 
 ```tsx
 let list = useAsyncList({
-  initialSelectedKeys: ['foo', 'bar'],
-  async load({signal}) {
+  initialSelectedKeys: ["foo", "bar"],
+  async load({ signal }) {
     // Same load function as before
-  }
+  },
 });
 ```
 
@@ -212,16 +219,18 @@ in addition to the `items`.
 
 ```tsx
 let list = useAsyncList({
-  async load({signal}) {
-    let res = await fetch('http://example.com/api', {signal});
+  async load({ signal }) {
+    let res = await fetch("http://example.com/api", { signal });
     let json = await res.json();
 
     // Return items and compute selectedKeys based on the data and return a list of ids.
     return {
       items: json.results,
-      selectedKeys: json.results.filter(item => item.isSelected).map(item => item.id)
+      selectedKeys: json.results
+        .filter((item) => item.isSelected)
+        .map((item) => item.id),
     };
-  }
+  },
 });
 ```
 

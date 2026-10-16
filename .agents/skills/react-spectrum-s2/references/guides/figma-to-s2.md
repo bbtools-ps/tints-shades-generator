@@ -1,13 +1,13 @@
 # Implementing Figma designs with React Spectrum S2
 
-When the user supplies a Figma frame, node, or URL and asks for an S2 implementation, treat the Figma MCP as a **reference**, not a code generator. The MCP returns React + Tailwind targeting raw CSS variables — it does **not** produce S2 output. Your job is to recognize what the design *is* (in Spectrum terms), then re-implement it with S2 components and the [`style` macro](style-macro.md).
+When the user supplies a Figma frame, node, or URL and asks for an S2 implementation, treat the Figma MCP as a **reference**, not a code generator. The MCP returns React + Tailwind targeting raw CSS variables — it does **not** produce S2 output. Your job is to recognize what the design _is_ (in Spectrum terms), then re-implement it with S2 components and the [`style` macro](style-macro.md).
 
 This guidance applies when the Figma MCP tools (`get_design_context`, `get_screenshot`, `get_variable_defs`, `get_metadata`, `search_design_system`) are available. If they are not, ask the user to install the Figma MCP or to paste a screenshot.
 
 ## Workflow
 
 1. **Extract `fileKey` and `nodeId` from the Figma URL.** For `https://figma.com/design/<fileKey>/<fileName>?node-id=1-2`, the node ID is `1:2` (replace `-` with `:`). If the URL is `figma.com/design/<fileKey>/branch/<branchKey>/...`, use the `branchKey` as the `fileKey`.
-2. **Inspect the design.** Call `get_design_context` with `clientFrameworks: "react"` and `clientLanguages: "typescript"`. Read the returned screenshot first — it shows the *intent*. The code beneath it is just a starting point, not the actual implementation.
+2. **Inspect the design.** Call `get_design_context` with `clientFrameworks: "react"` and `clientLanguages: "typescript"`. Read the returned screenshot first — it shows the _intent_. The code beneath it is just a starting point, not the actual implementation.
 3. **Pull the variables.** Call `get_variable_defs` on the same node to see which design tokens are in play. The names (`Palette/gray/200`, `Palette/transparent-white/800`, etc.) tell you what the designer reached for; the hex values let you sanity-check your token mapping.
 4. **Identify the source library and components.** Read `data-name` attributes in the reference code — they preserve the Figma component name (e.g. `data-name=".Status badge"`, `data-name=".Link out"`). If you're uncertain which library an instance came from, call `search_design_system` with the Figma component name and read the `libraryName` field. Real user files may mix S2 with S1 (the predecessor Spectrum library), product-specific kits, and team-internal libraries in the same frame. See [Identify the source library before mapping](#identify-the-source-library-before-mapping). Translate every instance to the **closest S2** React component.
 5. **Re-implement with S2 + the `style` macro.** Drop the absolute positioning, the arbitrary pixel values, and the Tailwind classes. See [Translating the reference output](#translating-the-reference-output).
@@ -21,13 +21,13 @@ Real Figma files may pull components from **more than one library**. Use `search
 
 Source kits usually fall into one of these buckets:
 
-- **S2 / Web** — the canonical S2 library. The Figma nodes *are* the spec; use the S2 component directly rather than reconstructing visuals from primitives. Size and style variants live as **properties on a single component set**, not as separate components (see [Component mapping](#component-mapping)).
+- **S2 / Web** — the canonical S2 library. The Figma nodes _are_ the spec; use the S2 component directly rather than reconstructing visuals from primitives. Size and style variants live as **properties on a single component set**, not as separate components (see [Component mapping](#component-mapping)).
 - **S2 / Web (deprecated)** — formerly `S2 / Web (Desktop scale)`. The previous S2 library. Still available, but no further updates will be made. Map instances to their current S2 component exactly as you would for `S2 / Web`; the only difference is its older **split naming**, where each size/style combination is its own component (`Button (M, Accent)`). When a component name resolves in both libraries, prefer the `S2 / Web` match. Real files may still mix the two.
-- **S1 (previous Spectrum library)** — `libraryName` starts with `S / ` (e.g. `S / Web (Desktop scale)`). Map each instance to its *equivalent* S2 component. If the user wants to upgrade their existing S1 components to S2, recommend the `migrate-react-spectrum-v3-to-s2` skill.
+- **S1 (previous Spectrum library)** — `libraryName` starts with `S / ` (e.g. `S / Web (Desktop scale)`). Map each instance to its _equivalent_ S2 component. If the user wants to upgrade their existing S1 components to S2, recommend the `migrate-react-spectrum-v3-to-s2` skill.
 - **S2 platform variants** (iOS, Android, etc.) — same React component as desktop S2; platform-specific affordances usually don't translate.
 - **Product or team-specific kits** — translate to the closest S2 component by name and visual or see if the user already has these components available.
 
-If the design contains only non-S2 components and the user has not yet committed to S2, ask before forcing the translation. The most common reason a user shares one of these files is "I want this *built in* S2," not "preserve this kit's visuals exactly."
+If the design contains only non-S2 components and the user has not yet committed to S2, ask before forcing the translation. The most common reason a user shares one of these files is "I want this _built in_ S2," not "preserve this kit's visuals exactly."
 
 ### Read the implementation-status flag in the component description
 
@@ -64,33 +64,33 @@ The **deprecated S2 / Web (Desktop scale)** library used the older **split namin
 
 Common patterns (name forms like `Button (S/M/L, …)` are the deprecated-library shape):
 
-| Figma component name                              | S2 component         | Props derived from the name or variant properties                |
-| ------------------------------------------------- | -------------------- | ---------------------------------------------------------------- |
-| `Button (S/M/L, Accent/Primary/Secondary/Negative)` | `Button`            | `size="S"\|"M"\|"L"`, `variant="accent"\|"primary"\|"secondary"\|"negative"` |
-| `Action button (XS/S/M/L/XL)`                     | `ActionButton`       | `size="XS"\|"S"\|"M"\|"L"\|"XL"`                                 |
-| `Close button (S/M/L)`                            | `CloseButton`        | `size="S"\|"M"\|"L"`                                             |
-| `Toggle button`                                   | `ToggleButton`       | Same size/variant axes as `Button`                               |
-| `Checkbox`                                        | `Checkbox`           | `isSelected`, `isIndeterminate`                                  |
-| `Radio button`                                    | `Radio` (inside `RadioGroup`) |                                                         |
-| `Switch`                                          | `Switch`             |                                                                  |
-| `Text field`                                      | `TextField`          | `label`, `description`, `errorMessage`, `isInvalid`, `isRequired` |
-| `Combo box` / `Picker` / `Dropdown`               | `ComboBox` / `Picker`| — choose by interaction (typeahead vs. fixed list)               |
-| `Tag`                                             | `Tag` (inside `TagGroup`) |                                                              |
-| `Badge`                                           | `Badge`              | `variant="neutral"\|"informative"\|"accent"\|...`                |
-| `Status light`                                    | `StatusLight`        | `variant`                                                        |
-| `Avatar`                                          | `Avatar`             | `size`                                                           |
-| `Progress bar` / `Progress circle`                | `ProgressBar` / `ProgressCircle` | `value`, `isIndeterminate`                           |
-| `Slider` / `Range slider`                         | `Slider` / `RangeSlider` |                                                              |
-| `Tabs`                                            | `Tabs` (`TabList` / `Tab` / `TabPanel`) |                                               |
-| `Menu` / `Action menu`                            | `Menu` / `ActionMenu`|                                                                  |
-| `Card`                                            | `Card` (consider `AssetCard`/`UserCard`/`ProductCard` variants) |                       |
-| `Dialog` / `Alert dialog`                         | `Dialog` / `AlertDialog` |                                                              |
-| `Toast`                                           | `Toast` (use `ToastQueue` to trigger) |                                                 |
-| `Tooltip`                                         | `Tooltip`            |                                                                  |
-| `Inline alert`                                    | `InlineAlert`        | `variant="neutral"\|"informative"\|"positive"\|"notice"\|"negative"` |
-| `Help text`                                       | `ContextualHelp` or field `description` |                                              |
-| `Icon` (the Figma instance)                       | `@react-spectrum/s2/icons/<Name>` | Match icon name; don't embed the asset URL              |
-| `Illustration`                                    | `@react-spectrum/s2/illustrations/<style>/<Name>` |                                      |
+| Figma component name                                | S2 component                                                    | Props derived from the name or variant properties                            |
+| --------------------------------------------------- | --------------------------------------------------------------- | ---------------------------------------------------------------------------- |
+| `Button (S/M/L, Accent/Primary/Secondary/Negative)` | `Button`                                                        | `size="S"\|"M"\|"L"`, `variant="accent"\|"primary"\|"secondary"\|"negative"` |
+| `Action button (XS/S/M/L/XL)`                       | `ActionButton`                                                  | `size="XS"\|"S"\|"M"\|"L"\|"XL"`                                             |
+| `Close button (S/M/L)`                              | `CloseButton`                                                   | `size="S"\|"M"\|"L"`                                                         |
+| `Toggle button`                                     | `ToggleButton`                                                  | Same size/variant axes as `Button`                                           |
+| `Checkbox`                                          | `Checkbox`                                                      | `isSelected`, `isIndeterminate`                                              |
+| `Radio button`                                      | `Radio` (inside `RadioGroup`)                                   |                                                                              |
+| `Switch`                                            | `Switch`                                                        |                                                                              |
+| `Text field`                                        | `TextField`                                                     | `label`, `description`, `errorMessage`, `isInvalid`, `isRequired`            |
+| `Combo box` / `Picker` / `Dropdown`                 | `ComboBox` / `Picker`                                           | — choose by interaction (typeahead vs. fixed list)                           |
+| `Tag`                                               | `Tag` (inside `TagGroup`)                                       |                                                                              |
+| `Badge`                                             | `Badge`                                                         | `variant="neutral"\|"informative"\|"accent"\|...`                            |
+| `Status light`                                      | `StatusLight`                                                   | `variant`                                                                    |
+| `Avatar`                                            | `Avatar`                                                        | `size`                                                                       |
+| `Progress bar` / `Progress circle`                  | `ProgressBar` / `ProgressCircle`                                | `value`, `isIndeterminate`                                                   |
+| `Slider` / `Range slider`                           | `Slider` / `RangeSlider`                                        |                                                                              |
+| `Tabs`                                              | `Tabs` (`TabList` / `Tab` / `TabPanel`)                         |                                                                              |
+| `Menu` / `Action menu`                              | `Menu` / `ActionMenu`                                           |                                                                              |
+| `Card`                                              | `Card` (consider `AssetCard`/`UserCard`/`ProductCard` variants) |                                                                              |
+| `Dialog` / `Alert dialog`                           | `Dialog` / `AlertDialog`                                        |                                                                              |
+| `Toast`                                             | `Toast` (use `ToastQueue` to trigger)                           |                                                                              |
+| `Tooltip`                                           | `Tooltip`                                                       |                                                                              |
+| `Inline alert`                                      | `InlineAlert`                                                   | `variant="neutral"\|"informative"\|"positive"\|"notice"\|"negative"`         |
+| `Help text`                                         | `ContextualHelp` or field `description`                         |                                                                              |
+| `Icon` (the Figma instance)                         | `@react-spectrum/s2/icons/<Name>`                               | Match icon name; don't embed the asset URL                                   |
+| `Illustration`                                      | `@react-spectrum/s2/illustrations/<style>/<Name>`               |                                                                              |
 
 When a Figma component name is ambiguous, fall back to the [Component Decision Tree](component-decision-tree.md). Use `search_design_system` with the file key to confirm the exact Figma library name when needed.
 
@@ -101,10 +101,10 @@ When a Figma component name is ambiguous, fall back to the [Component Decision T
 The MCP's reference code is a **visual approximation** built for fidelity to the screenshot. It is dense with patterns that don't survive translation to S2:
 
 - **Absolute positioning is screenshot scaffolding.** `absolute left-[40px] top-[239px]` recreates the canvas layout pixel-for-pixel. Replace it with flex/grid so the result is fluid. Use the macro: `style({display: 'flex', flexDirection: 'column', gap: 8})`.
-- **Arbitrary pixel values snap to the 4px grid.** `gap-[8px]` → `gap: 8`. `p-[12px]` → `padding: 12`. Don't preserve off-grid values (`13px`, `41px`) — round to the nearest grid step. Layout and iconography tokens are linked in `S2 / Web`, so `get_variable_defs` now returns **layout tokens** (e.g. `Form item/Gap/Medium/Regular`, group-gap) and **icon-sizing tokens** alongside color. When a spacing value comes through as a *named* layout token rather than a raw pixel, treat it as intentional — map it to the matching `style` macro spacing value.
+- **Arbitrary pixel values snap to the 4px grid.** `gap-[8px]` → `gap: 8`. `p-[12px]` → `padding: 12`. Don't preserve off-grid values (`13px`, `41px`) — round to the nearest grid step. Layout and iconography tokens are linked in `S2 / Web`, so `get_variable_defs` now returns **layout tokens** (e.g. `Form item/Gap/Medium/Regular`, group-gap) and **icon-sizing tokens** alongside color. When a spacing value comes through as a _named_ layout token rather than a raw pixel, treat it as intentional — map it to the matching `style` macro spacing value.
 - **`rounded-[Npx]` → a `borderRadius` token.** `'none'`, `'sm'`, `'default'`, `'lg'`, `'xl'`, `'full'`, `'pill'`. There is no `'md'`. Don't keep the raw pixel value.
 - **Type goes through the `font` shorthand.** `font-['Adobe_Clean:Medium'] text-[16px]` is the S2 body family — write `font: 'body'`. Don't import Adobe Clean directly; the macro provides family, size, weight, line-height, and a default color via a single token. Pick the role first (`heading-*`, `title-*`, `body-*`, `detail-*`, `ui-*`, `code-*`) and size second.
-- **Colors collapse to semantic tokens.** `bg-[var(--palette/transparent-white/100,…)]` and the hex values from `get_variable_defs` are foundation values. Map by *intent*, not raw value: error/destructive → `negative`, success → `positive`, info → `informative`, brand/CTA → `accent`, generic UI surfaces → `neutral` / `gray-N`. Reach for raw hue tokens (`red-…`, `blue-…`) only for decorative or chart colors.
+- **Colors collapse to semantic tokens.** `bg-[var(--palette/transparent-white/100,…)]` and the hex values from `get_variable_defs` are foundation values. Map by _intent_, not raw value: error/destructive → `negative`, success → `positive`, info → `informative`, brand/CTA → `accent`, generic UI surfaces → `neutral` / `gray-N`. Reach for raw hue tokens (`red-…`, `blue-…`) only for decorative or chart colors.
 - **`data-node-id` attributes are noise.** Strip them from the final code. `data-name` was useful for identifying the component — once you've made the mapping, drop it too.
 - **Image asset URLs (`https://www.figma.com/api/mcp/asset/…`) expire.** Never embed them. For icons, use `@react-spectrum/s2/icons/*`; for illustrations, use `@react-spectrum/s2/illustrations/*`; for genuine raster content, ask the user where the canonical asset lives.
 - **Logical sides, not physical.** Even if the reference code has `pl-[16px]` / `ml-[8px]`, write `paddingStart` / `marginStart` so the layout flips correctly in RTL.
@@ -117,9 +117,10 @@ Reference code returned by `get_design_context`:
 <div
   className="absolute bg-[var(--palette\/transparent-white\/100,rgba(255,255,255,0.11))] content-stretch flex items-start left-[40px] overflow-clip px-[12px] py-[10px] rounded-[9px] top-[40px]"
   data-node-id="112:4343"
-  data-name=".Status badge">
+  data-name=".Status badge"
+>
   <p className="font-['Adobe_Clean:Medium',sans-serif] text-[16px] text-[color:var(--palette\/transparent-white\/800,rgba(255,255,255,0.85))]">
-    👍  Ready for pick-up
+    👍 Ready for pick-up
   </p>
 </div>
 ```
@@ -127,9 +128,9 @@ Reference code returned by `get_design_context`:
 S2 translation:
 
 ```tsx
-import {Badge} from '@react-spectrum/s2/Badge';
+import { Badge } from "@react-spectrum/s2/Badge";
 
-<Badge variant="positive">Ready for pick-up</Badge>
+<Badge variant="positive">Ready for pick-up</Badge>;
 ```
 
 The `data-name=".Status badge"` is the signal. Once mapped, the wrapper, the transparent-white tokens, the arbitrary radius, and the explicit font sizing all disappear — the component owns them.

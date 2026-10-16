@@ -46,6 +46,7 @@ afterEach(() => {
 ```
 
 ### Tips and Tricks
+
 - The testers typically offers these things: a way to simulate common user interactions for the given component via a specified user modality (e.g. using mouse vs keyboard to toggle a menu), a way to get the various common elements that make up the component (e.g. the rows in a table), and a way to query the state of the component (e.g. get the selected rows in a table). Prefer using the testers for these use cases so that the user doesn't need to know what specific roles/elements/etc to target in their tests.
 - You can still simulate interactions manually in your test alongside the utilities provided by the tester. This can come in handy if you find that the tester doesn't cover a specific user flow or if one of its utilities isn't quite working as expected. After simulating your interaction, you can still use the tester to query for the component's state or trigger a different interaction utility.
 - Mouse drag interactions and other mock reliant interactions are not available in these test utils since they depended heavily on how the user mocked various things in their test. These must still be simulated manually by the user.
@@ -69,13 +70,20 @@ Skip the testers and write manual interactions for the following cases:
 Components with draggable handles (Slider, ColorArea, ColorSlider, ColorWheel) need `getBoundingClientRect` mocked so move calculations work:
 
 ```ts
-import {installMouseEvent} from '@react-spectrum/test-utils';
+import { installMouseEvent } from "@react-spectrum/test-utils";
 installMouseEvent();
 
 beforeAll(() => {
-  jest.spyOn(window.HTMLElement.prototype, 'getBoundingClientRect').mockImplementation(
-    () => ({top: 0, left: 0, width: 100, height: 10, bottom: 10, right: 100})
-  );
+  jest
+    .spyOn(window.HTMLElement.prototype, "getBoundingClientRect")
+    .mockImplementation(() => ({
+      top: 0,
+      left: 0,
+      width: 100,
+      height: 10,
+      bottom: 10,
+      right: 100,
+    }));
 });
 ```
 
@@ -83,32 +91,35 @@ beforeAll(() => {
 
 The pattern name passed to `createTester` is the ARIA pattern name — not the S2 component name.
 
-| Pattern name | S2 component | Key methods |
-|---|---|---|
-| `'CheckboxGroup'` | CheckboxGroup | `getCheckboxGroup()`, `getCheckboxes()`, `getSelectedCheckboxes()`, `toggleCheckbox({checkbox})` |
-| `'ComboBox'` | ComboBox | `getCombobox()`, `getListbox()`, `getOptions()`, `open()`, `toggleOptionSelection({option})` |
-| `'Dialog'` | Dialog | `getTrigger()`, `getDialog()`, `open()`, `close()` — pass `overlayType: 'modal'` or `'popover'` to `createTester` |
-| `'GridList'` | ListView | `getGridlist()`, `getRows()`, `getSelectedRows()`, `toggleRowSelection({row})`, `triggerRowAction({row})` |
-| `'Menu'` | Menu | `getTrigger()`, `getMenu()`, `getOptions()`, `open()`, `toggleOptionSelection({option})`, `openSubmenu({submenuTrigger})`, `close()` |
-| `'RadioGroup'` | RadioGroup | `getRadioGroup()`, `getRadios()`, `getSelectedRadio()`, `triggerRadio({radio})` |
-| `'Select'` | Picker | `getTrigger()`, `getListbox()`, `getOptions()`, `toggleOptionSelection({option})` |
-| `'Table'` | TableView | `getTable()`, `getRows()`, `getFooterRows()`, `getColumns()`, `getSelectedRows()`, `toggleRowSelection({row})`, `toggleSort({column})`, `triggerRowAction({row})` |
-| `'Tabs'` | Tabs | `getTablist()`, `getTabs()`, `getTabpanels()`, `getSelectedTab()`, `triggerTab({tab})` |
-| `'Tree'` | TreeView | `getTree()`, `getRows()`, `getSelectedRows()`, `toggleRowSelection({row})`, `toggleRowExpansion({row})`, `triggerRowAction({row})` |
+| Pattern name      | S2 component  | Key methods                                                                                                                                                       |
+| ----------------- | ------------- | ----------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| `'CheckboxGroup'` | CheckboxGroup | `getCheckboxGroup()`, `getCheckboxes()`, `getSelectedCheckboxes()`, `toggleCheckbox({checkbox})`                                                                  |
+| `'ComboBox'`      | ComboBox      | `getCombobox()`, `getListbox()`, `getOptions()`, `open()`, `toggleOptionSelection({option})`                                                                      |
+| `'Dialog'`        | Dialog        | `getTrigger()`, `getDialog()`, `open()`, `close()` — pass `overlayType: 'modal'` or `'popover'` to `createTester`                                                 |
+| `'GridList'`      | ListView      | `getGridlist()`, `getRows()`, `getSelectedRows()`, `toggleRowSelection({row})`, `triggerRowAction({row})`                                                         |
+| `'Menu'`          | Menu          | `getTrigger()`, `getMenu()`, `getOptions()`, `open()`, `toggleOptionSelection({option})`, `openSubmenu({submenuTrigger})`, `close()`                              |
+| `'RadioGroup'`    | RadioGroup    | `getRadioGroup()`, `getRadios()`, `getSelectedRadio()`, `triggerRadio({radio})`                                                                                   |
+| `'Select'`        | Picker        | `getTrigger()`, `getListbox()`, `getOptions()`, `toggleOptionSelection({option})`                                                                                 |
+| `'Table'`         | TableView     | `getTable()`, `getRows()`, `getFooterRows()`, `getColumns()`, `getSelectedRows()`, `toggleRowSelection({row})`, `toggleSort({column})`, `triggerRowAction({row})` |
+| `'Tabs'`          | Tabs          | `getTablist()`, `getTabs()`, `getTabpanels()`, `getSelectedTab()`, `triggerTab({tab})`                                                                            |
+| `'Tree'`          | TreeView      | `getTree()`, `getRows()`, `getSelectedRows()`, `toggleRowSelection({row})`, `toggleRowExpansion({row})`, `triggerRowAction({row})`                                |
 
 #### Dialog `overlayType` reference
 
 Pass `overlayType` to `createTester` so the tester knows how the overlay is mounted:
 
-| S2 component | `overlayType` |
-|---|---|
-| `Dialog` | `'modal'` |
-| `AlertDialog` | `'modal'` |
-| `CustomDialog` | `'modal'` |
-| Popover-based dialogs | `'popover'` |
+| S2 component          | `overlayType` |
+| --------------------- | ------------- |
+| `Dialog`              | `'modal'`     |
+| `AlertDialog`         | `'modal'`     |
+| `CustomDialog`        | `'modal'`     |
+| Popover-based dialogs | `'popover'`   |
 
 ```ts
-let dialogTester = testUtilUser.createTester('Dialog', {root: tree.getByRole('button'), overlayType: 'modal'});
+let dialogTester = testUtilUser.createTester("Dialog", {
+  root: tree.getByRole("button"),
+  overlayType: "modal",
+});
 await dialogTester.open();
 expect(dialogTester.getDialog()).toBeVisible();
 ```

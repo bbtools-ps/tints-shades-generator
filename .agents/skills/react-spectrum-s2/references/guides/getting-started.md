@@ -11,10 +11,12 @@ npm install @react-spectrum/s2
 ## Framework setup
 
 <Tabs
-  aria-label="Frameworks"
-  density="compact"
+aria-label="Frameworks"
+density="compact"
+
 >
-  <TabList><Tab id="parcel"><Parcel/><Text>Parcel</Text></Tab><Tab id="webpack"><Webpack/><Text>webpack</Text></Tab><Tab id="vite"><Vite/><Text>Vite</Text></Tab><Tab id="next"><Nextjs/><Text>Next.js</Text></Tab><Tab id="react-router"><ReactRouter/><Text>React Router</Text></Tab><Tab id="rollup"><Rollup/><Text>Rollup</Text></Tab><Tab id="esbuild"><ESBuild/><Text>ESBuild</Text></Tab></TabList>
+
+<TabList><Tab id="parcel"><Parcel/><Text>Parcel</Text></Tab><Tab id="webpack"><Webpack/><Text>webpack</Text></Tab><Tab id="vite"><Vite/><Text>Vite</Text></Tab><Tab id="next"><Nextjs/><Text>Next.js</Text></Tab><Tab id="react-router"><ReactRouter/><Text>React Router</Text></Tab><Tab id="rollup"><Rollup/><Text>Rollup</Text></Tab><Tab id="esbuild"><ESBuild/><Text>ESBuild</Text></Tab></TabList>
 
   <TabPanel id="parcel">
     To use React Spectrum in a client-only Parcel SPA, setup style macros, configure React Spectrum links to use your client side router, and optimize the client bundle to include localized strings for your supported languages.
@@ -69,6 +71,7 @@ npm install @react-spectrum/s2
         ```
       </Step>
     </StepList>
+
   </TabPanel>
 
   <TabPanel id="webpack">
@@ -178,6 +181,7 @@ npm install @react-spectrum/s2
         ```
       </Step>
     </StepList>
+
   </TabPanel>
 
   <TabPanel id="vite">
@@ -257,6 +261,7 @@ npm install @react-spectrum/s2
         ```
       </Step>
     </StepList>
+
   </TabPanel>
 
   <TabPanel id="next">
@@ -364,6 +369,7 @@ npm install @react-spectrum/s2
         ```
       </Step>
     </StepList>
+
   </TabPanel>
 
   <TabPanel id="react-router">
@@ -491,6 +497,7 @@ npm install @react-spectrum/s2
         ```
       </Step>
     </StepList>
+
   </TabPanel>
 
   <TabPanel id="rollup">
@@ -557,6 +564,7 @@ npm install @react-spectrum/s2
         ```
       </Step>
     </StepList>
+
   </TabPanel>
 
   <TabPanel id="esbuild">
@@ -614,6 +622,7 @@ npm install @react-spectrum/s2
         ```
       </Step>
     </StepList>
+
   </TabPanel>
 </Tabs>
 
@@ -622,103 +631,99 @@ npm install @react-spectrum/s2
 <Step>
   <Counter/>Render a [Provider](Provider.md) at the root of your app to set the locale, page background, and color scheme, load Spectrum fonts, and integrate with your client side router. When using S2 together with other versions of Spectrum, ensure that the S2 provider is the inner-most provider.
 
-  A `router` has two properties:
+A `router` has two properties:
 
-  1. `navigate` – a function received from your router for performing a client side navigation programmatically.
-  2. `useHref` (optional) – converts a router-specific href to a native HTML href, e.g. prepending a base path.
+1. `navigate` – a function received from your router for performing a client side navigation programmatically.
+2. `useHref` (optional) – converts a router-specific href to a native HTML href, e.g. prepending a base path.
 
-  ## React Router example
+## React Router example
 
-  ```tsx
-  // src/app.tsx
+```tsx
+// src/app.tsx
 
-  /*- begin highlight -*/
-  // Configure the type of the `routerOptions` prop on all React Spectrum components.
-  declare module '@react-spectrum/s2/Provider' {
-    interface RouterConfig {
-      routerOptions: NavigateOptions
-    }
+/*- begin highlight -*/
+// Configure the type of the `routerOptions` prop on all React Spectrum components.
+declare module "@react-spectrum/s2/Provider" {
+  interface RouterConfig {
+    routerOptions: NavigateOptions;
   }
-  /*- end highlight -*/
+}
+/*- end highlight -*/
 
-  function App() {
-    let navigate = useNavigate();
+function App() {
+  let navigate = useNavigate();
 
+  return (
+    /*- begin highlight -*/
+    <Provider background="base" router={{ navigate, useHref }}>
+      {/*- end highlight -*/}
+      {/* Your app here... */}
+      <Routes>
+        <Route path="/" element={<HomePage />} />
+        {/* ... */}
+      </Routes>
+    </Provider>
+  );
+}
+```
+
+## TanStack Router example
+
+```tsx
+// src/routes/__root.tsx
+
+/*- begin highlight -*/
+// Configure the type of the `href` and `routerOptions` props on all React Spectrum components.
+declare module '@react-spectrum/s2/Provider' {
+  interface RouterConfig {
+    href: ToOptions,
+    routerOptions: Omit<NavigateOptions, keyof ToOptions>
+  }
+}
+/*- end highlight -*/
+  component: () => {
+    let router = useRouter();
     return (
       /*- begin highlight -*/
-      <Provider background="base" router={{navigate, useHref}}>
+      <Provider
+        background="base"
+        router={{
+          navigate: (href, opts) => {
+            if (typeof href === "string") return;
+            return router.navigate({ ...href, ...opts });
+          },
+          useHref: (href) => {
+            if (typeof href === "string") return href;
+            return router.buildLocation(href).href;
+          }
+        }}>
         {/*- end highlight -*/}
         {/* Your app here... */}
-        <Routes>
-          <Route path="/" element={<HomePage />} />
-          {/* ... */}
-        </Routes>
       </Provider>
     );
   }
-  ```
+});
+```
 
-  ## TanStack Router example
-
-  ```tsx
-  // src/routes/__root.tsx
-
-  /*- begin highlight -*/
-  // Configure the type of the `href` and `routerOptions` props on all React Spectrum components.
-  declare module '@react-spectrum/s2/Provider' {
-    interface RouterConfig {
-      href: ToOptions,
-      routerOptions: Omit<NavigateOptions, keyof ToOptions>
-    }
-  }
-  /*- end highlight -*/
-    component: () => {
-      let router = useRouter();
-      return (
-        /*- begin highlight -*/
-        <Provider
-          background="base"
-          router={{
-            navigate: (href, opts) => {
-              if (typeof href === "string") return;
-              return router.navigate({ ...href, ...opts });
-            },
-            useHref: (href) => {
-              if (typeof href === "string") return href;
-              return router.buildLocation(href).href;
-            }
-          }}>
-          {/*- end highlight -*/}
-          {/* Your app here... */}
-        </Provider>
-      );
-    }
-  });
-  ```
 </Step>
 
 <Step>
   <Counter/>When building a full page S2 app that's not embedded within a larger page, import `page.css` to apply the background color and color scheme to the `<html>` element instead of the `<Provider>`. This ensures that the page has styles even before your JavaScript loads.
 
-  ```tsx
-  // Apply S2 background to the <html> element
-  /*- begin highlight -*/
-  /*- end highlight -*/
+```tsx
+// Apply S2 background to the <html> element
+/*- begin highlight -*/
+/*- end highlight -*/
 
-  function App() {
-    return (
-      <Provider router={{/* ... */}}>
-        {/* ... */}
-      </Provider>
-    );
-  }
-  ```
+function App() {
+  return <Provider router={{/* ... */}}>{/* ... */}</Provider>;
+}
+```
 
-  By default, this uses the `base` background layer. This can be customized by setting the `data-background` attribute on the `<html>` element. The `data-color-scheme` attribute can also be set to force light or dark mode.
+By default, this uses the `base` background layer. This can be customized by setting the `data-background` attribute on the `<html>` element. The `data-color-scheme` attribute can also be set to force light or dark mode.
 
-  ```tsx
-  <html data-background="layer-1">
-    {/* ... */}
-  </html>
-  ```
+```tsx
+<html data-background="layer-1">{/* ... */}</html>
+```
+
 </Step>

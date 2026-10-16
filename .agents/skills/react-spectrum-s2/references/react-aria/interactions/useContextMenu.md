@@ -3,17 +3,16 @@
 Handles context menu events across mouse, touch, keyboard, and screen reader interactions.
 
 ```tsx
-import React from 'react';
-import {useContextMenu} from 'react-aria/useContextMenu';
+import React from "react";
+import { useContextMenu } from "react-aria/useContextMenu";
 
 function Example() {
   let [events, setEvents] = React.useState<string[]>([]);
 
   /*- begin focus -*/
-  let {contextMenuProps} = useContextMenu({
-    onContextMenu: e => setEvents(
-      events => [`context menu at (${e.x}, ${e.y})`, ...events]
-    )
+  let { contextMenuProps } = useContextMenu({
+    onContextMenu: (e) =>
+      setEvents((events) => [`context menu at (${e.x}, ${e.y})`, ...events]),
   });
   /*- end focus -*/
 
@@ -25,20 +24,24 @@ function Example() {
         style={{
           width: 250,
           height: 100,
-          display: 'flex',
-          alignItems: 'center',
-          justifyContent: 'center',
-          border: '2px dashed gray',
-          borderRadius: 10
-        }}>
+          display: "flex",
+          alignItems: "center",
+          justifyContent: "center",
+          border: "2px dashed gray",
+          borderRadius: 10,
+        }}
+      >
         Right click here
       </div>
       <ul
         style={{
-          maxHeight: '200px',
-          overflow: 'auto'
-        }}>
-        {events.map((e, i) => <li key={i}>{e}</li>)}
+          maxHeight: "200px",
+          overflow: "auto",
+        }}
+      >
+        {events.map((e, i) => (
+          <li key={i}>{e}</li>
+        ))}
       </ul>
     </>
   );
@@ -61,9 +64,9 @@ There is no standard way to trigger a context menu consistently across platforms
 `useContextMenu` returns props that you spread onto the element that should respond to context menu interactions. The `onContextMenu` handler is called with a [ContextMenuEvent](#contextmenuevent) that includes the target element and the `x` and `y` position where the menu should appear, relative to the target.
 
 ```tsx
-import {useContextMenu} from 'react-aria/useContextMenu';
+import { useContextMenu } from "react-aria/useContextMenu";
 
-let {contextMenuProps} = useContextMenu(props);
+let { contextMenuProps } = useContextMenu(props);
 ```
 
 ## API
@@ -75,22 +78,22 @@ let {contextMenuProps} = useContextMenu(props);
 
 ### ContextMenuProps
 
-| Name | Type | Description |
-|------|------|-------------|
-| `onContextMenu` | `((e: ContextMenuEvent) => void) | undefined` | Event that is called when a context menu is triggered. |
+| Name            | Type                             | Description |
+| --------------- | -------------------------------- | ----------- |
+| `onContextMenu` | `((e: ContextMenuEvent) => void) | undefined`  | Event that is called when a context menu is triggered. |
 
 ### ContextMenuAria
 
-| Name | Type | Description |
-|------|------|-------------|
+| Name                  | Type                          | Description                            |
+| --------------------- | ----------------------------- | -------------------------------------- |
 | `contextMenuProps` \* | `HTMLAttributes<HTMLElement>` | Props to spread on the target element. |
 
 ### ContextMenuEvent
 
 The `onContextMenu` handler is fired with a `ContextMenuEvent`, which exposes the target element and the position the menu should be displayed relative to it.
 
-| Name | Type | Description |
-|------|------|-------------|
+| Name        | Type      | Description                                          |
+| ----------- | --------- | ---------------------------------------------------- |
 | `target` \* | `Element` | The target element on which the event was triggered. |
-| `x` \* | `number` | X position relative to the target. |
-| `y` \* | `number` | Y position relative to the target. |
+| `x` \*      | `number`  | X position relative to the target.                   |
+| `y` \*      | `number`  | Y position relative to the target.                   |

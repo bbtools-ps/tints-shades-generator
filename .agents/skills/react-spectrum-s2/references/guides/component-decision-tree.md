@@ -113,7 +113,7 @@ If the user does not specify which component they would like to use, choose one 
 
 ## Quiet vs. full-emphasis variants
 
-Several components expose an `isQuiet` (or `quiet` variant) prop that removes the chrome — borders, fills, and sometimes padding — so the control reads as inline content rather than a discrete object. Pick by *context*, not by visual taste:
+Several components expose an `isQuiet` (or `quiet` variant) prop that removes the chrome — borders, fills, and sometimes padding — so the control reads as inline content rather than a discrete object. Pick by _context_, not by visual taste:
 
 - Use **quiet** variants for:
   - Toolbar and toolbar-like rows (`ActionButton`, `ToggleButton`, `ActionMenu` with `isQuiet`).
@@ -127,7 +127,7 @@ Several components expose an `isQuiet` (or `quiet` variant) prop that removes th
   - Top-level navigation (`Breadcrumbs`, `Tabs`).
   - The main content view (`ListView`, `TableView`, `TreeView` displayed as the page's primary surface).
 
-If the design clearly shows borders, fills, or a defined hit target, use the default variant. If the control sits *inside* another bordered/filled surface and the design renders it without chrome, use quiet. Don't apply `isQuiet` just to make something look more compact — adjust spacing instead.
+If the design clearly shows borders, fills, or a defined hit target, use the default variant. If the control sits _inside_ another bordered/filled surface and the design renders it without chrome, use quiet. Don't apply `isQuiet` just to make something look more compact — adjust spacing instead.
 
 ## Last-resort custom components
 

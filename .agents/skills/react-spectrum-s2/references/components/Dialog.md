@@ -5,11 +5,20 @@ user interface. Depending on the kind of Dialog, further interactions may be blo
 Dialog is acknowledged.
 
 ```tsx
-import {Dialog, DialogTrigger, Button, ButtonGroup, Heading, Content, Footer, Image} from '@react-spectrum/s2/Dialog';
-import {Checkbox} from '@react-spectrum/s2/Checkbox';
-import {Form} from '@react-spectrum/s2/Form';
-import {TextField} from '@react-spectrum/s2/TextField';
-import heroImage from 'url:./assets/preview.png';
+import {
+  Dialog,
+  DialogTrigger,
+  Button,
+  ButtonGroup,
+  Heading,
+  Content,
+  Footer,
+  Image,
+} from "@react-spectrum/s2/Dialog";
+import { Checkbox } from "@react-spectrum/s2/Checkbox";
+import { Form } from "@react-spectrum/s2/Form";
+import { TextField } from "@react-spectrum/s2/TextField";
+import heroImage from "url:./assets/preview.png";
 
 function Example(props) {
   return (
@@ -17,12 +26,15 @@ function Example(props) {
       <Button variant="primary">Open Dialog</Button>
       {/*- begin focus -*/}
       <Dialog {...props}>
-        {({close}) => (
+        {({ close }) => (
           <>
             <Image slot="hero" src={heroImage} alt="" />
             <Heading slot="title">Subscribe to our newsletter</Heading>
             <Content>
-              <p>Enter your information to subscribe to our newsletter and receive updates about new features and announcements.</p>
+              <p>
+                Enter your information to subscribe to our newsletter and
+                receive updates about new features and announcements.
+              </p>
               <Form>
                 <TextField label="Name" />
                 <TextField label="Email" type="email" />
@@ -32,8 +44,12 @@ function Example(props) {
               <Checkbox>Don't show this again</Checkbox>
             </Footer>
             <ButtonGroup>
-              <Button onPress={close} variant="secondary">Cancel</Button>
-              <Button onPress={close} variant="accent">Subscribe</Button>
+              <Button onPress={close} variant="secondary">
+                Cancel
+              </Button>
+              <Button onPress={close} variant="accent">
+                Subscribe
+              </Button>
             </ButtonGroup>
           </>
         )}
@@ -53,9 +69,19 @@ Dialogs are windows containing contextual information, tasks, or workflows that 
 Use `Dialog` for standard dialog layouts. It supports `Image`, `Heading`, `Header`, `Content`, `Footer`, and `ButtonGroup` slots. Dismissible dialogs replace their `ButtonGroup` with a close button.
 
 ```tsx
-import {Dialog, DialogTrigger, Button, ButtonGroup, Heading, Header, Content, Footer, Image} from '@react-spectrum/s2/Dialog';
-import {Checkbox} from '@react-spectrum/s2/Checkbox';
-import heroImage from 'url:./assets/preview.png';
+import {
+  Dialog,
+  DialogTrigger,
+  Button,
+  ButtonGroup,
+  Heading,
+  Header,
+  Content,
+  Footer,
+  Image,
+} from "@react-spectrum/s2/Dialog";
+import { Checkbox } from "@react-spectrum/s2/Checkbox";
+import heroImage from "url:./assets/preview.png";
 
 function Example(props) {
   return (
@@ -63,20 +89,29 @@ function Example(props) {
       <Button variant="primary">Open Dialog</Button>
       {/*- begin focus -*/}
       <Dialog {...props}>
-        {({close}) => (
+        {({ close }) => (
           <>
             <Image slot="hero" src={heroImage} alt="" />
             <Heading slot="title">Dialog Title</Heading>
             <Header>Header</Header>
             <Content>
-              <p>Standard dialog description. This should briefly communicate any additional information or context about the standard dialog title, to help users make one of the decisions offered by the buttons. Make it no more than a few short sentences.</p>
+              <p>
+                Standard dialog description. This should briefly communicate any
+                additional information or context about the standard dialog
+                title, to help users make one of the decisions offered by the
+                buttons. Make it no more than a few short sentences.
+              </p>
             </Content>
             <Footer>
               <Checkbox>Don't show this again</Checkbox>
             </Footer>
             <ButtonGroup>
-              <Button onPress={close} variant="secondary">Cancel</Button>
-              <Button onPress={close} variant="accent">Subscribe</Button>
+              <Button onPress={close} variant="secondary">
+                Cancel
+              </Button>
+              <Button onPress={close} variant="accent">
+                Subscribe
+              </Button>
             </ButtonGroup>
           </>
         )}
@@ -92,8 +127,8 @@ function Example(props) {
 Use `AlertDialog` for confirmation, error messages, and other critical information that must be acknowledged.
 
 ```tsx
-import {AlertDialog, DialogTrigger} from '@react-spectrum/s2/AlertDialog';
-import {Button} from '@react-spectrum/s2/Button';
+import { AlertDialog, DialogTrigger } from "@react-spectrum/s2/AlertDialog";
+import { Button } from "@react-spectrum/s2/Button";
 
 function Example(props) {
   return (
@@ -102,9 +137,10 @@ function Example(props) {
       {/*- begin focus -*/}
       <AlertDialog
         {...props}
-        
-        onPrimaryAction={() => alert('onPrimaryAction')}
-        onSecondaryAction={() => alert('onSecondaryAction')}>
+
+        onPrimaryAction={() => alert("onPrimaryAction")}
+        onSecondaryAction={() => alert("onSecondaryAction")}
+      >
         {props.children}
       </AlertDialog>
       {/*- end focus -*/}
@@ -118,7 +154,15 @@ function Example(props) {
 Use `FullscreenDialog` for complex workflows that require more space. It supports `Heading`, `Header`, `Content`, and `ButtonGroup` slots.
 
 ```tsx
-import {FullscreenDialog, DialogTrigger, Button, ButtonGroup, Heading, Header, Content} from '@react-spectrum/s2/FullscreenDialog';
+import {
+  FullscreenDialog,
+  DialogTrigger,
+  Button,
+  ButtonGroup,
+  Heading,
+  Header,
+  Content,
+} from "@react-spectrum/s2/FullscreenDialog";
 
 function Example(props) {
   return (
@@ -126,17 +170,27 @@ function Example(props) {
       <Button variant="primary">Open Fullscreen</Button>
       {/*- begin focus -*/}
       <FullscreenDialog {...props}>
-        {({close}) => (
+        {({ close }) => (
           <>
             <Heading slot="title">Advanced Settings</Heading>
             <Header>Configure your application preferences</Header>
             <Content>
-              <p>This fullscreen dialog provides ample space for complex forms, detailed content, or multi-step workflows.</p>
-              <p>The content area can scroll if needed, making it perfect for lengthy forms or comprehensive settings panels.</p>
+              <p>
+                This fullscreen dialog provides ample space for complex forms,
+                detailed content, or multi-step workflows.
+              </p>
+              <p>
+                The content area can scroll if needed, making it perfect for
+                lengthy forms or comprehensive settings panels.
+              </p>
             </Content>
             <ButtonGroup>
-              <Button onPress={close} variant="secondary">Cancel</Button>
-              <Button onPress={close} variant="accent">Save Changes</Button>
+              <Button onPress={close} variant="secondary">
+                Cancel
+              </Button>
+              <Button onPress={close} variant="accent">
+                Save Changes
+              </Button>
             </ButtonGroup>
           </>
         )}
@@ -152,10 +206,15 @@ function Example(props) {
 Use `CustomDialog` for complete control over the dialog layout.
 
 ```tsx
-import {CustomDialog, DialogTrigger, Heading, CloseButton} from '@react-spectrum/s2/CustomDialog';
-import {Button} from '@react-spectrum/s2/Button';
-import Checkmark from '@react-spectrum/s2/illustrations/gradient/generic1/Checkmark';
-import {style} from '@react-spectrum/s2/style' with {type: 'macro'};
+import {
+  CustomDialog,
+  DialogTrigger,
+  Heading,
+  CloseButton,
+} from "@react-spectrum/s2/CustomDialog";
+import { Button } from "@react-spectrum/s2/Button";
+import Checkmark from "@react-spectrum/s2/illustrations/gradient/generic1/Checkmark";
+import { style } from "@react-spectrum/s2/style" with { type: "macro" };
 
 function Example(props) {
   return (
@@ -163,11 +222,34 @@ function Example(props) {
       <Button>Open dialog</Button>
       {/*- begin focus -*/}
       <CustomDialog {...props}>
-        <div className={style({display: 'flex', flexDirection: 'column', rowGap: 8, alignItems: 'center'})}>
+        <div
+          className={style({
+            display: "flex",
+            flexDirection: "column",
+            rowGap: 8,
+            alignItems: "center",
+          })}
+        >
           <Checkmark />
-          <Heading slot="title" styles={style({font: 'heading-lg', textAlign: 'center', marginY: 0})}>Thank you!</Heading>
-          <p className={style({font: 'body', textAlign: 'center', marginY: 0})}>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</p>
-          <CloseButton styles={style({position: 'absolute', top: 12, insetEnd: 12})} />
+          <Heading
+            slot="title"
+            styles={style({
+              font: "heading-lg",
+              textAlign: "center",
+              marginY: 0,
+            })}
+          >
+            Thank you!
+          </Heading>
+          <p
+            className={style({ font: "body", textAlign: "center", marginY: 0 })}
+          >
+            Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do
+            eiusmod tempor incididunt ut labore et dolore magna aliqua.
+          </p>
+          <CloseButton
+            styles={style({ position: "absolute", top: 12, insetEnd: 12 })}
+          />
         </div>
       </CustomDialog>
       {/*- end focus -*/}
@@ -181,9 +263,16 @@ function Example(props) {
 Use `DialogContainer` to show a dialog programmatically or mount in a different part of the JSX tree (e.g. outside a menu).
 
 ```tsx
-import {DialogContainer, Dialog, Button, ButtonGroup, Heading, Content} from '@react-spectrum/s2/Dialog';
-import {ActionMenu, MenuItem, type Key} from '@react-spectrum/s2/ActionMenu';
-import {useState} from 'react';
+import {
+  DialogContainer,
+  Dialog,
+  Button,
+  ButtonGroup,
+  Heading,
+  Content,
+} from "@react-spectrum/s2/Dialog";
+import { ActionMenu, MenuItem, type Key } from "@react-spectrum/s2/ActionMenu";
+import { useState } from "react";
 
 function DialogContainerExample() {
   let [dialogType, setDialogType] = useState<Key | null>(null);
@@ -198,44 +287,59 @@ function DialogContainerExample() {
 
       {/*- begin highlight -*/}
       <DialogContainer onDismiss={() => setDialogType(null)}>
-      {/*- end highlight -*/}
-        {dialogType === 'edit' && (
+        {/*- end highlight -*/}
+        {dialogType === "edit" && (
           <Dialog>
-            {({close}) => (
+            {({ close }) => (
               <>
                 <Heading slot="title">Edit Item</Heading>
                 <Content>Make changes to your item here.</Content>
                 <ButtonGroup>
-                  <Button onPress={close} variant="secondary">Cancel</Button>
-                  <Button onPress={close} variant="accent">Save</Button>
+                  <Button onPress={close} variant="secondary">
+                    Cancel
+                  </Button>
+                  <Button onPress={close} variant="accent">
+                    Save
+                  </Button>
                 </ButtonGroup>
               </>
             )}
           </Dialog>
         )}
-        {dialogType === 'delete' && (
+        {dialogType === "delete" && (
           <Dialog>
-            {({close}) => (
+            {({ close }) => (
               <>
                 <Heading slot="title">Delete Item</Heading>
-                <Content>Are you sure you want to delete this item? This action cannot be undone.</Content>
+                <Content>
+                  Are you sure you want to delete this item? This action cannot
+                  be undone.
+                </Content>
                 <ButtonGroup>
-                  <Button onPress={close} variant="secondary">Cancel</Button>
-                  <Button onPress={close} variant="negative">Delete</Button>
+                  <Button onPress={close} variant="secondary">
+                    Cancel
+                  </Button>
+                  <Button onPress={close} variant="negative">
+                    Delete
+                  </Button>
                 </ButtonGroup>
               </>
             )}
           </Dialog>
         )}
-        {dialogType === 'share' && (
+        {dialogType === "share" && (
           <Dialog>
-            {({close}) => (
+            {({ close }) => (
               <>
                 <Heading slot="title">Share Item</Heading>
                 <Content>Choose how you would like to share this item.</Content>
                 <ButtonGroup>
-                  <Button onPress={close} variant="secondary">Cancel</Button>
-                  <Button onPress={close} variant="accent">Share</Button>
+                  <Button onPress={close} variant="secondary">
+                    Cancel
+                  </Button>
+                  <Button onPress={close} variant="accent">
+                    Share
+                  </Button>
                 </ButtonGroup>
               </>
             )}
@@ -262,47 +366,47 @@ function DialogContainerExample() {
 </Dialog>
 ```
 
-| Name | Type | Default | Description |
-|------|------|---------|-------------|
-| `aria-describedby` | `string | undefined` | — | Identifies the element (or elements) that describes the object. |
-| `aria-details` | `string | undefined` | — | Identifies the element (or elements) that provide a detailed, extended description for the object. |
-| `aria-label` | `string | undefined` | — | Defines a string value that labels the current element. |
-| `aria-labelledby` | `string | undefined` | — | Identifies the element (or elements) that labels the current element. |
-| `children` | `((opts: DialogRenderProps) => ReactNode) | ReactNode` | — | Children of the dialog. A function may be provided to access a function to close the dialog. |
-| `id` | `string | undefined` | — | The element's unique identifier. See [MDN](https://developer.mozilla.org/en-US/docs/Web/HTML/Global_attributes/id). |
-| `isDismissible` | `boolean | undefined` | — | Whether the Dialog is dismissible. |
-| `isKeyboardDismissDisabled` | `boolean | undefined` | — | Whether pressing the escape key to close the dialog should be disabled. |
-| `role` | `"alertdialog" | "dialog" | undefined` | 'dialog' | The accessibility role for the dialog. |
-| `size` | `"L" | "M" | "S" | "XL" | undefined` | 'M' | The size of the Dialog. |
-| `slot` | `string | null | undefined` | — | A slot name for the component. Slots allow the component to receive props from a parent component. An explicit `null` value indicates that the local props completely override all props received from a parent. |
-| `styles` | `StylesProp | undefined` | — | Spectrum-defined styles, returned by the `style()` macro. |
-| `UNSAFE_className` | `UnsafeClassName | undefined` | — | Sets the CSS [className](https://developer.mozilla.org/en-US/docs/Web/API/Element/className) for the element. Only use as a **last resort**. Use the `style` macro via the `styles` prop instead. |
-| `UNSAFE_style` | `CSSProperties | undefined` | — | Sets inline [style](https://developer.mozilla.org/en-US/docs/Web/API/HTMLElement/style) for the element. Only use as a **last resort**. Use the `style` macro via the `styles` prop instead. |
+| Name                        | Type                                      | Default    | Description |
+| --------------------------- | ----------------------------------------- | ---------- | ----------- |
+| `aria-describedby`          | `string                                   | undefined` | —           | Identifies the element (or elements) that describes the object.                                                                                                                                   |
+| `aria-details`              | `string                                   | undefined` | —           | Identifies the element (or elements) that provide a detailed, extended description for the object.                                                                                                |
+| `aria-label`                | `string                                   | undefined` | —           | Defines a string value that labels the current element.                                                                                                                                           |
+| `aria-labelledby`           | `string                                   | undefined` | —           | Identifies the element (or elements) that labels the current element.                                                                                                                             |
+| `children`                  | `((opts: DialogRenderProps) => ReactNode) | ReactNode` | —           | Children of the dialog. A function may be provided to access a function to close the dialog.                                                                                                      |
+| `id`                        | `string                                   | undefined` | —           | The element's unique identifier. See [MDN](https://developer.mozilla.org/en-US/docs/Web/HTML/Global_attributes/id).                                                                               |
+| `isDismissible`             | `boolean                                  | undefined` | —           | Whether the Dialog is dismissible.                                                                                                                                                                |
+| `isKeyboardDismissDisabled` | `boolean                                  | undefined` | —           | Whether pressing the escape key to close the dialog should be disabled.                                                                                                                           |
+| `role`                      | `"alertdialog"                            | "dialog"   | undefined`  | 'dialog'                                                                                                                                                                                          | The accessibility role for the dialog.                                                                                                                                                                           |
+| `size`                      | `"L"                                      | "M"        | "S"         | "XL"                                                                                                                                                                                              | undefined`                                                                                                                                                                                                       | 'M' | The size of the Dialog. |
+| `slot`                      | `string                                   | null       | undefined`  | —                                                                                                                                                                                                 | A slot name for the component. Slots allow the component to receive props from a parent component. An explicit `null` value indicates that the local props completely override all props received from a parent. |
+| `styles`                    | `StylesProp                               | undefined` | —           | Spectrum-defined styles, returned by the `style()` macro.                                                                                                                                         |
+| `UNSAFE_className`          | `UnsafeClassName                          | undefined` | —           | Sets the CSS [className](https://developer.mozilla.org/en-US/docs/Web/API/Element/className) for the element. Only use as a **last resort**. Use the `style` macro via the `styles` prop instead. |
+| `UNSAFE_style`              | `CSSProperties                            | undefined` | —           | Sets inline [style](https://developer.mozilla.org/en-US/docs/Web/API/HTMLElement/style) for the element. Only use as a **last resort**. Use the `style` macro via the `styles` prop instead.      |
 
 ### AlertDialog
 
-| Name | Type | Default | Description |
-|------|------|---------|-------------|
-| `aria-describedby` | `string | undefined` | — | Identifies the element (or elements) that describes the object. |
-| `aria-details` | `string | undefined` | — | Identifies the element (or elements) that provide a detailed, extended description for the object. |
-| `aria-label` | `string | undefined` | — | Defines a string value that labels the current element. |
-| `aria-labelledby` | `string | undefined` | — | Identifies the element (or elements) that labels the current element. |
-| `autoFocusButton` | `"cancel" | "primary" | "secondary" | undefined` | — | Button to focus by default when the dialog opens. |
-| `cancelLabel` | `string | undefined` | — | The label to display within the cancel button. |
-| `children` | `ReactNode` | — | The contents of the AlertDialog. |
-| `id` | `string | undefined` | — | The element's unique identifier. See [MDN](https://developer.mozilla.org/en-US/docs/Web/HTML/Global_attributes/id). |
-| `isPrimaryActionDisabled` | `boolean | undefined` | — | Whether the primary button is disabled. |
-| `isSecondaryActionDisabled` | `boolean | undefined` | — | Whether the secondary button is disabled. |
-| `onCancel` | `(() => void) | undefined` | — | Handler that is called when the cancel button is pressed. |
-| `onPrimaryAction` | `(() => void) | undefined` | — | Handler that is called when the primary button is pressed. |
-| `onSecondaryAction` | `(() => void) | undefined` | — | Handler that is called when the secondary button is pressed. |
-| `primaryActionLabel` | `string` | — | The label to display within the confirm button. |
-| `secondaryActionLabel` | `string | undefined` | — | The label to display within the secondary button. |
-| `size` | `"L" | "M" | "S" | undefined` | 'M' | The size of the Dialog. |
-| `title` | `string` | — | The title of the AlertDialog. |
-| `UNSAFE_className` | `UnsafeClassName | undefined` | — | Sets the CSS [className](https://developer.mozilla.org/en-US/docs/Web/API/Element/className) for the element. Only use as a **last resort**. Use the `style` macro via the `styles` prop instead. |
-| `UNSAFE_style` | `CSSProperties | undefined` | — | Sets inline [style](https://developer.mozilla.org/en-US/docs/Web/API/HTMLElement/style) for the element. Only use as a **last resort**. Use the `style` macro via the `styles` prop instead. |
-| `variant` | `"confirmation" | "destructive" | "error" | "information" | "warning" | undefined` | 'confirmation' | The [visual style](https://spectrum.adobe.com/page/alert-dialog/#Options) of the AlertDialog. |
+| Name                        | Type             | Default       | Description                                     |
+| --------------------------- | ---------------- | ------------- | ----------------------------------------------- |
+| `aria-describedby`          | `string          | undefined`    | —                                               | Identifies the element (or elements) that describes the object.                                                                                                                                   |
+| `aria-details`              | `string          | undefined`    | —                                               | Identifies the element (or elements) that provide a detailed, extended description for the object.                                                                                                |
+| `aria-label`                | `string          | undefined`    | —                                               | Defines a string value that labels the current element.                                                                                                                                           |
+| `aria-labelledby`           | `string          | undefined`    | —                                               | Identifies the element (or elements) that labels the current element.                                                                                                                             |
+| `autoFocusButton`           | `"cancel"        | "primary"     | "secondary"                                     | undefined`                                                                                                                                                                                        | —         | Button to focus by default when the dialog opens. |
+| `cancelLabel`               | `string          | undefined`    | —                                               | The label to display within the cancel button.                                                                                                                                                    |
+| `children`                  | `ReactNode`      | —             | The contents of the AlertDialog.                |
+| `id`                        | `string          | undefined`    | —                                               | The element's unique identifier. See [MDN](https://developer.mozilla.org/en-US/docs/Web/HTML/Global_attributes/id).                                                                               |
+| `isPrimaryActionDisabled`   | `boolean         | undefined`    | —                                               | Whether the primary button is disabled.                                                                                                                                                           |
+| `isSecondaryActionDisabled` | `boolean         | undefined`    | —                                               | Whether the secondary button is disabled.                                                                                                                                                         |
+| `onCancel`                  | `(() => void)    | undefined`    | —                                               | Handler that is called when the cancel button is pressed.                                                                                                                                         |
+| `onPrimaryAction`           | `(() => void)    | undefined`    | —                                               | Handler that is called when the primary button is pressed.                                                                                                                                        |
+| `onSecondaryAction`         | `(() => void)    | undefined`    | —                                               | Handler that is called when the secondary button is pressed.                                                                                                                                      |
+| `primaryActionLabel`        | `string`         | —             | The label to display within the confirm button. |
+| `secondaryActionLabel`      | `string          | undefined`    | —                                               | The label to display within the secondary button.                                                                                                                                                 |
+| `size`                      | `"L"             | "M"           | "S"                                             | undefined`                                                                                                                                                                                        | 'M'       | The size of the Dialog.                           |
+| `title`                     | `string`         | —             | The title of the AlertDialog.                   |
+| `UNSAFE_className`          | `UnsafeClassName | undefined`    | —                                               | Sets the CSS [className](https://developer.mozilla.org/en-US/docs/Web/API/Element/className) for the element. Only use as a **last resort**. Use the `style` macro via the `styles` prop instead. |
+| `UNSAFE_style`              | `CSSProperties   | undefined`    | —                                               | Sets inline [style](https://developer.mozilla.org/en-US/docs/Web/API/HTMLElement/style) for the element. Only use as a **last resort**. Use the `style` macro via the `styles` prop instead.      |
+| `variant`                   | `"confirmation"  | "destructive" | "error"                                         | "information"                                                                                                                                                                                     | "warning" | undefined`                                        | 'confirmation' | The [visual style](https://spectrum.adobe.com/page/alert-dialog/#Options) of the AlertDialog. |
 
 ### FullscreenDialog
 
@@ -315,21 +419,21 @@ function DialogContainerExample() {
 </FullscreenDialog>
 ```
 
-| Name | Type | Default | Description |
-|------|------|---------|-------------|
-| `aria-describedby` | `string | undefined` | — | Identifies the element (or elements) that describes the object. |
-| `aria-details` | `string | undefined` | — | Identifies the element (or elements) that provide a detailed, extended description for the object. |
-| `aria-label` | `string | undefined` | — | Defines a string value that labels the current element. |
-| `aria-labelledby` | `string | undefined` | — | Identifies the element (or elements) that labels the current element. |
-| `children` | `((opts: DialogRenderProps) => ReactNode) | ReactNode` | — | Children of the dialog. A function may be provided to access a function to close the dialog. |
-| `id` | `string | undefined` | — | The element's unique identifier. See [MDN](https://developer.mozilla.org/en-US/docs/Web/HTML/Global_attributes/id). |
-| `isKeyboardDismissDisabled` | `boolean | undefined` | — | Whether pressing the escape key to close the dialog should be disabled. |
-| `role` | `"alertdialog" | "dialog" | undefined` | 'dialog' | The accessibility role for the dialog. |
-| `slot` | `string | null | undefined` | — | A slot name for the component. Slots allow the component to receive props from a parent component. An explicit `null` value indicates that the local props completely override all props received from a parent. |
-| `styles` | `StylesProp | undefined` | — | Spectrum-defined styles, returned by the `style()` macro. |
-| `UNSAFE_className` | `UnsafeClassName | undefined` | — | Sets the CSS [className](https://developer.mozilla.org/en-US/docs/Web/API/Element/className) for the element. Only use as a **last resort**. Use the `style` macro via the `styles` prop instead. |
-| `UNSAFE_style` | `CSSProperties | undefined` | — | Sets inline [style](https://developer.mozilla.org/en-US/docs/Web/API/HTMLElement/style) for the element. Only use as a **last resort**. Use the `style` macro via the `styles` prop instead. |
-| `variant` | `"fullscreen" | "fullscreenTakeover" | undefined` | 'fullscreen' | The variant of fullscreen dialog to display. |
+| Name                        | Type                                      | Default              | Description |
+| --------------------------- | ----------------------------------------- | -------------------- | ----------- |
+| `aria-describedby`          | `string                                   | undefined`           | —           | Identifies the element (or elements) that describes the object.                                                                                                                                   |
+| `aria-details`              | `string                                   | undefined`           | —           | Identifies the element (or elements) that provide a detailed, extended description for the object.                                                                                                |
+| `aria-label`                | `string                                   | undefined`           | —           | Defines a string value that labels the current element.                                                                                                                                           |
+| `aria-labelledby`           | `string                                   | undefined`           | —           | Identifies the element (or elements) that labels the current element.                                                                                                                             |
+| `children`                  | `((opts: DialogRenderProps) => ReactNode) | ReactNode`           | —           | Children of the dialog. A function may be provided to access a function to close the dialog.                                                                                                      |
+| `id`                        | `string                                   | undefined`           | —           | The element's unique identifier. See [MDN](https://developer.mozilla.org/en-US/docs/Web/HTML/Global_attributes/id).                                                                               |
+| `isKeyboardDismissDisabled` | `boolean                                  | undefined`           | —           | Whether pressing the escape key to close the dialog should be disabled.                                                                                                                           |
+| `role`                      | `"alertdialog"                            | "dialog"             | undefined`  | 'dialog'                                                                                                                                                                                          | The accessibility role for the dialog.                                                                                                                                                                           |
+| `slot`                      | `string                                   | null                 | undefined`  | —                                                                                                                                                                                                 | A slot name for the component. Slots allow the component to receive props from a parent component. An explicit `null` value indicates that the local props completely override all props received from a parent. |
+| `styles`                    | `StylesProp                               | undefined`           | —           | Spectrum-defined styles, returned by the `style()` macro.                                                                                                                                         |
+| `UNSAFE_className`          | `UnsafeClassName                          | undefined`           | —           | Sets the CSS [className](https://developer.mozilla.org/en-US/docs/Web/API/Element/className) for the element. Only use as a **last resort**. Use the `style` macro via the `styles` prop instead. |
+| `UNSAFE_style`              | `CSSProperties                            | undefined`           | —           | Sets inline [style](https://developer.mozilla.org/en-US/docs/Web/API/HTMLElement/style) for the element. Only use as a **last resort**. Use the `style` macro via the `styles` prop instead.      |
+| `variant`                   | `"fullscreen"                             | "fullscreenTakeover" | undefined`  | 'fullscreen'                                                                                                                                                                                      | The variant of fullscreen dialog to display.                                                                                                                                                                     |
 
 ### CustomDialog
 
@@ -340,23 +444,23 @@ function DialogContainerExample() {
 </FullscreenDialog>
 ```
 
-| Name | Type | Default | Description |
-|------|------|---------|-------------|
-| `aria-describedby` | `string | undefined` | — | Identifies the element (or elements) that describes the object. |
-| `aria-details` | `string | undefined` | — | Identifies the element (or elements) that provide a detailed, extended description for the object. |
-| `aria-label` | `string | undefined` | — | Defines a string value that labels the current element. |
-| `aria-labelledby` | `string | undefined` | — | Identifies the element (or elements) that labels the current element. |
-| `children` | `((opts: DialogRenderProps) => ReactNode) | ReactNode` | — | Children of the dialog. A function may be provided to access a function to close the dialog. |
-| `id` | `string | undefined` | — | The element's unique identifier. See [MDN](https://developer.mozilla.org/en-US/docs/Web/HTML/Global_attributes/id). |
-| `isDismissible` | `boolean | undefined` | — | Whether the Dialog is dismissible. |
-| `isKeyboardDismissDisabled` | `boolean | undefined` | — | Whether pressing the escape key to close the dialog should be disabled. |
-| `padding` | `"default" | "none" | undefined` | 'default' | The amount of padding around the contents of the dialog. |
-| `role` | `"alertdialog" | "dialog" | undefined` | 'dialog' | The accessibility role for the dialog. |
-| `size` | `"fullscreen" | "fullscreenTakeover" | "L" | "M" | "S" | undefined` | — | The size of the Dialog. |
-| `slot` | `string | null | undefined` | — | A slot name for the component. Slots allow the component to receive props from a parent component. An explicit `null` value indicates that the local props completely override all props received from a parent. |
-| `styles` | `StylesProp | undefined` | — | Spectrum-defined styles, returned by the `style()` macro. |
-| `UNSAFE_className` | `UnsafeClassName | undefined` | — | Sets the CSS [className](https://developer.mozilla.org/en-US/docs/Web/API/Element/className) for the element. Only use as a **last resort**. Use the `style` macro via the `styles` prop instead. |
-| `UNSAFE_style` | `CSSProperties | undefined` | — | Sets inline [style](https://developer.mozilla.org/en-US/docs/Web/API/HTMLElement/style) for the element. Only use as a **last resort**. Use the `style` macro via the `styles` prop instead. |
+| Name                        | Type                                      | Default              | Description |
+| --------------------------- | ----------------------------------------- | -------------------- | ----------- |
+| `aria-describedby`          | `string                                   | undefined`           | —           | Identifies the element (or elements) that describes the object.                                                                                                                                   |
+| `aria-details`              | `string                                   | undefined`           | —           | Identifies the element (or elements) that provide a detailed, extended description for the object.                                                                                                |
+| `aria-label`                | `string                                   | undefined`           | —           | Defines a string value that labels the current element.                                                                                                                                           |
+| `aria-labelledby`           | `string                                   | undefined`           | —           | Identifies the element (or elements) that labels the current element.                                                                                                                             |
+| `children`                  | `((opts: DialogRenderProps) => ReactNode) | ReactNode`           | —           | Children of the dialog. A function may be provided to access a function to close the dialog.                                                                                                      |
+| `id`                        | `string                                   | undefined`           | —           | The element's unique identifier. See [MDN](https://developer.mozilla.org/en-US/docs/Web/HTML/Global_attributes/id).                                                                               |
+| `isDismissible`             | `boolean                                  | undefined`           | —           | Whether the Dialog is dismissible.                                                                                                                                                                |
+| `isKeyboardDismissDisabled` | `boolean                                  | undefined`           | —           | Whether pressing the escape key to close the dialog should be disabled.                                                                                                                           |
+| `padding`                   | `"default"                                | "none"               | undefined`  | 'default'                                                                                                                                                                                         | The amount of padding around the contents of the dialog.                                                                                                                                                         |
+| `role`                      | `"alertdialog"                            | "dialog"             | undefined`  | 'dialog'                                                                                                                                                                                          | The accessibility role for the dialog.                                                                                                                                                                           |
+| `size`                      | `"fullscreen"                             | "fullscreenTakeover" | "L"         | "M"                                                                                                                                                                                               | "S"                                                                                                                                                                                                              | undefined` | —   | The size of the Dialog. |
+| `slot`                      | `string                                   | null                 | undefined`  | —                                                                                                                                                                                                 | A slot name for the component. Slots allow the component to receive props from a parent component. An explicit `null` value indicates that the local props completely override all props received from a parent. |
+| `styles`                    | `StylesProp                               | undefined`           | —           | Spectrum-defined styles, returned by the `style()` macro.                                                                                                                                         |
+| `UNSAFE_className`          | `UnsafeClassName                          | undefined`           | —           | Sets the CSS [className](https://developer.mozilla.org/en-US/docs/Web/API/Element/className) for the element. Only use as a **last resort**. Use the `style` macro via the `styles` prop instead. |
+| `UNSAFE_style`              | `CSSProperties                            | undefined`           | —           | Sets inline [style](https://developer.mozilla.org/en-US/docs/Web/API/HTMLElement/style) for the element. Only use as a **last resort**. Use the `style` macro via the `styles` prop instead.      |
 
 ### DialogTrigger
 
@@ -367,12 +471,12 @@ function DialogContainerExample() {
 </DialogTrigger>
 ```
 
-| Name | Type | Default | Description |
-|------|------|---------|-------------|
-| `children` | `ReactNode` | — |  |
-| `defaultOpen` | `boolean | undefined` | — | Whether the overlay is open by default (uncontrolled). |
-| `isOpen` | `boolean | undefined` | — | Whether the overlay is open by default (controlled). |
-| `onOpenChange` | `((isOpen: boolean) => void) | undefined` | — | Handler that is called when the overlay's open state changes. |
+| Name           | Type                         | Default    | Description |
+| -------------- | ---------------------------- | ---------- | ----------- |
+| `children`     | `ReactNode`                  | —          |             |
+| `defaultOpen`  | `boolean                     | undefined` | —           | Whether the overlay is open by default (uncontrolled).        |
+| `isOpen`       | `boolean                     | undefined` | —           | Whether the overlay is open by default (controlled).          |
+| `onOpenChange` | `((isOpen: boolean) => void) | undefined` | —           | Handler that is called when the overlay's open state changes. |
 
 ### DialogContainer
 
@@ -382,7 +486,7 @@ function DialogContainerExample() {
 </DialogContainer>
 ```
 
-| Name | Type | Default | Description |
-|------|------|---------|-------------|
-| `children` | `React.ReactNode` | — | The Dialog to display, if any. |
-| `onDismiss` | `() => void` | — | Handler that is called when the 'x' button of a dismissable Dialog is clicked. |
+| Name        | Type              | Default | Description                                                                    |
+| ----------- | ----------------- | ------- | ------------------------------------------------------------------------------ |
+| `children`  | `React.ReactNode` | —       | The Dialog to display, if any.                                                 |
+| `onDismiss` | `() => void`      | —       | Handler that is called when the 'x' button of a dismissable Dialog is clicked. |
