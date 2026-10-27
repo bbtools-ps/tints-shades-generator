@@ -179,7 +179,9 @@ function Example() {
 
       let res = await fetch(
         cursor || `https://swapi.py4e.com/api/people/?search=${filterText}`,
-        { signal }
+        {
+          signal,
+        }
       );
       let json = await res.json();
 
